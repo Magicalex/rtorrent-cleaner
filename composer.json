@@ -1,0 +1,28 @@
+{
+    "name": "magicalex/rtorrent-cleaner",
+    "description": "Script for clean useless file in rtorrent",
+    "keywords": ["rtorrent", "rutorrent", "cleaner", "clean", "file"],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "zendframework/zend-xmlrpc": "^2.7",
+        "gabrielelana/byte-units": "^0.5.0",
+        "symfony/finder": "^4.1",
+        "symfony/console": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "RtorrentCleaner\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "magicalex",
+            "email": "magicalex@mondedie.fr"
+        }
+    ],
+    "bin": [
+        "rtorrent-cleaner"
+    ]
+}
