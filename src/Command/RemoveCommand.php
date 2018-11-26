@@ -51,9 +51,9 @@ class RemoveCommand extends Command
         ]);
 
         $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrcp'));
-        $data_rtorrent = $list->listing_from_rtorrent($output);
-        $data_home = $list->listing_from_home();
-        $notTracked = $list->getFilesNotTracked($data_home, $data_rtorrent['path']);
+        $dataRtorrent = $list->listing_from_rtorrent($output);
+        $dataHome = $list->listing_from_home();
+        $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
 
         // remove files not tracked
         foreach ($notTracked as $file) {

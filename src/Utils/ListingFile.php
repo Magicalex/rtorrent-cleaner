@@ -113,18 +113,18 @@ class ListingFile
         $finder->in($this->home)->directories();
 
         foreach ($finder as $dir) {
-            $is_empty = true;
+            $isEmpty = true;
             $handle = opendir($dir->getRealPath());
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != '.' && $entry != '..') {
-                    $is_empty = false;
+                    $isEmpty = false;
                     break;
                 }
             }
 
             closedir($handle);
 
-            if ($is_empty === true) {
+            if ($isEmpty === true) {
                 $emptyDirectory[] = $dir->getRealPath();
             }
         }

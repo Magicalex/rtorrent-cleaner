@@ -1,14 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 use RtorrentCleaner\Command\RtorrentListCommand;
 use RtorrentCleaner\Command\RemoveCommand;
 
 // init
-$app = new Application('Rtorrent Cleaner', 'v1.0.0');
+$app = new Application('Rtorrent Cleaner', 'v0.1.0');
 
 // add commands
 $app->add(new RtorrentListCommand());

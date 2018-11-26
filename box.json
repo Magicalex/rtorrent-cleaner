@@ -1,0 +1,15 @@
+{
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Json",
+        "KevinGH\\Box\\Compactor\\Php"
+    ],
+    "directories": ["src"],
+    "finder": [
+        {
+            "in": "vendor",
+            "exclude": ["Tests", "tests"],
+            "name": "*.php"
+        }
+    ],
+    "output": "rtorrent-cleaner.phar"
+}

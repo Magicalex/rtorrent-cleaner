@@ -2,13 +2,17 @@
 
 ## Build Phar file
 
+add folder vendor/bin in PATH
+
 ```sh
-./build.sh
+composer global require humbug/box
+composer install
+composer run-script build-phar
 ```
 
 ## Installation
 
-
+...
 
 ## Usage
 

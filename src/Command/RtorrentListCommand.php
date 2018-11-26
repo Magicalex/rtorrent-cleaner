@@ -43,11 +43,11 @@ class RtorrentListCommand extends Command
         ]);
 
         $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrcp'));
-        $data_rtorrent = $list->listing_from_rtorrent($output);
-        $data_home = $list->listing_from_home();
+        $dataRtorrent = $list->listing_from_rtorrent($output);
+        $dataHome = $list->listing_from_home();
 
         // display torrents infos
-        foreach ($data_rtorrent['info'] as $key => $value) {
+        foreach ($dataRtorrent['info'] as $key => $value) {
             $nb = $key;
             $name = $value['name'];
             $nb_files = $value['nb_files'];
@@ -71,31 +71,31 @@ class RtorrentListCommand extends Command
             '' // empty line
         ]);
 
-        $notTracked = $list->getFilesNotTracked($data_home, $data_rtorrent['path']);
-        $missingFile = $list->getFilesMissingFromTorrent($data_rtorrent['path'], $data_home);
+        $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
 
-        $unnecessary_file = count($notTracked);
-        $unnecessary_total_size = 0;
+        $unnecessaryFile = count($notTracked);
+        $unnecessaryTotalSize = 0;
 
         $output->writeln([
-            " -> <fg=red>There are {$unnecessary_file} file(s) not tracked by rtorrent</>",
+            " -> <fg=red>There are {$unnecessaryFile} file(s) not tracked by rtorrent</>",
             '' // empty line
         ]);
 
         // display files not tracked by rtorrent
         foreach ($notTracked as $file) {
             $size = filesize($file);
-            $unnecessary_total_size = $unnecessary_total_size + $size;
+            $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
             $size = Binary::bytes($size)->format(2);
             $trunc = Str::truncate($file);
             $output->writeln("file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
         }
 
-        $unnecessary_total_size = Binary::bytes($unnecessary_total_size)->format(2);
+        $unnecessaryTotalSize = Binary::bytes($unnecessaryTotalSize)->format(2);
 
         $output->writeln([
             '', // empty line
-            "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessary_total_size}</>",
+            "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>",
             '' // empty line
         ]);
 
