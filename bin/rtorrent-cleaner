@@ -8,14 +8,14 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 }
 
 use Symfony\Component\Console\Application;
-use RtorrentCleaner\Command\RtorrentListCommand;
 use RtorrentCleaner\Command\RemoveCommand;
+use RtorrentCleaner\Command\ReportCommand;
 
 // init
 $app = new Application('Rtorrent Cleaner', 'v0.1.0');
 
 // add commands
-$app->add(new RtorrentListCommand());
+$app->add(new ReportCommand());
 $app->add(new RemoveCommand());
 
 $app->run();
