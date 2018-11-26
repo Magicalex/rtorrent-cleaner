@@ -85,12 +85,12 @@ class RtorrentListCommand extends Command
         foreach ($notTracked as $file) {
             $size = filesize($file);
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
-            $size = Str::convertFilesSize($size, 2);
+            $size = Str::convertFileSize($size, 2);
             $trunc = Str::truncate($file);
             $output->writeln("file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
         }
 
-        $unnecessaryTotalSize = Str::convertFilesSize($unnecessaryTotalSize, 2);
+        $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
 
         $output->writeln([
             '', // empty line
