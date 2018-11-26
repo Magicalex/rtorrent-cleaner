@@ -4,24 +4,24 @@
     "keywords": ["rtorrent", "rutorrent", "cleaner", "clean", "file", "phar", "console"],
     "type": "library",
     "license": "MIT",
-    "require": {
-        "php": ">=5.6.0",
-        "zendframework/zend-xmlrpc": "2.7.*",
-        "gabrielelana/byte-units": "0.5.*",
-        "symfony/finder": "3.4.*|4.1.*",
-        "symfony/console": "3.4.*|4.1.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "RtorrentCleaner\\": "src"
-        }
-    },
     "authors": [
         {
             "name": "magicalex",
             "email": "magicalex@mondedie.fr"
         }
     ],
+    "require": {
+        "php": ">=7.0.0",
+        "zendframework/zend-xmlrpc": "2.7.*",
+        "gabrielelana/byte-units": "0.5.*",
+        "symfony/finder": "3.4.* || 4.1.*",
+        "symfony/console": "3.4.* || 4.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "RtorrentCleaner\\": "src"
+        }
+    },
     "bin": [
         "bin/rtorrent-cleaner"
     ],

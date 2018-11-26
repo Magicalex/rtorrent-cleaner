@@ -7,7 +7,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 Install the dependencies for debian 9
 ```sh
-apt-get install php php-bcmath php-dom
+apt-get install php php-bcmath php-dom php-xml
 ```
 
 Install composer
