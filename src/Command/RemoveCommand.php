@@ -19,16 +19,16 @@ class RemoveCommand extends Command
             ->setDescription('delete unnecessary files')
             ->setHelp('Command rm for delete unnecessary files in your download folder')
             ->addOption(
-                'url-xmlrcp',
+                'url-xmlrpc',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'set url to your scgi mount point like: http://user:pass@localhost:80/RCP',
-                'http://localhost:80/RCP')
+                'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
+                'http://rtorrent:8080/RPC')
             ->addOption(
                 'home',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'set folder of your home like: /home/user/torrents',
+                'Set folder of your home like: /home/user/torrents',
                 '/data'
             )
             ->addOption(
@@ -50,9 +50,9 @@ class RemoveCommand extends Command
             ''
         ]);
 
-        $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrcp'));
-        $dataRtorrent = $list->listing_from_rtorrent($output);
-        $dataHome = $list->listing_from_home();
+        $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
+        $dataRtorrent = $list->listingFromRtorrent($output);
+        $dataHome = $list->listingFromHome();
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
 
         // remove files not tracked

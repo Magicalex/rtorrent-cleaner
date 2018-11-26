@@ -11,50 +11,50 @@ use Zend\XmlRpc\Client;
 class ListingFile
 {
     protected $home;
-    protected $urlXmlrcp;
+    protected $urlXmlRpc;
 
-    public function __construct(string $home, string $urlXmlrcp)
+    public function __construct(string $home, string $urlXmlRpc)
     {
         $this->home = $home;
-        $this->urlXmlrcp = $urlXmlrcp;
+        $this->urlXmlRpc = $urlXmlRpc;
     }
 
-    public function listing_from_rtorrent(OutputInterface $output)
+    public function listingFromRtorrent(OutputInterface $output)
     {
-        $progress_bar = new ProgressBar($output, 100);
-        $rtorrent = new Client($this->urlXmlrcp);
+        $progressBar = new ProgressBar($output, 100);
+        $rtorrent = new Client($this->urlXmlRpc);
 
-        $hash_torrents = $rtorrent->call('download_list');
-        $current_torrent = 0;
+        $torrentsHash = $rtorrent->call('download_list');
+        $currentTorrent = 0;
 
-        $progress_bar->start(); // init progress bar
-        $total_torrents = count($hash_torrents);
-        $number_unit_torrents = $total_torrents / 100;
-        $number_of_torrents_expected = $number_unit_torrents;
+        $progressBar->start(); // init progress bar
+        $totalTorrents = count($torrentsHash);
+        $numberUnitTorrents = $totalTorrents / 100;
+        $numberOfTorrentsExpected = $numberUnitTorrents;
 
-        foreach ($hash_torrents as $hash) {
+        foreach ($torrentsHash as $hash) {
             $torrent = $rtorrent->call('d.name', [$hash]);
-            $number_of_files = $rtorrent->call('d.size_files', [$hash]);
-            $current_torrent++;
+            $numberOfFiles = $rtorrent->call('d.size_files', [$hash]);
+            $currentTorrent++;
 
-            if ($current_torrent >= $number_of_torrents_expected) {
-                $number_of_torrents_expected = $number_of_torrents_expected + $number_unit_torrents;
-                $progress_bar->advance(1);
+            if ($currentTorrent >= $numberOfTorrentsExpected) {
+                $numberOfTorrentsExpected = $numberOfTorrentsExpected + $numberUnitTorrents;
+                $progressBar->advance(1);
             }
 
-            $torrentInfo[$current_torrent] = [
+            $torrentInfo[$currentTorrent] = [
                 'name'     => $torrent,
-                'nb_files' => $number_of_files
+                'nb_files' => $numberOfFiles
             ];
 
-            for ($f_id = 0; $f_id < $number_of_files; $f_id++) {
+            for ($f_id = 0; $f_id < $numberOfFiles; $f_id++) {
                 $file = $rtorrent->call('f.path', ["{$hash}:f{$f_id}"]);
 
                 // Get realpath
-                if ($number_of_files > 1 || is_dir("{$this->home}/{$torrent}") === true) {
-                    $full_path = "{$this->home}/{$torrent}/{$file}";
-                } elseif ($number_of_files == 1 && is_file("{$this->home}/{$file}") === true) {
-                    $full_path = "{$this->home}/{$file}";
+                if ($numberOfFiles > 1 || is_dir("{$this->home}/{$torrent}") === true) {
+                    $fullPath = "{$this->home}/{$torrent}/{$file}";
+                } elseif ($numberOfFiles == 1 && is_file("{$this->home}/{$file}") === true) {
+                    $fullPath = "{$this->home}/{$file}";
                 }
 
                 // Get file size
@@ -62,17 +62,17 @@ class ListingFile
                 $size = Binary::bytes($size)->format(2);
 
                 // add info in array
-                $torrentInfo[$current_torrent]['files']["f{$f_id}"] = [
+                $torrentInfo[$currentTorrent]['files']["f{$f_id}"] = [
                     'name' => $file,
                     'size' => $size
                 ];
 
                 // add file in rtorrentFile array
-                $torrentFile[] = $full_path;
+                $torrentFile[] = $fullPath;
             }
         }
 
-        $progress_bar->finish();
+        $progressBar->finish();
         $output->writeln([
             ' <fg=green>Completed!</>',
             '' // empty line
@@ -84,7 +84,7 @@ class ListingFile
         ];
     }
 
-    public function listing_from_home()
+    public function listingFromHome()
     {
         $finder = new Finder();
         $finder->in($this->home)->files();

@@ -1,6 +1,6 @@
 {
     "name": "magicalex/rtorrent-cleaner",
-    "description": "Script for clean useless file in rtorrent",
+    "description": "rtorrent cleaner script in php for remove unnecessary file in rtorrent",
     "keywords": ["rtorrent", "rutorrent", "cleaner", "clean", "file", "phar", "console"],
     "type": "library",
     "license": "MIT",

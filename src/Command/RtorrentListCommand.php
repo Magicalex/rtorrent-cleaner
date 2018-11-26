@@ -19,11 +19,11 @@ class RtorrentListCommand extends Command
             ->setDescription('create a report on unnecessary files')
             ->setHelp('create a report on unnecessary files')
             ->addOption(
-                'url-xmlrcp',
+                'url-xmlrpc',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'set url to your scgi mount point like: http://user:pass@localhost:80/RCP',
-                'http://localhost:80/RCP')
+                'set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
+                'http://rtorrent:8080/RPC')
             ->addOption(
                 'home',
                 null,
@@ -42,16 +42,16 @@ class RtorrentListCommand extends Command
             '' // empty line
         ]);
 
-        $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrcp'));
-        $dataRtorrent = $list->listing_from_rtorrent($output);
-        $dataHome = $list->listing_from_home();
+        $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
+        $dataRtorrent = $list->listingFromRtorrent($output);
+        $dataHome = $list->listingFromHome();
 
         // display torrents infos
         foreach ($dataRtorrent['info'] as $key => $value) {
             $nb = $key;
             $name = $value['name'];
-            $nb_files = $value['nb_files'];
-            $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</> (files: <fg=yellow>{$nb_files}</>)");
+            $nbFiles = $value['nb_files'];
+            $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</> (files: <fg=yellow>{$nbFiles}</>)");
 
             if ($output->isVerbose()) {
                 foreach ($value['files'] as $key => $value) {
