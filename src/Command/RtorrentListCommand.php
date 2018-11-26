@@ -2,7 +2,6 @@
 
 namespace RtorrentCleaner\Command;
 
-use ByteUnits\Binary;
 use RtorrentCleaner\Utils\ListingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
@@ -86,12 +85,12 @@ class RtorrentListCommand extends Command
         foreach ($notTracked as $file) {
             $size = filesize($file);
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
-            $size = Binary::bytes($size)->format(2);
+            $size = Str::convertFilesSize($size, 2);
             $trunc = Str::truncate($file);
             $output->writeln("file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
         }
 
-        $unnecessaryTotalSize = Binary::bytes($unnecessaryTotalSize)->format(2);
+        $unnecessaryTotalSize = Str::convertFilesSize($unnecessaryTotalSize, 2);
 
         $output->writeln([
             '', // empty line

@@ -2,7 +2,7 @@
 
 namespace RtorrentCleaner\Utils;
 
-use ByteUnits\Binary;
+use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -59,7 +59,7 @@ class ListingFile
 
                 // Get file size
                 $size = $rtorrent->call('f.size_bytes', ["{$hash}:f{$f_id}"]);
-                $size = Binary::bytes($size)->format(2);
+                $size = Str::convertFileSize($size, 2);
 
                 // add info in array
                 $torrentInfo[$currentTorrent]['files']["f{$f_id}"] = [
