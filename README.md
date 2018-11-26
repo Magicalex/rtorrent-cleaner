@@ -3,11 +3,16 @@
 Script in php for remove unnecessary file in rtorrent.  
 Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner)
 
+## Requirements
+
+- php 7
+- composer
+
 ## Installation
 
 Install the dependencies for debian 9
 ```sh
-apt-get install php php-bcmath php-dom php-xml
+apt-get install php php-dom php-xml
 ```
 
 Install composer
@@ -24,19 +29,24 @@ composer global require magicalex/rtorrent-cleaner
 
 ## Usage
 
-Show help
+Command for displaying help:
 ```sh
-rtorrent-cleaner -h
+rtorrent-cleaner
 ```
 
-Show help for command `report`
+Command for making a report:
 ```sh
-rtorrent-cleaner report -h
+rtorrent-cleaner report --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
 ```
 
-Show help for command `rm`
+Command for remove unnecessary files:
 ```sh
-rtorrent-cleaner rm -h
+rtorrent-cleaner rm --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+```
+
+Command for remove unnecessary files without confirmation (--assume-yes):
+```sh
+rtorrent-cleaner rm --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents --assume-yes
 ```
 
 ## [WIP] Build Phar rtorrent-cleaner.phar
