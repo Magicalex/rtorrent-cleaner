@@ -98,9 +98,9 @@ class ReportCommand extends Command
             '' // empty line
         ]);
 
-        if (($missingFile = count($missingFile)) > 0) {
+        if (($numberMissingFile = count($missingFile)) > 0) {
             $output->writeln([
-                " -> <fg=red>There {$missingFile} file(s) missing from a torrent</>",
+                " -> <fg=red>There {$numberMissingFile} file(s) missing from a torrent</>",
                 '' // empty line
             ]);
 
