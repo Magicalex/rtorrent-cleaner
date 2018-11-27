@@ -61,16 +61,16 @@ class RemoveCommand extends Command
 
             if ($input->getOption('assume-yes') === true) {
                 unlink($file);
-                $output->writeln("file: <fg=red>{$trunc}</> has been removed");
+                $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
                 $helper = $this->getHelper('question');
                 $question = new Question("Are you sure you want to delete the <fg=red>{$trunc}</> file? [y|n] ", 'n');
 
                 if ($helper->ask($input, $output, $question) === 'y') {
                     unlink($file);
-                    $output->writeln("file: <fg=red>{$trunc}</> has been removed.");
+                    $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
                 } else {
-                    $output->writeln('file not deleted.');
+                    $output->writeln(' -> file not deleted');
                 }
             }
         }
@@ -79,7 +79,7 @@ class RemoveCommand extends Command
         $emptyDirectory = $list->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
-            $output->writeln('no empty directory');
+            $output->writeln(' -> no empty directory');
         } else {
             while (count($emptyDirectory) > 0) {
                 $list->removeEmptyDirectory($emptyDirectory, $output);

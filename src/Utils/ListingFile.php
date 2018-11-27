@@ -133,7 +133,7 @@ class ListingFile
         foreach ($emptyDirectory as $dir) {
             rmdir($dir);
             $trunc = Str::truncate($dir);
-            $output->writeln("empty directory: <fg=red>{$trunc}</> has been removed");
+            $output->writeln(" -> empty directory: <fg=red>{$trunc}</> has been removed");
         }
     }
 }

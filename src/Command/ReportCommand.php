@@ -87,7 +87,7 @@ class ReportCommand extends Command
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
             $size = Str::convertFileSize($size, 2);
             $trunc = Str::truncate($file);
-            $output->writeln("file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
+            $output->writeln("unnecessary file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
         }
 
         $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
