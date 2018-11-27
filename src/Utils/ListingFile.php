@@ -33,7 +33,7 @@ class ListingFile
 
         foreach ($torrentsHash as $hash) {
             $torrent = $rtorrent->call('d.name', [$hash]);
-            $basePath = $rtorrent->call('d.base_path', [$hash]);
+            $basePath = $rtorrent->call('d.directory', [$hash]);
             $numberOfFiles = $rtorrent->call('d.size_files', [$hash]);
             $currentTorrent++;
 
@@ -51,11 +51,7 @@ class ListingFile
                 $file = $rtorrent->call('f.path', ["{$hash}:f{$f_id}"]);
 
                 // Get realpath
-                if ($numberOfFiles > 1) {
-                    $fullPath = "{$basePath}/{$file}";
-                } elseif ($numberOfFiles == 1) {
-                    $fullPath = $basePath;
-                }
+                $fullPath = "{$basePath}/{$file}";
 
                 // Get file size
                 $size = $rtorrent->call('f.size_bytes', ["{$hash}:f{$f_id}"]);
