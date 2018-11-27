@@ -29,7 +29,7 @@ class RemoveCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Set folder of your home like: /home/user/torrents',
-                '/data'
+                '/data/torrents'
             )
             ->addOption(
                 'assume-yes',

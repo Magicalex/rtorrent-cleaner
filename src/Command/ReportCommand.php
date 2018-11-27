@@ -28,7 +28,7 @@ class ReportCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'set folder of your home like: /home/user/torrents',
-                '/data'
+                '/data/torrents'
             );
     }
 
