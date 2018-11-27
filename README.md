@@ -15,11 +15,13 @@ Install the dependencies for debian 9
 apt-get install php php-bcmath php-dom
 ```
 
-Install composer
+Install composer for root user
 ```sh
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 chmod +x /usr/local/bin/composer
-echo 'export PATH="$PATH:~/.config/composer/vendor/bin"' >> ~/.bashrc
+mkdir /root/.composer && composer install -d /root/.composer
+echo 'export PATH="$PATH:/root/.composer/vendor/bin"' >> /root/.bashrc
+source /root/.bashrc
 ```
 
 Install rtorrent-cleaner in global
