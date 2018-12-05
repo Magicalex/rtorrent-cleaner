@@ -13,7 +13,7 @@ class Str
         }
     }
 
-    public static function convertFileSize($octets, $round)
+    public static function convertFileSize(int $octets, int $round)
     {
         $unit = ['o', 'ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
 
@@ -22,5 +22,20 @@ class Str
         }
 
         return round($octets, 2).' '.$unit[$i];
+    }
+
+    public static function getPattern($exclude)
+    {
+        // exclude file with pattern
+        $pattern = explode('|', $exclude);
+        $notName = [];
+
+        foreach ($pattern as $value) {
+            if (empty($value) === false) {
+                $notName[] = $value;
+            }
+        }
+
+        return $notName;
     }
 }

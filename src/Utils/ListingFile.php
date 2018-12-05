@@ -80,10 +80,10 @@ class ListingFile
         ];
     }
 
-    public function listingFromHome()
+    public function listingFromHome(array $exclude = [])
     {
         $finder = new Finder();
-        $finder->in($this->home)->files();
+        $finder->in($this->home)->files()->notName($exclude);
 
         foreach ($finder as $file) {
             $fileTorrentHome[] = $file->getRealPath();

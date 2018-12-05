@@ -5,19 +5,20 @@ namespace RtorrentCleaner\Command;
 use RtorrentCleaner\Utils\ListingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class RemoveCommand extends Command
+class moveCommand extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('rm')
+            ->setName('mv')
             ->setDescription('delete unnecessary files')
-            ->setHelp('Command rm for delete unnecessary files in your download folder')
+            ->setHelp('Command mv for move unnecessary files in a specified folder')
             ->addOption(
                 'url-xmlrpc',
                 null,
@@ -35,23 +36,36 @@ class RemoveCommand extends Command
                 null,
                 InputArgument::OPTIONAL,
                 'Exclude files with a pattern ex: --exclude=*.sub|*.str exclude all subfiles')
+            ->addArgument(
+                'folder',
+                null,
+                InputArgument::REQUIRED,
+                'Set folder where to move unnecessary files')
             ->addOption(
                 'assume-yes',
                 null,
                 InputOption::VALUE_NONE,
-                'Delete all the files without confirmation');
+                'move all the files without confirmation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln([
             '============================',
-            '= <fg=red>REMOVE UNNECESSARY FILES</> =',
+            '= <fg=green>MOVE UNNECESSARY FILES</> =',
             '============================',
             '',
-            ' -> <fg=red>Retrieving the list of concerned files.</>',
+            ' -> <fg=green>Retrieving the list of concerned files.</>',
             ''
         ]);
+
+        // check directory
+        if (is_dir($input->getArgument('folder')) === false) {
+            $output->writeln('<fg=red>Please, define a correct directory.</>');
+            exit(1);
+        } else {
+            $folder = realpath($input->getArgument('folder'));
+        }
 
         // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
@@ -61,35 +75,24 @@ class RemoveCommand extends Command
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
 
-        // remove files not tracked
+        // move files not tracked
         foreach ($notTracked as $file) {
             $trunc = Str::truncate($file, 70);
+            $fileName = basename($file);
 
             if ($input->getOption('assume-yes') === true) {
-                unlink($file);
-                $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
+                rename($file, $folder.'/'.$fileName);
+                $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
                 $helper = $this->getHelper('question');
-                $question = new Question("Do you want delete <fg=red>{$trunc}</> ? [y|n] ", 'n');
+                $question = new Question("Do you want move <fg=red>{$trunc}</> ? [y|n] ", 'n');
 
                 if ($helper->ask($input, $output, $question) === 'y') {
-                    unlink($file);
-                    $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
+                    rename($file, $folder.'/'.$fileName);
+                    $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
                 } else {
-                    $output->writeln(' -> file not deleted');
+                    $output->writeln(' -> file not moved');
                 }
-            }
-        }
-
-        // remove empty directory
-        $emptyDirectory = $list->getEmptyDirectory();
-
-        if (count($emptyDirectory) == 0) {
-            $output->writeln(' -> no empty directory');
-        } else {
-            while (count($emptyDirectory) > 0) {
-                $list->removeEmptyDirectory($emptyDirectory, $output);
-                $emptyDirectory = $list->getEmptyDirectory();
             }
         }
     }

@@ -21,15 +21,19 @@ class ReportCommand extends Command
                 'url-xmlrpc',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
+                'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
                 'http://rtorrent:8080/RPC')
             ->addOption(
                 'home',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'set folder of your home like: /home/user/torrents',
-                '/data/torrents'
-            );
+                'Set folder of your home like: /home/user/torrents',
+                '/data/torrents')
+            ->addOption(
+                'exclude',
+                null,
+                InputArgument::OPTIONAL,
+                'Exclude files with a pattern ex: --exclude=*.sub|*.str exclude all subfiles');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -41,9 +45,12 @@ class ReportCommand extends Command
             '' // empty line
         ]);
 
+        // exclude file with pattern
+        $exclude = Str::getPattern($input->getOption('exclude'));
+
         $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
-        $dataHome = $list->listingFromHome();
+        $dataHome = $list->listingFromHome($exclude);
 
         // display torrents infos
         foreach ($dataRtorrent['info'] as $key => $value) {

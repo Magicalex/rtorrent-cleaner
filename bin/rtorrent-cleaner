@@ -12,10 +12,11 @@ use RtorrentCleaner\Command\RemoveCommand;
 use RtorrentCleaner\Command\ReportCommand;
 
 // init
-$app = new Application('Rtorrent Cleaner', '0.1.2');
+$app = new Application('Rtorrent Cleaner', '0.2.0');
 
 // add commands
 $app->add(new ReportCommand());
 $app->add(new RemoveCommand());
+$app->add(new moveCommand());
 
 $app->run();
