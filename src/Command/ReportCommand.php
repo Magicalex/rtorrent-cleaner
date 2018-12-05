@@ -34,7 +34,7 @@ class ReportCommand extends Command
                 'exclude',
                 null,
                 InputArgument::OPTIONAL,
-                'Exclude files with a pattern ex: --exclude=*.sub|*.str exclude all subfiles');
+                'Exclude files with a pattern ex: --exclude=*.sub,*.str exclude all subfiles');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

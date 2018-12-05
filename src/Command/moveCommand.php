@@ -35,7 +35,7 @@ class moveCommand extends Command
                 'exclude',
                 null,
                 InputArgument::OPTIONAL,
-                'Exclude files with a pattern ex: --exclude=*.sub|*.str exclude all subfiles')
+                'Exclude files with a pattern ex: --exclude=*.sub,*.str exclude all subfiles')
             ->addArgument(
                 'folder',
                 null,
@@ -51,9 +51,9 @@ class moveCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln([
-            '============================',
+            '==========================',
             '= <fg=green>MOVE UNNECESSARY FILES</> =',
-            '============================',
+            '==========================',
             '',
             ' -> <fg=green>Retrieving the list of concerned files.</>',
             ''

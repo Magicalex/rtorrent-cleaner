@@ -35,7 +35,7 @@ class RemoveCommand extends Command
                 'exclude',
                 null,
                 InputArgument::OPTIONAL,
-                'Exclude files with a pattern ex: --exclude=*.sub|*.str exclude all subfiles')
+                'Exclude files with a pattern ex: --exclude=*.sub,*.str exclude all subfiles')
             ->addOption(
                 'assume-yes',
                 null,
