@@ -13,8 +13,8 @@
     "require": {
         "php": ">=7.0.0",
         "zendframework/zend-xmlrpc": "2.7.*",
-        "symfony/finder": "3.4.* || 4.1.*",
-        "symfony/console": "3.4.* || 4.1.*"
+        "symfony/finder": "3.4.* || 4.2.*",
+        "symfony/console": "3.4.* || 4.2.*"
     },
     "autoload": {
         "psr-4": {
