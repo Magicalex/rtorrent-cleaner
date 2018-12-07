@@ -56,14 +56,36 @@ Command for remove unnecessary files without confirmation (--assume-yes):
 rtorrent-cleaner rm --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents --assume-yes
 ```
 
+Command for move unnecessary files in a folder (here: /home/user/old) :
+```sh
+rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+```
+
+Command for move unnecessary files in a folder (here: /home/user/old) without confirmation (--assume-yes):
+```sh
+rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents --assume-yes
+```
+
+Option for ignore files (option `--exclude=`) :
+```sh
+rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+```
+This example exclude all files `.sub` and `.srt` in the output
+
+## Improve performance
+
+See nginx.conf ...
+
 ## [WIP] Build Phar rtorrent-cleaner.phar
 
 Does not work yet
 
 ```sh
 composer global require humbug/box
+git clone https://github.com/Magicalex/rtorrent-cleaner.git
+cd rtorrent-cleaner
 composer install
-composer run-script build-phar
+box compile
 ```
 
 ## License

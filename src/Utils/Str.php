@@ -4,7 +4,7 @@ namespace RtorrentCleaner\Utils;
 
 class Str
 {
-    public static function truncate(string $text, int $maxChars = 100, string $separator = '[...]')
+    public static function truncate($text, $maxChars = 100, $separator = '[...]')
     {
         if (($length = strlen($text)) > $maxChars) {
             return substr_replace($text, $separator, $maxChars / 2, $length - $maxChars);
@@ -13,7 +13,7 @@ class Str
         }
     }
 
-    public static function convertFileSize(int $octets, int $round)
+    public static function convertFileSize($octets, $round)
     {
         $unit = ['o', 'ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
 

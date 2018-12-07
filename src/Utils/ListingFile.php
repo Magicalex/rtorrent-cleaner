@@ -12,7 +12,7 @@ class ListingFile
     protected $home;
     protected $urlXmlRpc;
 
-    public function __construct(string $home, string $urlXmlRpc)
+    public function __construct($home, $urlXmlRpc)
     {
         $this->home = $home;
         $this->urlXmlRpc = $urlXmlRpc;
@@ -80,7 +80,7 @@ class ListingFile
         ];
     }
 
-    public function listingFromHome(array $exclude = [])
+    public function listingFromHome($exclude = [])
     {
         $finder = new Finder();
         $finder->in($this->home)->files()->notName($exclude);
