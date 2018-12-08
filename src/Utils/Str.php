@@ -36,6 +36,10 @@ class Str
             }
         }
 
+        if (version_compare(PHP_VERSION, '7.1.3', '<=') === true) {
+            $notName = implode($notName);
+        }
+
         return $notName;
     }
 }
