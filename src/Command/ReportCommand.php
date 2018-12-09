@@ -16,8 +16,8 @@ class ReportCommand extends Command
     {
         $this
             ->setName('report')
-            ->setDescription('create a report on unnecessary files')
-            ->setHelp('create a report on unnecessary files')
+            ->setDescription('Create a report on unnecessary files')
+            ->setHelp('Create a report on unnecessary files')
             ->addOption(
                 'url-xmlrpc',
                 null,

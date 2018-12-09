@@ -17,7 +17,7 @@ class moveCommand extends Command
     {
         $this
             ->setName('mv')
-            ->setDescription('delete unnecessary files')
+            ->setDescription('Move unnecessary files')
             ->setHelp('Command mv for move unnecessary files in a specified folder')
             ->addOption(
                 'url-xmlrpc',
@@ -45,7 +45,7 @@ class moveCommand extends Command
                 'assume-yes',
                 null,
                 InputOption::VALUE_NONE,
-                'move all the files without confirmation');
+                'Move all the files without confirmation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
