@@ -10,10 +10,19 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 ## Requirements
 
-- php 7 with extension php-bcmath and php-dom
-- composer
+- php 5.6 and above with extension php-bcmath and php-dom
 
 ## Installation
+
+### Installation via phar file (recommended)
+
+```sh
+curl -s _url_
+mv rtorrent-cleaner.phar /usr/local/bin/rtorrent-cleaner
+chmod +x /usr/local/bin/rtorrent-cleaner
+```
+
+### Installation via composer
 
 Install the dependencies for debian 9
 ```sh
@@ -74,9 +83,13 @@ This example exclude all files `.sub` and `.srt` in the output
 
 ## Improve performance
 
-See nginx.conf ...
+Add this [nginx.conf](https://github.com/Magicalex/rtorrent-cleaner/blob/master/nginx.conf) in your nginx configuration.
+Adapt your scgi address `scgi_pass 127.0.0.1:5000;`
+Check your nginx configuration and restart nginx.
 
-## [WIP] Build Phar rtorrent-cleaner.phar
+Now, you can use `--url-xmlrpc=http://127.0.0.1:8888` scgi mount point.
+
+## Build Phar rtorrent-cleaner.phar
 
 Does not work yet
 
@@ -95,3 +108,4 @@ rtorrent-cleaner is released under the MIT License.
 ## TODO
 
 - remove torrent without file ? (maybe stop torrent `d.stop` or `d.erase`)
+- add log file support

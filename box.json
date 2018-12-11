@@ -3,13 +3,18 @@
         "KevinGH\\Box\\Compactor\\Json",
         "KevinGH\\Box\\Compactor\\Php"
     ],
-    "directories": ["src"],
     "finder": [
         {
             "in": "vendor",
-            "exclude": ["Tests", "tests"],
+            "exclude": ["Tests", "tests", "Test", "test"],
+            "name": "*.php"
+        },
+        {
+            "in": "src",
             "name": "*.php"
         }
     ],
+    "files": ["vendor/composer/installed.json"],
+    "compression": "GZ",
     "output": "rtorrent-cleaner.phar"
 }
