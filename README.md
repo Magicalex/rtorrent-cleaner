@@ -17,7 +17,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 ### Installation via phar file (recommended)
 
 ```sh
-curl -s _url_
+wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/v0.2.2/rtorrent-cleaner.phar
 mv rtorrent-cleaner.phar /usr/local/bin/rtorrent-cleaner
 chmod +x /usr/local/bin/rtorrent-cleaner
 ```
@@ -90,8 +90,6 @@ Check your nginx configuration and restart nginx.
 Now, you can use `--url-xmlrpc=http://127.0.0.1:8888` scgi mount point.
 
 ## Build Phar rtorrent-cleaner.phar
-
-Does not work yet
 
 ```sh
 composer global require humbug/box
