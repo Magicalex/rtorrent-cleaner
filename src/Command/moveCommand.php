@@ -10,6 +10,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Stopwatch\Stopwatch;
+
 
 class moveCommand extends Command
 {
@@ -50,6 +52,9 @@ class moveCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $time = new Stopwatch();
+        $time->start('move');
+
         $output->writeln([
             '==========================',
             '= <fg=green>MOVE UNNECESSARY FILES</> =',
@@ -69,7 +74,6 @@ class moveCommand extends Command
 
         // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
-
         $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
@@ -95,5 +99,8 @@ class moveCommand extends Command
                 }
             }
         }
+
+        $event = $time->stop('move');
+        $output->writeln("<options=italic> -> time: {$event->getDuration()}, memory: {$event->getMemory()}</>");
     }
 }

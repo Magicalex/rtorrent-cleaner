@@ -20,13 +20,11 @@ class ListingFile
 
     public function listingFromRtorrent(OutputInterface $output)
     {
-        $progressBar = new ProgressBar($output, 100);
         $rtorrent = new Client($this->urlXmlRpc);
-
+        $progressBar = new ProgressBar($output, 100);
         $torrentsHash = $rtorrent->call('download_list');
         $currentTorrent = 0;
-
-        $progressBar->start(); // init progress bar
+        $progressBar->start();
         $totalTorrents = count($torrentsHash);
         $numberUnitTorrents = $totalTorrents / 100;
         $numberOfTorrentsExpected = $numberUnitTorrents;

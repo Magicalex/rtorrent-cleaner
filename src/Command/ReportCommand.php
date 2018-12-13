@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class ReportCommand extends Command
 {
@@ -39,6 +40,9 @@ class ReportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $time = new Stopwatch();
+        $time->start('report');
+
         $output->writeln([
             '========================',
             '= <fg=cyan>LIST OF ALL TORRENTS</> =',
@@ -48,7 +52,6 @@ class ReportCommand extends Command
 
         // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
-
         $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
@@ -80,7 +83,6 @@ class ReportCommand extends Command
 
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
-
         $unnecessaryFile = count($notTracked);
         $unnecessaryTotalSize = 0;
 
@@ -118,5 +120,8 @@ class ReportCommand extends Command
                 $output->writeln("missing file: <fg=red>{$trunc}</>");
             }
         }
+
+        $event = $time->stop('report');
+        $output->writeln(" -> time: {$event->getDuration()}, memory: {$event->getMemory()}");
     }
 }
