@@ -1,4 +1,4 @@
 composer.lock
 vendor
-rtorrent-cleaner.phar
+rtorrent-cleaner-php*.phar
 test.php

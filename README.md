@@ -95,8 +95,8 @@ Now, you can use `--url-xmlrpc=http://127.0.0.1:8888` scgi mount point.
 composer global require humbug/box
 git clone https://github.com/Magicalex/rtorrent-cleaner.git
 cd rtorrent-cleaner
-composer install
-box compile
+composer run-script build-phar-php5
+composer run-script build-phar-php7
 ```
 
 ## License
