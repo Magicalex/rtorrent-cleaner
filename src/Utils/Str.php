@@ -47,14 +47,14 @@ class Str
     {
         $sec = (int) $ms / 1000;
         $min = floor($sec / 60);
-        $sec = $sec - $min * 60;
+        $sec = floor($sec - $min * 60);
 
         return "{$min} min {$sec} sec";
     }
 
     public static function humanMemory($bytes)
     {
-        $mb = $bytes / (1024 * 1024);
+        $mb = round($bytes / (1024 * 1024), 2);
 
         return "{$mb} MB";
     }

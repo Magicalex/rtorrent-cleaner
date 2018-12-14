@@ -12,8 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-
-class moveCommand extends Command
+class MoveCommand extends Command
 {
     protected function configure()
     {
@@ -103,6 +102,6 @@ class moveCommand extends Command
         $event = $time->stop('move');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln("<options=italic> -> time: {$time}, memory: {$mb}</>");
+        $output->writeln(" -> time: {$time}, memory: {$mb}");
     }
 }
