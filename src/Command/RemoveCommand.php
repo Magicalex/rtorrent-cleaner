@@ -98,6 +98,8 @@ class RemoveCommand extends Command
         }
 
         $event = $time->stop('remove');
-        $output->writeln("<options=italic> -> time: {$event->getDuration()}, memory: {$event->getMemory()}</>");
+        $time = Str::humanTime($event->getDuration());
+        $mb = Str::humanMemory($event->getMemory());
+        $output->writeln("<options=italic> -> time: {$time}, memory: {$mb}</>");
     }
 }

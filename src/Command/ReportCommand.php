@@ -122,6 +122,8 @@ class ReportCommand extends Command
         }
 
         $event = $time->stop('report');
-        $output->writeln(" -> time: {$event->getDuration()}, memory: {$event->getMemory()}");
+        $time = Str::humanTime($event->getDuration());
+        $mb = Str::humanMemory($event->getMemory());
+        $output->writeln("<options=italic> -> time: {$time}, memory: {$mb}</>");
     }
 }

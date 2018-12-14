@@ -42,4 +42,20 @@ class Str
 
         return $notName;
     }
+
+    public static function humanTime($ms)
+    {
+        $sec = (int) $ms / 1000;
+        $min = floor($sec / 60);
+        $sec = $sec - $min * 60;
+
+        return "{$min} min {$sec} sec";
+    }
+
+    public static function humanMemory($bytes)
+    {
+        $mb = $bytes / (1024 * 1024);
+
+        return "{$mb} MB";
+    }
 }
