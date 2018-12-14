@@ -32,7 +32,8 @@
             "rm -Rf vendor composer.lock",
             "composer install",
             "box compile",
-            "mv rtorrent-cleaner.phar rtorrent-cleaner-php7.phar"
+            "mv rtorrent-cleaner.phar rtorrent-cleaner-php7.phar",
+            "composer config --unset platform"
         ],
         "build-phar-php5": [
             "composer global require humbug/box",
@@ -40,12 +41,10 @@
             "rm -Rf vendor composer.lock",
             "composer install",
             "box compile",
-            "mv rtorrent-cleaner.phar rtorrent-cleaner-php5.phar"
+            "mv rtorrent-cleaner.phar rtorrent-cleaner-php5.phar",
+            "composer config --unset platform"
         ]
     },
     "config": {
-        "platform": {
-            "php": "5.6.0"
-        }
     }
 }
