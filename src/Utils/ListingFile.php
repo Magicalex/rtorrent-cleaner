@@ -89,7 +89,7 @@ class ListingFile
         $finder->in($this->home)->files()->notName($exclude);
 
         foreach ($finder as $file) {
-            $fileTorrentHome[] = $file->getRealPath();
+            $fileTorrentHome[] = $file->getPathname();
         }
 
         return $fileTorrentHome;
