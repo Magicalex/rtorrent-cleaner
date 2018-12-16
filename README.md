@@ -14,30 +14,30 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 ## Installation
 
+### Install php
+
+Example for debian 9
+```sh
+apt install php7.0-fpm php7.0 php7.0-dom php7.0-bcmath
+```
+
 ### Installation via phar file (recommended)
 
-rtorrent cleaner for php 7
-
+rtorrent cleaner for php 7.1 and above
 ```sh
 wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.2.4/rtorrent-cleaner-php7.phar
-mv rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner
+mv -f rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner
 chmod +x /usr/local/bin/rtorrent-cleaner
 ```
 
-rtorrent cleaner for php 5
-
+rtorrent cleaner for php 5.6 and above
 ```sh
 wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.2.4/rtorrent-cleaner-php5.phar
-mv rtorrent-cleaner-php5.phar /usr/local/bin/rtorrent-cleaner
+mv -f rtorrent-cleaner-php5.phar /usr/local/bin/rtorrent-cleaner
 chmod +x /usr/local/bin/rtorrent-cleaner
 ```
 
 ### Installation via composer
-
-Install the dependencies for debian 9
-```sh
-apt-get install php php-bcmath php-dom
-```
 
 Install composer for root user
 ```sh
@@ -87,9 +87,13 @@ rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost/RPC --home=/ho
 
 Option for ignore files (option `--exclude=`) :
 ```sh
+# php 5.6 and above
+rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+# php 7.1 and above
 rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
 ```
 This example exclude all files `.sub` and `.srt` in the output
+You can add multiple patterns by separating them by `,` only for php 7.1 and above
 
 ## Improve performance
 
@@ -101,6 +105,7 @@ Now, you can use `--url-xmlrpc=http://127.0.0.1:8888` scgi mount point.
 
 ## Build Phar rtorrent-cleaner.phar
 
+To build the archive phar, php7 is required.
 ```sh
 composer global require humbug/box
 git clone https://github.com/Magicalex/rtorrent-cleaner.git
