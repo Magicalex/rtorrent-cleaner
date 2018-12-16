@@ -60,7 +60,6 @@ class ReportCommand extends Command
         foreach ($dataRtorrent['info'] as $key => $value) {
             $nb = $key;
             $name = $value['name'];
-            $nbFiles = $value['nb_files'];
             $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</>");
 
             if ($output->isVerbose()) {
