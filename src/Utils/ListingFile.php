@@ -22,17 +22,25 @@ class ListingFile
     {
         $rtorrent = new Client($this->urlXmlRpc);
         $progressBar = new ProgressBar($output, 100);
-        $torrentsHash = $rtorrent->call('download_list');
-        $currentTorrent = 0;
         $progressBar->start();
-        $totalTorrents = count($torrentsHash);
+
+        $d_param = [
+            '', // view
+            'default', // view name
+            'd.hash=',
+            'd.name=',
+            'd.directory='
+        ];
+        $torrents = $rtorrent->call('d.multicall2', $d_param);
+
+        $currentTorrent = 0;
+        $totalTorrents = count($torrents);
         $numberUnitTorrents = $totalTorrents / 100;
         $numberOfTorrentsExpected = $numberUnitTorrents;
 
-        foreach ($torrentsHash as $hash) {
-            $torrent = $rtorrent->call('d.name', [$hash]);
-            $basePath = $rtorrent->call('d.directory', [$hash]);
-            $numberOfFiles = $rtorrent->call('d.size_files', [$hash]);
+        foreach ($torrents as $torrent) {
+            $name = $torrent[1];
+            $basePath = $torrent[2];
             $currentTorrent++;
 
             if ($currentTorrent >= $numberOfTorrentsExpected) {
@@ -41,27 +49,22 @@ class ListingFile
             }
 
             $torrentInfo[$currentTorrent] = [
-                'name'     => $torrent,
-                'nb_files' => $numberOfFiles
+                'name' => $name
             ];
 
-            for ($f_id = 0; $f_id < $numberOfFiles; $f_id++) {
-                $file = $rtorrent->call('f.path', ["{$hash}:f{$f_id}"]);
+            $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
+            $files = $rtorrent->call('f.multicall', $f_param);
 
-                // Get realpath
-                $fullPath = "{$basePath}/{$file}";
+            foreach ($files as $file) {
+                $filename = $file[0];
+                $size = Str::convertFileSize($file[1], 2);
 
-                // Get file size
-                $size = $rtorrent->call('f.size_bytes', ["{$hash}:f{$f_id}"]);
-                $size = Str::convertFileSize($size, 2);
-
-                // add info in array
                 $torrentInfo[$currentTorrent]['files']["f{$f_id}"] = [
-                    'name' => $file,
+                    'name' => $filename,
                     'size' => $size
                 ];
 
-                // add file in rtorrentFile array
+                $fullPath = "{$basePath}/{$filename}";
                 $torrentFile[] = $fullPath;
             }
         }

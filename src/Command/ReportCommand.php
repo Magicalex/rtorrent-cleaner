@@ -61,7 +61,7 @@ class ReportCommand extends Command
             $nb = $key;
             $name = $value['name'];
             $nbFiles = $value['nb_files'];
-            $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</> (files: <fg=yellow>{$nbFiles}</>)");
+            $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</>");
 
             if ($output->isVerbose()) {
                 foreach ($value['files'] as $key => $value) {
