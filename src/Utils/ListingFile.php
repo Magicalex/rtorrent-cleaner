@@ -54,6 +54,7 @@ class ListingFile
 
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
             $files = $rtorrent->call('f.multicall', $f_param);
+            $f_id = 0;
 
             foreach ($files as $file) {
                 $filename = $file[0];
@@ -66,6 +67,7 @@ class ListingFile
 
                 $fullPath = "{$basePath}/{$filename}";
                 $torrentFile[] = $fullPath;
+                $f_id++;
             }
         }
 
