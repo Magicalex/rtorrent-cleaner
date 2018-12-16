@@ -16,19 +16,19 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 ### Installation via phar file (recommended)
 
-rtorrent cleaner for php 5
-
-```sh
-wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.2.3/rtorrent-cleaner-php5.phar
-mv rtorrent-cleaner-php5.phar /usr/local/bin/rtorrent-cleaner
-chmod +x /usr/local/bin/rtorrent-cleaner
-```
-
 rtorrent cleaner for php 7
 
 ```sh
-wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.2.3/rtorrent-cleaner-php7.phar
+wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.2.4/rtorrent-cleaner-php7.phar
 mv rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner
+chmod +x /usr/local/bin/rtorrent-cleaner
+```
+
+rtorrent cleaner for php 5
+
+```sh
+wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.2.4/rtorrent-cleaner-php5.phar
+mv rtorrent-cleaner-php5.phar /usr/local/bin/rtorrent-cleaner
 chmod +x /usr/local/bin/rtorrent-cleaner
 ```
 
