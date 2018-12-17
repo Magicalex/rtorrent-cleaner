@@ -59,8 +59,9 @@ class ReportCommand extends Command
 
         if ($output->isVerbose()) {
             $output->writeln([
+                '--------------------',
                 '<fg=cyan>LIST OF ALL TORRENTS</>',
-                '====================',
+                '--------------------',
                 ''
             ]);
 
@@ -80,8 +81,9 @@ class ReportCommand extends Command
         }
 
         $output->writeln([
+            '-------------------------------------------',
             '<fg=cyan>LIST OF GAPS BETWEEN RTORRENT AND YOUR HOME</>',
-            '===========================================',
+            '-------------------------------------------',
             ''
         ]);
 
