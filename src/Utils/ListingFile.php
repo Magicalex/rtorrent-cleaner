@@ -21,29 +21,21 @@ class ListingFile
     public function listingFromRtorrent(OutputInterface $output)
     {
         $rtorrent = new Client($this->urlXmlRpc);
-        $progressBar = new ProgressBar($output, 100);
-        $progressBar->start();
 
         // call to rtorrent
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $rtorrent->call('d.multicall2', $d_param);
 
+        // init progress bar
+        $progressBar = new ProgressBar($output, count($torrents));
+        $progressBar->start();
         $currentTorrent = 0;
-        $totalTorrents = count($torrents);
-        $numberUnitTorrents = $totalTorrents / 100;
-        $numberOfTorrentsExpected = $numberUnitTorrents;
 
         foreach ($torrents as $torrent) {
-            $name = $torrent[1];
             $basePath = $torrent[2];
             $currentTorrent++;
-
-            if ($currentTorrent >= $numberOfTorrentsExpected) {
-                $numberOfTorrentsExpected = $numberOfTorrentsExpected + $numberUnitTorrents;
-                $progressBar->advance(1);
-            }
-
-            $torrentInfo[$currentTorrent] = ['name' => $name];
+            $progressBar->advance(1);
+            $torrentInfo[$currentTorrent] = ['name' => $torrent[1]];
 
             // call to rtorrent
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
