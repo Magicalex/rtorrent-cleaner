@@ -121,3 +121,4 @@ rtorrent-cleaner is released under the MIT License.
 
 - remove torrent without file ? (maybe stop torrent `d.stop` or `d.erase`)
 - add log file support
+- interface web

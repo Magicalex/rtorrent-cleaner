@@ -44,25 +44,33 @@ class ReportCommand extends Command
         $time->start('report');
 
         $output->writeln([
-            '========================',
-            '= <fg=cyan>LIST OF ALL TORRENTS</> =',
-            '========================',
-            '' // empty line
+            '==========',
+            '= <fg=cyan>REPORT</> =',
+            '==========',
+            '',
+            ' -> <fg=green>Retrieving the list of files.</>',
+            ''
         ]);
 
-        // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
         $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
 
-        // display torrents infos
-        foreach ($dataRtorrent['info'] as $key => $value) {
-            $nb = $key;
-            $name = $value['name'];
-            $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</>");
+        if ($output->isVerbose()) {
+            $output->writeln([
+                '========================',
+                '= <fg=cyan>LIST OF ALL TORRENTS</> =',
+                '========================',
+                ''
+            ]);
 
-            if ($output->isVerbose()) {
+            // display torrents infos
+            foreach ($dataRtorrent['info'] as $key => $value) {
+                $nb = $key;
+                $name = $value['name'];
+                $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</>");
+
                 foreach ($value['files'] as $key => $value) {
                     $f_id = $key;
                     $file = $value['name'];
@@ -73,22 +81,18 @@ class ReportCommand extends Command
         }
 
         $output->writeln([
-            '', // empty line
+            '',
             '===============================================',
             '= <fg=cyan>LIST OF GAPS BETWEEN RTORRENT AND YOUR HOME</> =',
             '===============================================',
-            '' // empty line
+            ''
         ]);
 
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
         $unnecessaryFile = count($notTracked);
         $unnecessaryTotalSize = 0;
-
-        $output->writeln([
-            " -> <fg=red>There are {$unnecessaryFile} file(s) not tracked by rtorrent</>",
-            '' // empty line
-        ]);
+        $output->writeln([" -> <fg=red>There are {$unnecessaryFile} file(s) not tracked by rtorrent</>", '']);
 
         // display files not tracked by rtorrent
         foreach ($notTracked as $file) {
@@ -100,18 +104,10 @@ class ReportCommand extends Command
         }
 
         $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
-
-        $output->writeln([
-            '', // empty line
-            "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>",
-            '' // empty line
-        ]);
+        $output->writeln(['', "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>"]);
 
         if (($numberMissingFile = count($missingFile)) > 0) {
-            $output->writeln([
-                " -> <fg=red>There {$numberMissingFile} file(s) missing from a torrent</>",
-                '' // empty line
-            ]);
+            $output->writeln(['', " -> <fg=red>There {$numberMissingFile} file(s) missing from a torrent</>", '']);
 
             // display files missing from a torrent
             foreach ($missingFile as $file) {
@@ -123,6 +119,6 @@ class ReportCommand extends Command
         $event = $time->stop('report');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln(" -> time: {$time}, memory: {$mb}");
+        $output->writeln('', "time: {$time}, memory: {$mb}");
     }
 }

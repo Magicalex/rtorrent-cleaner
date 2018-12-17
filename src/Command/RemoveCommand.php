@@ -97,9 +97,13 @@ class RemoveCommand extends Command
             }
         }
 
+        if (count($notTracked) == 0) {
+            $output->writeln(' -> <fg=yellow>no files to remove</>');
+        }
+
         $event = $time->stop('remove');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln(" -> time: {$time}, memory: {$mb}");
+        $output->writeln('', "time: {$time}, memory: {$mb}");
     }
 }

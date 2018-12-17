@@ -24,13 +24,8 @@ class ListingFile
         $progressBar = new ProgressBar($output, 100);
         $progressBar->start();
 
-        $d_param = [
-            '', // view
-            'default', // view name
-            'd.hash=',
-            'd.name=',
-            'd.directory='
-        ];
+        // call to rtorrent
+        $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $rtorrent->call('d.multicall2', $d_param);
 
         $currentTorrent = 0;
@@ -48,10 +43,9 @@ class ListingFile
                 $progressBar->advance(1);
             }
 
-            $torrentInfo[$currentTorrent] = [
-                'name' => $name
-            ];
+            $torrentInfo[$currentTorrent] = ['name' => $name];
 
+            // call to rtorrent
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
             $files = $rtorrent->call('f.multicall', $f_param);
             $f_id = 0;
@@ -72,10 +66,7 @@ class ListingFile
         }
 
         $progressBar->finish();
-        $output->writeln([
-            ' <fg=green>Completed!</>',
-            '' // empty line
-        ]);
+        $output->writeln([' <fg=green>Completed!</>', '']);
 
         return [
             'path' => $torrentFile,
@@ -114,6 +105,7 @@ class ListingFile
         foreach ($finder as $dir) {
             $isEmpty = true;
             $handle = opendir($dir->getRealPath());
+
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != '.' && $entry != '..') {
                     $isEmpty = false;

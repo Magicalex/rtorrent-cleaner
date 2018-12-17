@@ -99,9 +99,13 @@ class MoveCommand extends Command
             }
         }
 
+        if (count($notTracked) == 0) {
+            $output->writeln(' -> <fg=yellow>no files to move</>');
+        }
+
         $event = $time->stop('move');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln(" -> time: {$time}, memory: {$mb}");
+        $output->writeln('', "time: {$time}, memory: {$mb}");
     }
 }
