@@ -89,7 +89,7 @@ class RemoveCommand extends Command
         $emptyDirectory = $list->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
-            $output->writeln(' -> no empty directory');
+            $output->writeln(' -> <fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $list->removeEmptyDirectory($emptyDirectory, $output);
@@ -104,6 +104,6 @@ class RemoveCommand extends Command
         $event = $time->stop('remove');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln('', "time: {$time}, memory: {$mb}");
+        $output->writeln(['', "time: {$time}, memory: {$mb}"]);
     }
 }

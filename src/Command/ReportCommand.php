@@ -103,6 +103,10 @@ class ReportCommand extends Command
             $output->writeln("unnecessary file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
         }
 
+        if ($unnecessaryFile == 0) {
+            $output->writeln(' -> <fg=yellow>no files not tracked by rtorrent</>');
+        }
+
         $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
         $output->writeln(['', "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>"]);
 
@@ -119,6 +123,6 @@ class ReportCommand extends Command
         $event = $time->stop('report');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln('', "time: {$time}, memory: {$mb}");
+        $output->writeln(['', "time: {$time}, memory: {$mb}"]);
     }
 }

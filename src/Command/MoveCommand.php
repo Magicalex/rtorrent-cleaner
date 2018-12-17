@@ -106,6 +106,6 @@ class MoveCommand extends Command
         $event = $time->stop('move');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln('', "time: {$time}, memory: {$mb}");
+        $output->writeln(['', "time: {$time}, memory: {$mb}"]);
     }
 }
