@@ -106,6 +106,7 @@ class MoveCommand extends Command
         $event = $time->stop('move');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln(['', "time: {$time}, memory: {$mb}"]);
+        $torrents = count($dataRtorrent['info']);
+        $output->writeln(['', "time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

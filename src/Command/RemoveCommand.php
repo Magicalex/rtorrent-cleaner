@@ -104,6 +104,7 @@ class RemoveCommand extends Command
         $event = $time->stop('remove');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln(['', "time: {$time}, memory: {$mb}"]);
+        $torrents = count($dataRtorrent['info']);
+        $output->writeln(['', "time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

@@ -59,9 +59,8 @@ class ReportCommand extends Command
 
         if ($output->isVerbose()) {
             $output->writeln([
-                '========================',
-                '= <fg=cyan>LIST OF ALL TORRENTS</> =',
-                '========================',
+                '<fg=cyan>LIST OF ALL TORRENTS</>',
+                '====================',
                 ''
             ]);
 
@@ -81,9 +80,8 @@ class ReportCommand extends Command
         }
 
         $output->writeln([
-            '===============================================',
-            '= <fg=cyan>LIST OF GAPS BETWEEN RTORRENT AND YOUR HOME</> =',
-            '===============================================',
+            '<fg=cyan>LIST OF GAPS BETWEEN RTORRENT AND YOUR HOME</>',
+            '===========================================',
             ''
         ]);
 
@@ -122,6 +120,7 @@ class ReportCommand extends Command
         $event = $time->stop('report');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $output->writeln(['', "time: {$time}, memory: {$mb}"]);
+        $torrents = count($dataRtorrent['info']);
+        $output->writeln(['', "time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }
