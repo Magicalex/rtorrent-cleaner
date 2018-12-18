@@ -73,7 +73,7 @@ class MoveCommand extends Command
 
         // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
+        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);

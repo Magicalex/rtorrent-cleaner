@@ -53,7 +53,7 @@ class ReportCommand extends Command
         ]);
 
         $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('home'), $input->getOption('url-xmlrpc'));
+        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
 
