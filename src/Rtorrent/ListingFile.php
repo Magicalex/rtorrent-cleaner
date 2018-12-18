@@ -26,7 +26,7 @@ class ListingFile extends Connect
             $basePath = $torrent[2];
             $currentTorrent++;
             $progressBar->advance(1);
-            $torrentInfo[$currentTorrent] = ['name' => $torrent[1]];
+            $torrentInfo[$currentTorrent] = ['name' => $torrent[1], 'hash' => $torrent[0]];
 
             // call to rtorrent
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];

@@ -86,6 +86,10 @@ class RemoveCommand extends Command
             }
         }
 
+        if (count($notTracked) == 0) {
+            $output->writeln(' -> <fg=yellow>no files to remove</>');
+        }
+
         // remove empty directory
         $directory = new Directory($input->getOption('home'));
         $emptyDirectory = $directory->getEmptyDirectory();
@@ -102,10 +106,6 @@ class RemoveCommand extends Command
 
                 $emptyDirectory = $directory->getEmptyDirectory();
             }
-        }
-
-        if (count($notTracked) == 0) {
-            $output->writeln(' -> <fg=yellow>no files to remove</>');
         }
 
         $event = $time->stop('remove');

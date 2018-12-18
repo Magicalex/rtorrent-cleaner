@@ -39,7 +39,17 @@ class MissingFileCommand extends Command
         $time = new Stopwatch();
         $time->start('missingFile');
 
-        // do something
+        $list = new MissingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
+        $dataRtorrent = $list->listingFromRtorrent($output);
+        $dataHome = $list->listingFromHome();
+        $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
+
+        // construct
+        foreach ($missingFile as $file) {
+            $torrentMissingFile['hash'] = $list->findTorrentHash($dataRtorrent, $file);
+            $torrentMissingFile['hash']['file'] = $file;
+        }
+        var_dump($torrentMissingFile);
 
         $event = $time->stop('missingFile');
         $time = Str::humanTime($event->getDuration());
