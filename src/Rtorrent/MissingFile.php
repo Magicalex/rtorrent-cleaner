@@ -5,7 +5,7 @@ namespace RtorrentCleaner\Rtorrent;
 class MissingFile extends ListingFile
 {
 
-    protected function findTorrentHash($dataRtorrent, $missingFile)
+    public function findTorrentHash($dataRtorrent, $missingFile)
     {
         $id = 0;
 

@@ -54,7 +54,7 @@ class ListingFile extends Connect
         ];
     }
 
-    public function listingFromHome($exclude = [])
+    public function listingFromHome($exclude = '')
     {
         $finder = new Finder();
         $finder->in($this->home)->files()->notName($exclude);
