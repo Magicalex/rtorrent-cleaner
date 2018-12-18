@@ -2,6 +2,7 @@
 
 namespace RtorrentCleaner\Rtorrent;
 
+use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
