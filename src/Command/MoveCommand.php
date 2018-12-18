@@ -2,7 +2,7 @@
 
 namespace RtorrentCleaner\Command;
 
-use RtorrentCleaner\Utils\ListingFile;
+use RtorrentCleaner\Rtorrent\ListingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

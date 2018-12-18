@@ -1,26 +1,16 @@
 <?php
 
-namespace RtorrentCleaner\Utils;
+namespace RtorrentCleaner\Rtorrent;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Zend\XmlRpc\Client;
 
-class ListingFile
+class ListingFile extends Connect
 {
-    protected $home;
-    protected $urlXmlRpc;
-
-    public function __construct($home, $urlXmlRpc)
-    {
-        $this->home = $home;
-        $this->urlXmlRpc = $urlXmlRpc;
-    }
-
     public function listingFromRtorrent(OutputInterface $output)
     {
-        $rtorrent = new Client($this->urlXmlRpc);
+        $rtorrent = $this->rtorrent();
 
         // call to rtorrent
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
@@ -43,15 +33,12 @@ class ListingFile
             $f_id = 0;
 
             foreach ($files as $file) {
-                $filename = $file[0];
+                $fullPath = "{$basePath}/{$file[0]}";
                 $size = Str::convertFileSize($file[1], 2);
-
                 $torrentInfo[$currentTorrent]['files']["f{$f_id}"] = [
-                    'name' => $filename,
+                    'name' => $fullPath,
                     'size' => $size
                 ];
-
-                $fullPath = "{$basePath}/{$filename}";
                 $torrentFile[] = $fullPath;
                 $f_id++;
             }
@@ -86,41 +73,5 @@ class ListingFile
     public function getFilesMissingFromTorrent($rtorrent, $home)
     {
         return array_diff($rtorrent, $home);
-    }
-
-    public function getEmptyDirectory()
-    {
-        $emptyDirectory = [];
-        $finder = new Finder();
-        $finder->in($this->home)->directories();
-
-        foreach ($finder as $dir) {
-            $isEmpty = true;
-            $handle = opendir($dir->getRealPath());
-
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != '.' && $entry != '..') {
-                    $isEmpty = false;
-                    break;
-                }
-            }
-
-            closedir($handle);
-
-            if ($isEmpty === true) {
-                $emptyDirectory[] = $dir->getRealPath();
-            }
-        }
-
-        return $emptyDirectory;
-    }
-
-    public function removeEmptyDirectory($emptyDirectory, OutputInterface $output)
-    {
-        foreach ($emptyDirectory as $dir) {
-            rmdir($dir);
-            $trunc = Str::truncate($dir);
-            $output->writeln(" -> empty directory: <fg=red>{$trunc}</> has been removed");
-        }
     }
 }

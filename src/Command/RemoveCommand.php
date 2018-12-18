@@ -2,7 +2,8 @@
 
 namespace RtorrentCleaner\Command;
 
-use RtorrentCleaner\Utils\ListingFile;
+use RtorrentCleaner\Rtorrent\ListingFile;
+use RtorrentCleaner\Utils\Directory;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -86,14 +87,20 @@ class RemoveCommand extends Command
         }
 
         // remove empty directory
-        $emptyDirectory = $list->getEmptyDirectory();
+        $directory = new Directory($input->getOption('home'));
+        $emptyDirectory = $directory->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
             $output->writeln(' -> <fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
-                $list->removeEmptyDirectory($emptyDirectory, $output);
-                $emptyDirectory = $list->getEmptyDirectory();
+                $removedDirectory = $directory->removeDirectory($emptyDirectory);
+
+                foreach ($removedDirectory as $folder) {
+                    $output->writeln(" -> empty directory: <fg=red>{$folder}</> has been removed");
+                }
+
+                $emptyDirectory = $directory->getEmptyDirectory();
             }
         }
 
