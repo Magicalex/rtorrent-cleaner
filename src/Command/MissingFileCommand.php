@@ -44,12 +44,35 @@ class MissingFileCommand extends Command
         $dataHome = $list->listingFromHome();
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
 
-        // construct
+        $torrentMissingFile = [];
+        $findHash = false;
+
         foreach ($missingFile as $file) {
-            $torrentMissingFile['hash'] = $list->findTorrentHash($dataRtorrent, $file);
-            $torrentMissingFile['hash']['file'] = $file;
+            $hash = $list->findTorrentHash($dataRtorrent['info'], $file);
+
+            // check if $hash has been already add
+            foreach ($torrentMissingFile as $id => $data) {
+                if ($data['hash'] == $hash) {
+                    $torrentMissingFile[$id]['files'][] = $file;
+                    $findHash = true;
+                    break;
+                }
+            }
+
+            if ($findHash === false) {
+                $torrentMissingFile[] = [
+                    'hash' => $hash,
+                    'files' => [$file]
+                ];
+            }
+
+            $findHash = false;
         }
         var_dump($torrentMissingFile);
+
+        // 3 - afficher que le nom du torrent
+        //  -> Des fichiers manquent dans ce torrent (montrer la liste)
+        // 4 - Proposer une suppression du torrent OU de redownload le torrent OU ne rien faire
 
         $event = $time->stop('missingFile');
         $time = Str::humanTime($event->getDuration());
