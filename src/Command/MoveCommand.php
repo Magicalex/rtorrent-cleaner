@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class MoveCommand extends Command
@@ -88,12 +88,18 @@ class MoveCommand extends Command
                 rename($file, $folder.'/'.$fileName);
                 $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
-                $question = new Question("Do you want move <fg=red>{$trunc}</> ? [y|n] ", 'n');
+                $question = new ChoiceQuestion(
+                    "Do you want move <fg=red>{$trunc}</> ? (defaults: n)",
+                    ['y', 'n'], 1
+                );
 
-                if ($helper->ask($input, $output, $question) === 'y') {
+                $question->setErrorMessage('Option %s is invalid.');
+                $answer = $helper->ask($input, $output, $question);
+
+                if ($answer == 'y') {
                     rename($file, $folder.'/'.$fileName);
                     $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
-                } else {
+                } elseif ($answer == 'n') {
                     $output->writeln(' -> file not moved');
                 }
             }

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class RemoveCommand extends Command
@@ -65,6 +65,7 @@ class RemoveCommand extends Command
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $helper = $this->getHelper('question');
 
         // remove files not tracked
         foreach ($notTracked as $file) {
@@ -74,13 +75,18 @@ class RemoveCommand extends Command
                 unlink($file);
                 $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
-                $helper = $this->getHelper('question');
-                $question = new Question("Do you want delete <fg=red>{$trunc}</> ? [y|n] ", 'n');
+                $question = new ChoiceQuestion(
+                    "Do you want delete <fg=red>{$trunc}</> ? (defaults: n)",
+                    ['y', 'n'], 1
+                );
 
-                if ($helper->ask($input, $output, $question) === 'y') {
+                $question->setErrorMessage('Option %s is invalid.');
+                $answer = $helper->ask($input, $output, $question);
+
+                if ($answer == 'y') {
                     unlink($file);
                     $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
-                } else {
+                } elseif ($answer == 'n') {
                     $output->writeln(' -> file not deleted');
                 }
             }

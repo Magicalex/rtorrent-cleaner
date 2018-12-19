@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class MissingFileCommand extends Command
@@ -41,7 +41,7 @@ class MissingFileCommand extends Command
 
         $output->writeln([
             '========================',
-            '= <fg=blue>MANAGE MISSING FILES</> =',
+            '= <fg=cyan>MANAGE MISSING FILES</> =',
             '========================',
             '',
             ' -> <fg=green>Retrieving the list of concerned files.</>',
@@ -84,17 +84,25 @@ class MissingFileCommand extends Command
             }
 
             foreach ($torrentMissingFile as $info) {
-                $question = new Question("What do you want to do for the torrent <fg=yellow>{$info['name']}</> ? [delete|redownload|nothing] ", 'nothing');
+                $question = new ChoiceQuestion(
+                    "What do you want to do for the torrent <fg=yellow>{$info['name']}</> ? (defaults: nothing)",
+                    ['delete', 'redownload', 'nothing'], 2
+                );
+
+                $question->setErrorMessage('Option %s is invalid.');
+                $answer = $helper->ask($input, $output, $question);
 
                 foreach ($info['files'] as $file) {
                     $file = Str::truncate($file);
-                    $output->writeln(" -> file: <fg=blue>{$file}</> ");
+                    $output->writeln(" -> missing file: <fg=cyan>{$file}</> ");
                 }
 
-                if ($helper->ask($input, $output, $question) === 'delete') {
+                if ($answer == 'delete') {
                     $output->writeln(" -> torrent: <fg=red>{$info['name']}</> has been removed");
-                } elseif ($helper->ask($input, $output, $question) === 'redownload') {
+                } elseif ($answer == 'redownload') {
                     $output->writeln(" -> torrent: <fg=red>{$info['name']}</> redownload");
+                } elseif ($answer == 'nothing') {
+                    $output->writeln(" -> torrent: nothing");
                 }
             }
         }
