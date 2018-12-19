@@ -17,7 +17,7 @@ class MissingFileCommand extends Command
     {
         $this
             ->setName('torrents')
-            ->setDescription('Management of missing files')
+            ->setDescription('Managing torrents with missing files')
             ->setHelp('Command torrents for delete torrents or redownload the missing files')
             ->addOption(
                 'url-xmlrpc',
@@ -68,11 +68,13 @@ class MissingFileCommand extends Command
             foreach ($torrentMissingFile as $torrent) {
                 $output->writeln("Torrent: <fg=cyan>{$torrent['name']}</> ");
 
-                foreach ($torrent['file'] as $file) {
+                foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
                     $output->writeln(" -> missing file: <fg=cyan>{$file}</>");
                 }
             }
+
+            echo PHP_EOL;
 
             foreach ($torrentMissingFile as $torrent) {
                 $question = new ChoiceQuestion(
