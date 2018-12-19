@@ -56,7 +56,7 @@ class MoveCommand extends Command
 
         $output->writeln([
             '==========================',
-            '= <fg=green>MOVE UNNECESSARY FILES</> =',
+            '= <fg=blue>MOVE UNNECESSARY FILES</> =',
             '==========================',
             '',
             ' -> <fg=green>Retrieving the list of concerned files.</>',
@@ -77,6 +77,7 @@ class MoveCommand extends Command
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $helper = $this->getHelper('question');
 
         // move files not tracked
         foreach ($notTracked as $file) {
@@ -87,7 +88,6 @@ class MoveCommand extends Command
                 rename($file, $folder.'/'.$fileName);
                 $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
-                $helper = $this->getHelper('question');
                 $question = new Question("Do you want move <fg=red>{$trunc}</> ? [y|n] ", 'n');
 
                 if ($helper->ask($input, $output, $question) === 'y') {

@@ -39,40 +39,65 @@ class MissingFileCommand extends Command
         $time = new Stopwatch();
         $time->start('missingFile');
 
+        $output->writeln([
+            '========================',
+            '= <fg=blue>MANAGE MISSING FILES</> =',
+            '========================',
+            '',
+            ' -> <fg=green>Retrieving the list of concerned files.</>',
+            ''
+        ]);
+
         $list = new MissingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome();
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
+        $helper = $this->getHelper('question');
 
-        $torrentMissingFile = [];
-        $findHash = false;
+        if (count($missingFile) == 0) {
+            $output->writeln(' -> <fg=yellow>no missing files</>');
+        } else {
+            $torrentMissingFile = [];
+            $findHash = false;
 
-        foreach ($missingFile as $file) {
-            $hash = $list->findTorrentHash($dataRtorrent['info'], $file);
+            foreach ($missingFile as $file) {
+                $torrent = $list->findTorrentHash($dataRtorrent['info'], $file);
 
-            // check if $hash has been already add
-            foreach ($torrentMissingFile as $id => $data) {
-                if ($data['hash'] == $hash) {
-                    $torrentMissingFile[$id]['files'][] = $file;
-                    $findHash = true;
-                    break;
+                // check if $hash has been already add
+                foreach ($torrentMissingFile as $id => $info) {
+                    if ($info['hash'] == $torrent['hash']) {
+                        $torrentMissingFile[$id]['files'][] = $file;
+                        $findHash = true;
+                        break;
+                    }
+                }
+
+                if ($findHash === false) {
+                    $torrentMissingFile[] = [
+                        'hash' => $torrent['hash'],
+                        'name' => $torrent['name'],
+                        'files' => [$file]
+                    ];
+                }
+
+                $findHash = false;
+            }
+
+            foreach ($torrentMissingFile as $info) {
+                $question = new Question("What do you want to do for the torrent <fg=yellow>{$info['name']}</> ? [delete|redownload|nothing] ", 'nothing');
+
+                foreach ($info['files'] as $file) {
+                    $file = Str::truncate($file);
+                    $output->writeln(" -> file: <fg=blue>{$file}</> ");
+                }
+
+                if ($helper->ask($input, $output, $question) === 'delete') {
+                    $output->writeln(" -> torrent: <fg=red>{$info['name']}</> has been removed");
+                } elseif ($helper->ask($input, $output, $question) === 'redownload') {
+                    $output->writeln(" -> torrent: <fg=red>{$info['name']}</> redownload");
                 }
             }
-
-            if ($findHash === false) {
-                $torrentMissingFile[] = [
-                    'hash' => $hash,
-                    'files' => [$file]
-                ];
-            }
-
-            $findHash = false;
         }
-        var_dump($torrentMissingFile);
-
-        // 3 - afficher que le nom du torrent
-        //  -> Des fichiers manquent dans ce torrent (montrer la liste)
-        // 4 - Proposer une suppression du torrent OU de redownload le torrent OU ne rien faire
 
         $event = $time->stop('missingFile');
         $time = Str::humanTime($event->getDuration());
