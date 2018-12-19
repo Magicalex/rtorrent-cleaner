@@ -66,7 +66,7 @@ class MissingFileCommand extends Command
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
             foreach ($torrentMissingFile as $torrent) {
-                $output->writeln("Torrent: <fg=cyan>{$torrent['name']}</> ");
+                $output->writeln("Torrent: <fg=yellow>{$torrent['name']}</>");
 
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
@@ -89,12 +89,12 @@ class MissingFileCommand extends Command
                     $result = $list->deleteTorrent($torrent['hash']);
 
                     if ($result === true) {
-                        $output->writeln(" -> torrent: <fg=red>{$torrent['name']}</> has been removed");
+                        $output->writeln("-> torrent: <fg=red>{$torrent['name']}</> has been removed");
                     }
                 } elseif ($answer == 'redownload') {
-                    $output->writeln(" -> torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
+                    $output->writeln("-> torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
                 } elseif ($answer == 'nothing') {
-                    $output->writeln(' -> ignored torrent');
+                    $output->writeln('-> <fg=yellow>torrent ignored');
                 }
             }
         }

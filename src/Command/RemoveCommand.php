@@ -59,7 +59,6 @@ class RemoveCommand extends Command
             ''
         ]);
 
-        // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
         $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
         $dataRtorrent = $list->listingFromRtorrent($output);
@@ -67,7 +66,6 @@ class RemoveCommand extends Command
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $helper = $this->getHelper('question');
 
-        // remove files not tracked
         foreach ($notTracked as $file) {
             $trunc = Str::truncate($file, 70);
 
@@ -85,9 +83,9 @@ class RemoveCommand extends Command
 
                 if ($answer == 'yes') {
                     unlink($file);
-                    $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
+                    $output->writeln("-> file: <fg=red>{$trunc}</> has been removed");
                 } elseif ($answer == 'no') {
-                    $output->writeln(' -> file not deleted');
+                    $output->writeln('-> <fg=yellow>file not deleted</>');
                 }
             }
         }
@@ -101,13 +99,13 @@ class RemoveCommand extends Command
         $emptyDirectory = $directory->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
-            $output->writeln(' -> <fg=yellow>no empty directory</>');
+            $output->writeln('-> <fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $directory->removeDirectory($emptyDirectory);
 
                 foreach ($removedDirectory as $folder) {
-                    $output->writeln(" -> empty directory: <fg=red>{$folder}</> has been removed");
+                    $output->writeln("-> empty directory: <fg=red>{$folder}</> has been removed");
                 }
 
                 $emptyDirectory = $directory->getEmptyDirectory();

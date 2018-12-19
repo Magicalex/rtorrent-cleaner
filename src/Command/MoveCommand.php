@@ -98,9 +98,9 @@ class MoveCommand extends Command
 
                 if ($answer == 'yes') {
                     rename($file, $folder.'/'.$fileName);
-                    $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
+                    $output->writeln("-> file: <fg=red>{$trunc}</> has been moved");
                 } elseif ($answer == 'no') {
-                    $output->writeln(' -> file not moved');
+                    $output->writeln('-> file not moved');
                 }
             }
         }
