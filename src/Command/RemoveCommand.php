@@ -76,17 +76,17 @@ class RemoveCommand extends Command
                 $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
                 $question = new ChoiceQuestion(
-                    "Do you want delete <fg=red>{$trunc}</> ? (defaults: n)",
-                    ['y', 'n'], 1
+                    "Do you want delete <fg=red>{$trunc}</> ? (defaults: no)",
+                    ['yes', 'no'], 1
                 );
 
                 $question->setErrorMessage('Option %s is invalid.');
                 $answer = $helper->ask($input, $output, $question);
 
-                if ($answer == 'y') {
+                if ($answer == 'yes') {
                     unlink($file);
                     $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
-                } elseif ($answer == 'n') {
+                } elseif ($answer == 'no') {
                     $output->writeln(' -> file not deleted');
                 }
             }

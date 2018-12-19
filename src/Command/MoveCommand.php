@@ -56,7 +56,7 @@ class MoveCommand extends Command
 
         $output->writeln([
             '==========================',
-            '= <fg=blue>MOVE UNNECESSARY FILES</> =',
+            '= <fg=cyan>MOVE UNNECESSARY FILES</> =',
             '==========================',
             '',
             ' -> <fg=green>Retrieving the list of concerned files.</>',
@@ -89,17 +89,17 @@ class MoveCommand extends Command
                 $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
                 $question = new ChoiceQuestion(
-                    "Do you want move <fg=red>{$trunc}</> ? (defaults: n)",
-                    ['y', 'n'], 1
+                    "Do you want move <fg=yellow>{$trunc}</> ? (defaults: no)",
+                    ['yes', 'no'], 1
                 );
 
                 $question->setErrorMessage('Option %s is invalid.');
                 $answer = $helper->ask($input, $output, $question);
 
-                if ($answer == 'y') {
+                if ($answer == 'yes') {
                     rename($file, $folder.'/'.$fileName);
                     $output->writeln(" -> file: <fg=red>{$trunc}</> has been moved");
-                } elseif ($answer == 'n') {
+                } elseif ($answer == 'no') {
                     $output->writeln(' -> file not moved');
                 }
             }

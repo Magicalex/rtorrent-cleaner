@@ -5,7 +5,6 @@ namespace RtorrentCleaner\Command;
 use RtorrentCleaner\Rtorrent\MissingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,9 +16,9 @@ class MissingFileCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('torrent')
+            ->setName('torrents')
             ->setDescription('Management of missing files')
-            ->setHelp('Command torrent for delete torrents or redownload the missing files')
+            ->setHelp('Command torrents for delete torrents or redownload the missing files')
             ->addOption(
                 'url-xmlrpc',
                 null,
@@ -57,52 +56,43 @@ class MissingFileCommand extends Command
         if (count($missingFile) == 0) {
             $output->writeln(' -> <fg=yellow>no missing files</>');
         } else {
-            $torrentMissingFile = [];
-            $findHash = false;
+            $output->writeln([
+                '-----------------------------------',
+                '<fg=cyan>List of torrents with missing files</>',
+                '-----------------------------------',
+                ''
+            ]);
 
-            foreach ($missingFile as $file) {
-                $torrent = $list->findTorrentHash($dataRtorrent['info'], $file);
+            $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
-                // check if $hash has been already add
-                foreach ($torrentMissingFile as $id => $info) {
-                    if ($info['hash'] == $torrent['hash']) {
-                        $torrentMissingFile[$id]['files'][] = $file;
-                        $findHash = true;
-                        break;
-                    }
+            foreach ($torrentMissingFile as $torrent) {
+                $output->writeln("Torrent: <fg=cyan>{$torrent['name']}</> ");
+
+                foreach ($torrent['file'] as $file) {
+                    $file = Str::truncate($file);
+                    $output->writeln(" -> missing file: <fg=cyan>{$file}</>");
                 }
-
-                if ($findHash === false) {
-                    $torrentMissingFile[] = [
-                        'hash' => $torrent['hash'],
-                        'name' => $torrent['name'],
-                        'files' => [$file]
-                    ];
-                }
-
-                $findHash = false;
             }
 
-            foreach ($torrentMissingFile as $info) {
+            foreach ($torrentMissingFile as $torrent) {
                 $question = new ChoiceQuestion(
-                    "What do you want to do for the torrent <fg=yellow>{$info['name']}</> ? (defaults: nothing)",
+                    "What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)",
                     ['delete', 'redownload', 'nothing'], 2
                 );
 
                 $question->setErrorMessage('Option %s is invalid.');
                 $answer = $helper->ask($input, $output, $question);
 
-                foreach ($info['files'] as $file) {
-                    $file = Str::truncate($file);
-                    $output->writeln(" -> missing file: <fg=cyan>{$file}</> ");
-                }
-
                 if ($answer == 'delete') {
-                    $output->writeln(" -> torrent: <fg=red>{$info['name']}</> has been removed");
+                    $result = $list->deleteTorrent($torrent['hash']);
+
+                    if ($result === true) {
+                        $output->writeln(" -> torrent: <fg=red>{$torrent['name']}</> has been removed");
+                    }
                 } elseif ($answer == 'redownload') {
-                    $output->writeln(" -> torrent: <fg=red>{$info['name']}</> redownload");
+                    $output->writeln(" -> torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
                 } elseif ($answer == 'nothing') {
-                    $output->writeln(" -> torrent: nothing");
+                    $output->writeln(' -> ignored torrent');
                 }
             }
         }

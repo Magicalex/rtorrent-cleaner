@@ -91,7 +91,7 @@ class ReportCommand extends Command
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
         $unnecessaryFile = count($notTracked);
         $unnecessaryTotalSize = 0;
-        $output->writeln([" -> <fg=red>There are {$unnecessaryFile} file(s) not tracked by rtorrent</>", '']);
+        $output->writeln([" -> <fg=red>There are {$unnecessaryFile} file(s) not tracked by rtorrent.</> (Use rm command for remove unnecessary file)",'']);
 
         // display files not tracked by rtorrent
         foreach ($notTracked as $file) {
@@ -110,7 +110,7 @@ class ReportCommand extends Command
         $output->writeln(['', "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>"]);
 
         if (($numberMissingFile = count($missingFile)) > 0) {
-            $output->writeln(['', " -> <fg=red>There {$numberMissingFile} file(s) missing from a torrent</>", '']);
+            $output->writeln(['', " -> <fg=red>There are {$numberMissingFile} file(s) missing from a torrent.</> (Use torrents command for manage torrent with missing file)", '']);
 
             // display files missing from a torrent
             foreach ($missingFile as $file) {
