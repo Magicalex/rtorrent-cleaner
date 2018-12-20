@@ -2,8 +2,6 @@
 
 namespace RtorrentCleaner\Rtorrent;
 
-use Zend\XmlRpc\Client;
-
 class Connect
 {
     protected $home;
@@ -17,12 +15,14 @@ class Connect
 
     protected function rtorrent()
     {
-        return $rtorrent = new fXmlRpc\Client(
+        return $rtorrent = new \fXmlRpc\Client(
             $this->urlXmlRpc,
-            new fXmlRpc\Transport\HttpAdapterTransport(
-                new Http\Message\MessageFactory\DiactorosMessageFactory(),
-                new Http\Adapter\Guzzle6\Client(new GuzzleHttp\Client())
-            )
+            new \fXmlRpc\Transport\HttpAdapterTransport(
+                new \Http\Message\MessageFactory\DiactorosMessageFactory(),
+                new \Http\Adapter\Guzzle6\Client(new \GuzzleHttp\Client())
+            ),
+            new \fXmlRpc\Parser\NativeParser(),
+            new \fXmlRpc\Serializer\NativeSerializer()
         );
     }
 }

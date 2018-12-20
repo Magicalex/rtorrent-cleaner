@@ -10,7 +10,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 ## Requirements
 
-- php 5.6 and above with extension php-bcmath and php-dom
+- php 5.6 and above with extension xmlrpc xmlreader
 
 ## Installation
 
@@ -18,7 +18,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 Example for debian 9
 ```sh
-apt install php7.0-fpm php7.0 php7.0-xml php7.0-bcmath
+apt install php7.0-fpm php7.0 php7.0-xml
 ```
 
 ### Installation via phar file (recommended)
