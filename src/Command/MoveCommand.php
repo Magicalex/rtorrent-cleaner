@@ -55,10 +55,10 @@ class MoveCommand extends Command
 
         $output->writeln([
             '==========================',
-            '= <fg=cyan>MOVE UNNECESSARY FILES</> =',
+            '= <fg=yellow>MOVE UNNECESSARY FILES</> =',
             '==========================',
             '',
-            ' -> <fg=green>Retrieving the list of concerned files.</>',
+            ' -> Retrieving the list of concerned files.',
             ''
         ]);
 

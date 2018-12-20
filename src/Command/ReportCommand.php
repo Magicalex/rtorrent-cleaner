@@ -44,10 +44,10 @@ class ReportCommand extends Command
 
         $output->writeln([
             '==========',
-            '= <fg=cyan>REPORT</> =',
+            '= <fg=yellow>REPORT</> =',
             '==========',
             '',
-            ' -> <fg=green>Retrieving the list of files.</>',
+            ' -> Retrieving the list of files.',
             ''
         ]);
 

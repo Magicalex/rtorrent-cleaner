@@ -43,7 +43,7 @@ class TorrentsCommand extends Command
             '= <fg=cyan>MANAGE MISSING FILES</> =',
             '========================',
             '',
-            ' -> <fg=green>Retrieving the list of concerned files.</>',
+            ' -> Retrieving the list of concerned files.',
             ''
         ]);
 
