@@ -43,7 +43,7 @@ class TorrentsCommand extends Command
             '= <fg=yellow>MANAGE MISSING FILES</> =',
             '========================',
             '',
-            ' -> Retrieving the list of concerned files.',
+            ' -> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
@@ -66,7 +66,7 @@ class TorrentsCommand extends Command
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
             foreach ($torrentMissingFile as $torrent) {
-                $output->writeln("Torrent: <fg=yellow>{$torrent['name']}</>");
+                $output->writeln("torrent: <fg=yellow>{$torrent['name']}</>");
 
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);

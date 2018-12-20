@@ -47,7 +47,7 @@ class ReportCommand extends Command
             '= <fg=yellow>REPORT</> =',
             '==========',
             '',
-            ' -> Retrieving the list of files.',
+            ' -> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 

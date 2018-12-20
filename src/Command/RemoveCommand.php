@@ -54,7 +54,7 @@ class RemoveCommand extends Command
             '= <fg=yellow>REMOVE UNNECESSARY FILES</> =',
             '============================',
             '',
-            ' -> Retrieving the list of concerned files.',
+            ' -> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 

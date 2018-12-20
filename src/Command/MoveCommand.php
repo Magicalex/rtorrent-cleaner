@@ -58,7 +58,7 @@ class MoveCommand extends Command
             '= <fg=yellow>MOVE UNNECESSARY FILES</> =',
             '==========================',
             '',
-            ' -> Retrieving the list of concerned files.',
+            ' -> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
