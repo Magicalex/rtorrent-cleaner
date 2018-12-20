@@ -8,7 +8,7 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 }
 
 use Symfony\Component\Console\Application;
-use RtorrentCleaner\Command\MissingFileCommand;
+use RtorrentCleaner\Command\TorrentsCommand;
 use RtorrentCleaner\Command\MoveCommand;
 use RtorrentCleaner\Command\RemoveCommand;
 use RtorrentCleaner\Command\ReportCommand;
@@ -20,6 +20,6 @@ $app = new Application('Rtorrent Cleaner', '0.3.0');
 $app->add(new ReportCommand());
 $app->add(new RemoveCommand());
 $app->add(new MoveCommand());
-$app->add(new MissingFileCommand());
+$app->add(new TorrentsCommand());
 
 $app->run();

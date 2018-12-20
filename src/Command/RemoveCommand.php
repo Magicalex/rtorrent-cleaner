@@ -18,8 +18,8 @@ class RemoveCommand extends Command
     {
         $this
             ->setName('rm')
-            ->setDescription('Delete unnecessary files')
-            ->setHelp('Command rm for delete unnecessary files in your download folder')
+            ->setDescription('Delete your unnecessary files in your download folder')
+            ->setHelp('Command rm for delete your unnecessary files in your download folder')
             ->addOption(
                 'url-xmlrpc',
                 null,

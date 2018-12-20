@@ -18,8 +18,8 @@ class MoveCommand extends Command
     {
         $this
             ->setName('mv')
-            ->setDescription('Move unnecessary files')
-            ->setHelp('Command mv for move unnecessary files in a specified folder')
+            ->setDescription('Move your unnecessary files in a specified folder')
+            ->setHelp('Command mv for move your unnecessary files in a specified folder')
             ->addOption(
                 'url-xmlrpc',
                 null,

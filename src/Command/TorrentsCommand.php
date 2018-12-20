@@ -11,13 +11,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class MissingFileCommand extends Command
+class TorrentsCommand extends Command
 {
     protected function configure()
     {
         $this
             ->setName('torrents')
-            ->setDescription('Managing torrents with missing files')
+            ->setDescription('Delete torrents or redownload the missing files')
             ->setHelp('Command torrents for delete torrents or redownload the missing files')
             ->addOption(
                 'url-xmlrpc',
