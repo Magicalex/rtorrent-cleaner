@@ -44,9 +44,8 @@ class MoveCommand extends Command
                 'Move all the files without confirmation')
             ->addArgument(
                 'folder',
-                null,
                 InputArgument::REQUIRED,
-                'Set folder where to move unnecessary files');
+                'Set a folder to move unnecessary files');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
