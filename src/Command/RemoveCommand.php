@@ -51,7 +51,7 @@ class RemoveCommand extends Command
 
         $output->writeln([
             '============================',
-            '= <fg=cyan>REMOVE UNNECESSARY FILES</> =',
+            '= <fg=yellow>REMOVE UNNECESSARY FILES</> =',
             '============================',
             '',
             ' -> Retrieving the list of concerned files.',

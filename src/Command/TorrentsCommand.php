@@ -40,7 +40,7 @@ class TorrentsCommand extends Command
 
         $output->writeln([
             '========================',
-            '= <fg=cyan>MANAGE MISSING FILES</> =',
+            '= <fg=yellow>MANAGE MISSING FILES</> =',
             '========================',
             '',
             ' -> Retrieving the list of concerned files.',
