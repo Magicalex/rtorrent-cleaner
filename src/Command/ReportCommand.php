@@ -90,6 +90,7 @@ class ReportCommand extends Command
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
         $unnecessaryFile = count($notTracked);
+        $nbMissingFile = count($missingFile);
         $unnecessaryTotalSize = 0;
         $output->writeln([" -> <fg=red>There are {$unnecessaryFile} file(s) not tracked by rtorrent.</> (Use rm command for remove unnecessary file)",'']);
 
@@ -109,14 +110,16 @@ class ReportCommand extends Command
         $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
         $output->writeln(['', "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>"]);
 
-        if (($numberMissingFile = count($missingFile)) > 0) {
-            $output->writeln(['', " -> <fg=red>There are {$numberMissingFile} file(s) missing from a torrent.</> (Use torrents command for manage torrent with missing file)", '']);
+        $output->writeln(['', " -> <fg=red>There are {$nbMissingFile} file(s) missing from a torrent.</> (Use torrents command for manage torrent with missing file)", '']);
 
-            // display files missing from a torrent
-            foreach ($missingFile as $file) {
-                $file = Str::truncate($file);
-                $output->writeln("missing file: <fg=yellow>{$file}</>");
-            }
+        // display files missing from a torrent
+        foreach ($missingFile as $file) {
+            $file = Str::truncate($file);
+            $output->writeln("missing file: <fg=yellow>{$file}</>");
+        }
+
+        if ($nbMissingFile == 0) {
+            $output->writeln('<fg=yellow>no missing files</>');
         }
 
         $event = $time->stop('report');

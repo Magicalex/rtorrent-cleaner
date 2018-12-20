@@ -55,7 +55,7 @@ class MissingFile extends ListingFile
         $rtorrent = $this->rtorrent();
         $response = $rtorrent->call('d.erase', [$hash]);
 
-        return ($response == 0) ? true:false;
+        return ($response == 0) ? true : false;
     }
 
     public function redownload($hash)
