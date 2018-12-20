@@ -15,8 +15,8 @@
         "symfony/finder": "3.4.* || 4.2.*",
         "symfony/console": "3.4.* || 4.2.*",
         "symfony/stopwatch": "3.4.* || 4.2.*",
-        "lstrojny/fxmlrpc": "0.14.*",
-        "zendframework/zend-diactoros": "2.1.*",
+        "lstrojny/fxmlrpc": "0.13.0 || 0.14.*",
+        "zendframework/zend-diactoros": "1.8.* || 2.1.*",
         "php-http/guzzle6-adapter": "1.1.*",
         "guzzlehttp/guzzle": "6.*",
         "php-http/message": "1.7.*"
