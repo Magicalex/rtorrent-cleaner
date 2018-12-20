@@ -68,7 +68,7 @@ class ReportCommand extends Command
             foreach ($dataRtorrent['info'] as $key => $value) {
                 $nb = $key;
                 $name = $value['name'];
-                $output->writeln("[{$nb}] <fg=green>Torrent:</> <fg=yellow>{$name}</>");
+                $output->writeln("[{$nb}] <fg=green>torrent:</> <fg=yellow>{$name}</>");
 
                 foreach ($value['files'] as $key => $value) {
                     $f_id = $key;

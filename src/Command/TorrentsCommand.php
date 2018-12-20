@@ -95,7 +95,7 @@ class TorrentsCommand extends Command
                     $list->redownload($torrent['hash']);
                     $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
                 } elseif ($answer == 'nothing') {
-                    $output->writeln('<fg=yellow>torrent ignored');
+                    $output->writeln('<fg=yellow>torrent ignored</>');
                 }
             }
         }
