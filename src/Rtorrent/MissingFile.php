@@ -60,6 +60,12 @@ class MissingFile extends ListingFile
 
     public function redownload($hash)
     {
-
+        $rtorrent = $this->rtorrent();
+        $rtorrent->call('d.stop', [$hash]);
+        $rtorrent->call('d.close', [$hash]);
+        $rtorrent->call('f.multicall', [$hash, '', 'f.set_create_queued=0', 'f.set_resize_queued=0']);
+        $rtorrent->call('d.check_hash', [$hash]);
+        $rtorrent->call('d.open', [$hash]);
+        $rtorrent->call('d.start', [$hash]);
     }
 }

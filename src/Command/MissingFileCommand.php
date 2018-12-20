@@ -89,12 +89,13 @@ class MissingFileCommand extends Command
                     $result = $list->deleteTorrent($torrent['hash']);
 
                     if ($result === true) {
-                        $output->writeln("-> torrent: <fg=red>{$torrent['name']}</> has been removed");
+                        $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been removed");
                     }
                 } elseif ($answer == 'redownload') {
-                    $output->writeln("-> torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
+                    $list->redownload($torrent['hash']);
+                    $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
                 } elseif ($answer == 'nothing') {
-                    $output->writeln('-> <fg=yellow>torrent ignored');
+                    $output->writeln('<fg=yellow>torrent ignored');
                 }
             }
         }

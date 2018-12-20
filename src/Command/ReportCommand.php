@@ -98,12 +98,12 @@ class ReportCommand extends Command
             $size = filesize($file);
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
             $size = Str::convertFileSize($size, 2);
-            $trunc = Str::truncate($file);
-            $output->writeln("unnecessary file: <fg=red>{$trunc}</> size: <fg=yellow>{$size}</>");
+            $file = Str::truncate($file);
+            $output->writeln("unnecessary file: <fg=red>{$file}</> size: <fg=yellow>{$size}</>");
         }
 
         if ($unnecessaryFile == 0) {
-            $output->writeln(' -> <fg=yellow>no files not tracked by rtorrent</>');
+            $output->writeln('<fg=yellow>no files not tracked by rtorrent</>');
         }
 
         $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
@@ -114,8 +114,8 @@ class ReportCommand extends Command
 
             // display files missing from a torrent
             foreach ($missingFile as $file) {
-                $trunc = Str::truncate($file);
-                $output->writeln("missing file: <fg=red>{$trunc}</>");
+                $file = Str::truncate($file);
+                $output->writeln("missing file: <fg=yellow>{$file}</>");
             }
         }
 

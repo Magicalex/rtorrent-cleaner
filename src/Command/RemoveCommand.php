@@ -67,14 +67,14 @@ class RemoveCommand extends Command
         $helper = $this->getHelper('question');
 
         foreach ($notTracked as $file) {
-            $trunc = Str::truncate($file, 70);
+            $viewFile = Str::truncate($file, 70);
 
             if ($input->getOption('assume-yes') === true) {
                 unlink($file);
-                $output->writeln(" -> file: <fg=red>{$trunc}</> has been removed");
+                $output->writeln(" -> file: <fg=red>{$viewFile}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
                 $question = new ChoiceQuestion(
-                    "Do you want delete <fg=red>{$trunc}</> ? (defaults: no)",
+                    "Do you want delete <fg=red>{$viewFile}</> ? (defaults: no)",
                     ['yes', 'no'], 1
                 );
 
@@ -83,15 +83,15 @@ class RemoveCommand extends Command
 
                 if ($answer == 'yes') {
                     unlink($file);
-                    $output->writeln("-> file: <fg=red>{$trunc}</> has been removed");
+                    $output->writeln("-> file: <fg=red>{$viewFile}</> has been removed");
                 } elseif ($answer == 'no') {
-                    $output->writeln('-> <fg=yellow>file not deleted</>');
+                    $output->writeln('<fg=yellow>file not deleted</>');
                 }
             }
         }
 
         if (count($notTracked) == 0) {
-            $output->writeln(' -> <fg=yellow>no files to remove</>');
+            $output->writeln('<fg=yellow>no files to remove</>');
         }
 
         // remove empty directory
@@ -99,13 +99,13 @@ class RemoveCommand extends Command
         $emptyDirectory = $directory->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
-            $output->writeln('-> <fg=yellow>no empty directory</>');
+            $output->writeln('<fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $directory->removeDirectory($emptyDirectory);
 
                 foreach ($removedDirectory as $folder) {
-                    $output->writeln("-> empty directory: <fg=red>{$folder}</> has been removed");
+                    $output->writeln("empty directory: <fg=red>{$folder}</> has been removed");
                 }
 
                 $emptyDirectory = $directory->getEmptyDirectory();
