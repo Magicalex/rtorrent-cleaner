@@ -55,42 +55,41 @@ composer global require magicalex/rtorrent-cleaner
 
 ## Usage
 
-Command for displaying help:
+Displaying help:
 ```sh
 rtorrent-cleaner
 ```
 
-Command for making a report:
+Command `report` for create a report on unnecessary files and missing files:
 ```sh
-rtorrent-cleaner report --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
 ```
 
-Command for remove unnecessary files:
+Command `rm` for delete unnecessary files in your download folder:
 ```sh
-rtorrent-cleaner rm --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+# delete without confirmation --assume-yes
+rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents --assume-yes
 ```
 
-Command for remove unnecessary files without confirmation (--assume-yes):
+Command `mv` for move unnecessary files in a specified folder (here: /home/user/old) :
 ```sh
-rtorrent-cleaner rm --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents --assume-yes
+rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+# move without confirmation --assume-yes
+rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents --assume-yes
 ```
 
-Command for move unnecessary files in a folder (here: /home/user/old) :
+Command `torrents` for delete torrents or redownload the missing files:
 ```sh
-rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
 ```
 
-Command for move unnecessary files in a folder (here: /home/user/old) without confirmation (--assume-yes):
-```sh
-rtorrent-cleaner mv /home/user/old/ --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents --assume-yes
-```
-
-Option for ignore files (option `--exclude=`) :
+Option for the command `mv` `rm` and `report` to ignore files: `--exclude=`
 ```sh
 # php 5.6 and above
-rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
 # php 7.1 and above
-rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost/RPC --home=/home/user/torrents
+rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
 ```
 This example exclude all files `.sub` and `.srt` in the output
 You can add multiple patterns by separating them by `,` only for php 7.1 and above
