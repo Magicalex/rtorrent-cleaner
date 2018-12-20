@@ -35,18 +35,18 @@ class MoveCommand extends Command
             ->addOption(
                 'exclude',
                 null,
-                InputArgument::OPTIONAL,
-                'Exclude files with a pattern ex: --exclude=*.sub,*.str exclude all subfiles')
-            ->addArgument(
-                'folder',
-                null,
-                InputArgument::REQUIRED,
-                'Set folder where to move unnecessary files')
+                InputOption::VALUE_REQUIRED,
+                'Exclude files with a pattern ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
                 'assume-yes',
                 null,
                 InputOption::VALUE_NONE,
-                'Move all the files without confirmation');
+                'Move all the files without confirmation')
+            ->addArgument(
+                'folder',
+                null,
+                InputArgument::REQUIRED,
+                'Set folder where to move unnecessary files');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

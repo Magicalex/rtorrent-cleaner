@@ -5,7 +5,6 @@ namespace RtorrentCleaner\Command;
 use RtorrentCleaner\Rtorrent\ListingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +17,7 @@ class ReportCommand extends Command
         $this
             ->setName('report')
             ->setDescription('Create a report on unnecessary files')
-            ->setHelp('Create a report on unnecessary files')
+            ->setHelp('Command report for create a report on unnecessary files and missing files')
             ->addOption(
                 'url-xmlrpc',
                 null,
@@ -34,8 +33,8 @@ class ReportCommand extends Command
             ->addOption(
                 'exclude',
                 null,
-                InputArgument::OPTIONAL,
-                'Exclude files with a pattern ex: --exclude=*.sub,*.str exclude all subfiles');
+                InputOption::VALUE_REQUIRED,
+                'Exclude files with a pattern ex: --exclude=*.sub exclude all subfiles');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

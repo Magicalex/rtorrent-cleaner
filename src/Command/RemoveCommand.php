@@ -6,7 +6,6 @@ use RtorrentCleaner\Rtorrent\ListingFile;
 use RtorrentCleaner\Utils\Directory;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,8 +35,8 @@ class RemoveCommand extends Command
             ->addOption(
                 'exclude',
                 null,
-                InputArgument::OPTIONAL,
-                'Exclude files with a pattern ex: --exclude=*.sub,*.str exclude all subfiles')
+                InputOption::VALUE_REQUIRED,
+                'Exclude files with a pattern ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
                 'assume-yes',
                 null,
