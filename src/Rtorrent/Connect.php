@@ -17,6 +17,12 @@ class Connect
 
     protected function rtorrent()
     {
-        return new Client($this->urlXmlRpc);
+        return $rtorrent = new fXmlRpc\Client(
+            $this->urlXmlRpc,
+            new fXmlRpc\Transport\HttpAdapterTransport(
+                new Http\Message\MessageFactory\DiactorosMessageFactory(),
+                new Http\Adapter\Guzzle6\Client(new GuzzleHttp\Client())
+            )
+        );
     }
 }
