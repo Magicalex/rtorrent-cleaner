@@ -15,7 +15,7 @@ class Connect
 
     protected function rtorrent()
     {
-        return $rtorrent = new \fXmlRpc\Client(
+        return new \fXmlRpc\Client(
             $this->urlXmlRpc,
             new \fXmlRpc\Transport\HttpAdapterTransport(
                 new \Http\Message\MessageFactory\DiactorosMessageFactory(),
