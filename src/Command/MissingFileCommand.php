@@ -54,7 +54,7 @@ class MissingFileCommand extends Command
         $helper = $this->getHelper('question');
 
         if (count($missingFile) == 0) {
-            $output->writeln(' -> <fg=yellow>no missing files</>');
+            $output->writeln('<fg=yellow>no missing files</>');
         } else {
             $output->writeln([
                 '-----------------------------------',
