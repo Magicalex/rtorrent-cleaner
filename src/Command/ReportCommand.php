@@ -52,9 +52,9 @@ class ReportCommand extends Command
             $logFile = $input->getOption('log');
         }
 
-        $output = new Log($output, $logFile);
+        $console = new Log($output, $logFile);
 
-        $output->writeln([
+        $console->writeln([
             '==========',
             '= <fg=yellow>REPORT</> =',
             '==========',
@@ -72,7 +72,7 @@ class ReportCommand extends Command
         $unnecessaryFile = count($notTracked);
         $nbMissingFile = count($missingFile);
         $unnecessaryTotalSize = 0;
-        $output->writeln([" > {$unnecessaryFile} file(s) are not tracked by rtorrent. (Use the `rm` command for remove unnecessary file)", '']);
+        $console->writeln([" > {$unnecessaryFile} file(s) are not tracked by rtorrent. (Use the `rm` command for remove unnecessary file)", '']);
 
         // display files not tracked by rtorrent
         $i = 0;
@@ -86,16 +86,16 @@ class ReportCommand extends Command
         }
 
         if ($unnecessaryFile == 0) {
-            $output->writeln('<fg=yellow>no files not tracked by rtorrent</>');
+            $console->writeln('<fg=yellow>no files not tracked by rtorrent</>');
         } else {
             $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
             array_push($dataTable1, new TableSeparator(), ['', '<fg=green>Total recoverable space</>', "<fg=yellow>{$unnecessaryTotalSize}</>"]);
-            $table = new Table($output);
+            $table = new Table($console);
             $table->setHeaders(['', 'Unnecessary files', 'Size'])->setRows($dataTable1);
             $table->render();
         }
 
-        $output->writeln(['', " > {$nbMissingFile} files(s) are missing in the torrents. (Use the `torrents` command for manage torrents with missing files)", '']);
+        $console->writeln(['', " > {$nbMissingFile} files(s) are missing in the torrents. (Use the `torrents` command for manage torrents with missing files)", '']);
 
         // display files missing from a torrent
         $i = 0;
@@ -106,9 +106,9 @@ class ReportCommand extends Command
         }
 
         if ($nbMissingFile == 0) {
-            $output->writeln('<fg=yellow>no missing files</>');
+            $console->writeln('<fg=yellow>no missing files</>');
         } else {
-            $table = new Table($output);
+            $table = new Table($console);
             $table->setHeaders(['', 'Missing files'])->setRows($dataTable2);
             $table->render();
         }
@@ -117,6 +117,6 @@ class ReportCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($dataRtorrent['info']);
-        $output->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $console->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }
