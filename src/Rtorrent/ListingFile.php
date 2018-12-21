@@ -28,7 +28,7 @@ class ListingFile extends Connect
 
             // call to rtorrent
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
-            $files = $rtorrent->call('f.multicall', $f_param);
+            $files = $this->rtorrent->call('f.multicall', $f_param);
             $f_id = 0;
 
             foreach ($files as $file) {
