@@ -5,6 +5,7 @@ namespace RtorrentCleaner\Command;
 use RtorrentCleaner\Rtorrent\ListingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -99,25 +100,33 @@ class ReportCommand extends Command
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
             $size = Str::convertFileSize($size, 2);
             $file = Str::truncate($file);
-            $output->writeln("unnecessary file: <fg=red>{$file}</> size: <fg=yellow>{$size}</>");
+            $dataTable1[] = ["unnecessary file: <fg=red>{$file}</>", "<fg=yellow>{$size}</>"];
         }
 
         if ($unnecessaryFile == 0) {
             $output->writeln('<fg=yellow>no files not tracked by rtorrent</>');
+        } else {
+            $table = new Table($output);
+            $table->setHeaders(['Unnecessary files', 'Size'])->setRows($dataTable1);
+            $table->render();
         }
 
         $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
         $output->writeln(['', "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>"]);
-        $output->writeln(['', " -> <fg=red>{$nbMissingFile} are missing in the torrents.</> (Use the `torrents` command for manage torrents with missing files)", '']);
+        $output->writeln(['', " -> <fg=red>{$nbMissingFile} files(s) are missing in the torrents.</> (Use the `torrents` command for manage torrents with missing files)", '']);
 
         // display files missing from a torrent
         foreach ($missingFile as $file) {
             $file = Str::truncate($file);
-            $output->writeln("missing file: <fg=yellow>{$file}</>");
+            $dataTable2[] = ["<fg=yellow>{$file}</>"];
         }
 
         if ($nbMissingFile == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
+        } else {
+            $table = new Table($output);
+            $table->setHeaders(['Missing files'])->setRows($dataTable2);
+            $table->render();
         }
 
         $event = $time->stop('report');
