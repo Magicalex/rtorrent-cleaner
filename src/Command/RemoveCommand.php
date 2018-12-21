@@ -60,7 +60,7 @@ class RemoveCommand extends Command
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
 
-        $output->writeln([" > {$nbyFile} unnecessary file(s) to delete.", '']);
+        $output->writeln([" > {$nbFile} unnecessary file(s) to delete.", '']);
 
         foreach ($notTracked as $file) {
             $viewFile = Str::truncate($file, 70);

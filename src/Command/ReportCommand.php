@@ -44,6 +44,7 @@ class ReportCommand extends Command
     {
         $time = new Stopwatch();
         $time->start('report');
+        $logFile = false;
 
         if ($input->getOption('log') !== false && $input->getOption('log') === null) {
             $logFile = 'rtorrent-cleaner.log';
@@ -51,7 +52,7 @@ class ReportCommand extends Command
             $logFile = $input->getOption('log');
         }
 
-        //$output = new Log();
+        $output = new Log($output, $logFile);
 
         $output->writeln([
             '==========',

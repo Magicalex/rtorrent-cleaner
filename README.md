@@ -83,34 +83,34 @@ Available commands:
 
 Command `report` for create a report on unnecessary files and missing files:
 ```sh
-$ rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+$ rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC
 ```
 
 Command `rm` for delete unnecessary files in your download folder:
 ```sh
-$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC
 # delete without confirmation --assume-yes
-$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents --assume-yes
+$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC --assume-yes
 ```
 
 Command `mv` for move unnecessary files in a specified folder (ex: /home/user/old) :
 ```sh
-$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC
 # move without confirmation --assume-yes
-$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents --assume-yes
+$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC --assume-yes
 ```
 
 Command `torrents` for delete torrents or redownload the missing files:
 ```sh
-$ rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+$ rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC
 ```
 
 Option for the command `mv`, `rm` and `report` to ignore files: `--exclude=`
 ```sh
 # php 5.6 and above
-$ rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+$ rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC
 # php 7.1 and above
-$ rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost:80/RPC --home=/home/user/torrents
+$ rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost:80/RPC
 ```
 This example exclude all files `.sub` and `.srt` in the output  
 You can add multiple patterns by separating them by `,` only for php 7.1 and above
