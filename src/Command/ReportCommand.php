@@ -10,6 +10,7 @@ use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ReportCommand extends Command
@@ -43,6 +44,9 @@ class ReportCommand extends Command
     {
         $time = new Stopwatch();
         $time->start('report');
+
+        // log test
+        new StreamOutput(fopen('rtorrent-cleaner.log', 'w+'));
 
         $output->writeln([
             '==========',
@@ -107,6 +111,6 @@ class ReportCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($dataRtorrent['info']);
-        $output->writeln(['', "time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $output->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

@@ -115,8 +115,3 @@ composer run-script build-phar-php7
 ## License
 
 rtorrent-cleaner is released under the MIT License.
-
-## TODO
-
-- add log file support
-- interface web

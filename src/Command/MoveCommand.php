@@ -64,7 +64,7 @@ class MoveCommand extends Command
 
         // check directory
         if (is_dir($input->getArgument('folder')) === false) {
-            $output->writeln('<fg=red>/!\ Please, define a correct directory.</>');
+            $output->writeln(' > <fg=red>/!\ Please, define a correct directory.</>');
             exit(1);
         } else {
             $folder = realpath($input->getArgument('folder'));
