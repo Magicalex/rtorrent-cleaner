@@ -63,9 +63,10 @@ class RemoveCommand extends Command
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
 
-        $output->writeln([" > {$unnecessaryFile} unnecessary file(s) to delete.", '']);
+        $output->writeln([" > {$nbyFile} unnecessary file(s) to delete.", '']);
 
         foreach ($notTracked as $file) {
             $viewFile = Str::truncate($file, 70);

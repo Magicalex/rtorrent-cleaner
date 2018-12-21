@@ -76,9 +76,10 @@ class MoveCommand extends Command
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
 
-        $output->writeln([" > {$unnecessaryFile} unnecessary file(s) to move.", '']);
+        $output->writeln([" > {$nbFile} unnecessary file(s) to move.", '']);
 
         // move files not tracked
         foreach ($notTracked as $file) {

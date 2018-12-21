@@ -53,7 +53,7 @@ class TorrentsCommand extends Command
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
         $helper = $this->getHelper('question');
 
-        $output->writeln([' > <fg=cyan>List of torrents with missing files</>']);
+        $output->writeln([' > <fg=cyan>List of torrents with missing files</>', '']);
 
         if (count($missingFile) == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
