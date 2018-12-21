@@ -95,37 +95,39 @@ class ReportCommand extends Command
         $output->writeln([" -> <fg=red>{$unnecessaryFile} file(s) are not tracked by rtorrent.</> (Use the `rm` command for remove unnecessary file)", '']);
 
         // display files not tracked by rtorrent
-        foreach ($notTracked as $file) {
+        foreach ($notTracked as $i => $file) {
+            $i++;
             $size = filesize($file);
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
             $size = Str::convertFileSize($size, 2);
             $file = Str::truncate($file);
-            $dataTable1[] = ["unnecessary file: <fg=red>{$file}</>", "<fg=yellow>{$size}</>"];
+            $dataTable1[] = ["$i", "<fg=yellow>{$file}</>", "<fg=yellow>{$size}</>"];
         }
 
         if ($unnecessaryFile == 0) {
             $output->writeln('<fg=yellow>no files not tracked by rtorrent</>');
         } else {
+            $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
+            $dataTable1 = ["<fg=green>Total recoverable space</>", "<fg=yellow>{$unnecessaryTotalSize}</>"];
             $table = new Table($output);
-            $table->setHeaders(['Unnecessary files', 'Size'])->setRows($dataTable1);
+            $table->setHeaders(['#', 'Unnecessary files', 'Size'])->setRows($dataTable1);
             $table->render();
         }
 
-        $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
-        $output->writeln(['', "<fg=green>Total recoverable space:</> <fg=yellow>{$unnecessaryTotalSize}</>"]);
         $output->writeln(['', " -> <fg=red>{$nbMissingFile} files(s) are missing in the torrents.</> (Use the `torrents` command for manage torrents with missing files)", '']);
 
         // display files missing from a torrent
-        foreach ($missingFile as $file) {
+        foreach ($missingFile as $i => $file) {
+            $i++;
             $file = Str::truncate($file);
-            $dataTable2[] = ["<fg=yellow>{$file}</>"];
+            $dataTable2[] = ["$i", "<fg=yellow>{$file}</>"];
         }
 
         if ($nbMissingFile == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
         } else {
             $table = new Table($output);
-            $table->setHeaders(['Missing files'])->setRows($dataTable2);
+            $table->setHeaders(['#', 'Missing files'])->setRows($dataTable2);
             $table->render();
         }
 
