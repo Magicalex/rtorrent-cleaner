@@ -6,6 +6,7 @@ use RtorrentCleaner\Rtorrent\ListingFile;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -56,37 +57,6 @@ class ReportCommand extends Command
         $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
-
-        if ($output->isVerbose()) {
-            $output->writeln([
-                '--------------------',
-                '<fg=cyan>LIST OF ALL TORRENTS</>',
-                '--------------------',
-                ''
-            ]);
-
-            // display torrents infos
-            foreach ($dataRtorrent['info'] as $key => $value) {
-                $nb = $key;
-                $name = $value['name'];
-                $output->writeln("[{$nb}] <fg=green>torrent:</> <fg=yellow>{$name}</>");
-
-                foreach ($value['files'] as $key => $value) {
-                    $f_id = $key;
-                    $file = $value['name'];
-                    $size = $value['size'];
-                    $output->writeln("{$f_id}: <fg=cyan>{$file}</> (size: <fg=yellow>{$size}</>)");
-                }
-            }
-        }
-
-        $output->writeln([
-            '-------------------------------------------',
-            '<fg=cyan>LIST OF GAPS BETWEEN RTORRENT AND YOUR HOME</>',
-            '-------------------------------------------',
-            ''
-        ]);
-
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
         $unnecessaryFile = count($notTracked);
@@ -95,7 +65,8 @@ class ReportCommand extends Command
         $output->writeln([" -> <fg=red>{$unnecessaryFile} file(s) are not tracked by rtorrent.</> (Use the `rm` command for remove unnecessary file)", '']);
 
         // display files not tracked by rtorrent
-        foreach ($notTracked as $i => $file) {
+        $i = 0;
+        foreach ($notTracked as $file) {
             $i++;
             $size = filesize($file);
             $unnecessaryTotalSize = $unnecessaryTotalSize + $size;
@@ -108,16 +79,17 @@ class ReportCommand extends Command
             $output->writeln('<fg=yellow>no files not tracked by rtorrent</>');
         } else {
             $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
-            $dataTable1 = ["<fg=green>Total recoverable space</>", "<fg=yellow>{$unnecessaryTotalSize}</>"];
+            array_push($dataTable1, new TableSeparator(), ['', "<fg=green>Total recoverable space</>", "<fg=yellow>{$unnecessaryTotalSize}</>"]);
             $table = new Table($output);
-            $table->setHeaders(['#', 'Unnecessary files', 'Size'])->setRows($dataTable1);
+            $table->setHeaders(['', 'Unnecessary files', 'Size'])->setRows($dataTable1);
             $table->render();
         }
 
         $output->writeln(['', " -> <fg=red>{$nbMissingFile} files(s) are missing in the torrents.</> (Use the `torrents` command for manage torrents with missing files)", '']);
 
         // display files missing from a torrent
-        foreach ($missingFile as $i => $file) {
+        $i = 0;
+        foreach ($missingFile as $file) {
             $i++;
             $file = Str::truncate($file);
             $dataTable2[] = ["$i", "<fg=yellow>{$file}</>"];
