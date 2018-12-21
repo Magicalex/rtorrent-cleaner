@@ -5,12 +5,14 @@ namespace RtorrentCleaner\Rtorrent;
 class Connect
 {
     protected $home;
+    protected $rtorrent;
     protected $urlXmlRpc;
 
-    public function __construct($urlXmlRpc, $home)
+    public function __construct($urlXmlRpc)
     {
-        $this->home = $home;
         $this->urlXmlRpc = $urlXmlRpc;
+        $this->rtorrent = $this->rtorrent();
+        $this->home = $this->getDefaultHome();
     }
 
     protected function rtorrent()
@@ -24,5 +26,10 @@ class Connect
             new \fXmlRpc\Parser\NativeParser(),
             new \fXmlRpc\Serializer\NativeSerializer()
         );
+    }
+
+    protected function getDefaultHome()
+    {
+        return $this->rtorrent->call('directory.default');
     }
 }

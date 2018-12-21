@@ -14,7 +14,7 @@ class Log
     public function __construct(OutputInterface $output, $logFile)
     {
         $this->output = $output;
-        $this->enabledLog = (isset($logFile)) ? true : false;
+        $this->enabledLog = ($logFile === false) ? false : true;
 
         if ($this->enabledLog === true) {
             $this->log = new StreamOutput(fopen($logFile, 'w+'));

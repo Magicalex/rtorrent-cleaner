@@ -3,6 +3,7 @@
 namespace RtorrentCleaner\Command;
 
 use RtorrentCleaner\Rtorrent\ListingFile;
+use RtorrentCleaner\Log\Log;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -27,12 +28,6 @@ class ReportCommand extends Command
                 'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
                 'http://rtorrent:8080/RPC')
             ->addOption(
-                'home',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Set folder of your home like: /home/user/torrents',
-                '/data/torrents')
-            ->addOption(
                 'exclude',
                 null,
                 InputOption::VALUE_REQUIRED,
@@ -40,9 +35,9 @@ class ReportCommand extends Command
             ->addOption(
                 'log',
                 null,
-                InputOption::VALUE_REQUIRED,
+                InputOption::VALUE_OPTIONAL,
                 'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner/rtorrent-cleaner.log',
-                'rtorrent-cleaner.log');
+                false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -50,7 +45,13 @@ class ReportCommand extends Command
         $time = new Stopwatch();
         $time->start('report');
 
-        var_dump($input->getOption('log'));
+        if ($input->getOption('log') !== false && $input->getOption('log') === null) {
+            $logFile = 'rtorrent-cleaner.log';
+        } else {
+            $logFile = $input->getOption('log');
+        }
+
+        //$output = new Log();
 
         $output->writeln([
             '==========',
@@ -62,7 +63,7 @@ class ReportCommand extends Command
         ]);
 
         $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
+        $list = new ListingFile($input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
