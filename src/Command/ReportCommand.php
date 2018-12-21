@@ -10,7 +10,6 @@ use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ReportCommand extends Command
@@ -37,7 +36,13 @@ class ReportCommand extends Command
                 'exclude',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Exclude files with a pattern ex: --exclude=*.sub exclude all subfiles');
+                'Exclude files with a pattern. ex: `--exclude=*.sub` exclude all subfiles')
+            ->addOption(
+                'log',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner/rtorrent-cleaner.log',
+                'rtorrent-cleaner.log');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,8 +50,7 @@ class ReportCommand extends Command
         $time = new Stopwatch();
         $time->start('report');
 
-        // log test
-        new StreamOutput(fopen('rtorrent-cleaner.log', 'w+'));
+        var_dump($input->getOption('log'));
 
         $output->writeln([
             '==========',
