@@ -99,7 +99,7 @@ class ReportCommand extends Command
             $output->writeln('<fg=yellow>no missing files</>');
         } else {
             $table = new Table($output);
-            $table->setHeaders(['#', 'Missing files'])->setRows($dataTable2);
+            $table->setHeaders(['', 'Missing files'])->setRows($dataTable2);
             $table->render();
         }
 
