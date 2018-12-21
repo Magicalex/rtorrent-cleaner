@@ -11,11 +11,9 @@ class ListingFile extends Connect
 {
     public function listingFromRtorrent(OutputInterface $output)
     {
-        $rtorrent = $this->rtorrent();
-
         // call to rtorrent
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
-        $torrents = $rtorrent->call('d.multicall2', $d_param);
+        $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
         // init progress bar
         $progressBar = new ProgressBar($output, count($torrents));

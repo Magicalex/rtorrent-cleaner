@@ -27,12 +27,6 @@ class RemoveCommand extends Command
                 'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
                 'http://rtorrent:8080/RPC')
             ->addOption(
-                'home',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Set folder of your home like: /home/user/torrents',
-                '/data/torrents')
-            ->addOption(
                 'exclude',
                 null,
                 InputOption::VALUE_REQUIRED,
@@ -59,7 +53,7 @@ class RemoveCommand extends Command
         ]);
 
         $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
+        $list = new ListingFile($input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome($exclude);
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
@@ -97,7 +91,7 @@ class RemoveCommand extends Command
         }
 
         // remove empty directory
-        $directory = new Directory($input->getOption('home'));
+        $directory = new Directory($input->getOption('url-xmlrpc'));
         $emptyDirectory = $directory->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {

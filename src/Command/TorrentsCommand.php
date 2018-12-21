@@ -24,13 +24,7 @@ class TorrentsCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
-                'http://rtorrent:8080/RPC')
-            ->addOption(
-                'home',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Set folder of your home like: /home/user/torrents',
-                '/data/torrents');
+                'http://rtorrent:8080/RPC');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -47,7 +41,7 @@ class TorrentsCommand extends Command
             ''
         ]);
 
-        $list = new MissingFile($input->getOption('url-xmlrpc'), $input->getOption('home'));
+        $list = new MissingFile($input->getOption('url-xmlrpc'));
         $dataRtorrent = $list->listingFromRtorrent($output);
         $dataHome = $list->listingFromHome();
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
@@ -82,11 +76,8 @@ class TorrentsCommand extends Command
                 $answer = $helper->ask($input, $output, $question);
 
                 if ($answer == 'delete') {
-                    $result = $list->deleteTorrent($torrent['hash']);
-
-                    if ($result === true) {
-                        $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been removed");
-                    }
+                    $list->deleteTorrent($torrent['hash']);
+                    $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been removed");
                 } elseif ($answer == 'redownload') {
                     $list->redownload($torrent['hash']);
                     $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been redownloaded");

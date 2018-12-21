@@ -2,17 +2,11 @@
 
 namespace RtorrentCleaner\Utils;
 
+use RtorrentCleaner\Rtorrent\Connect;
 use Symfony\Component\Finder\Finder;
 
-class Directory
+class Directory extends Connect
 {
-    protected $home;
-
-    public function __construct($home)
-    {
-        $this->home = $home;
-    }
-
     public function getEmptyDirectory()
     {
         $emptyDirectory = [];
