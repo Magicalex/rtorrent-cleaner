@@ -79,7 +79,7 @@ class ReportCommand extends Command
             $output->writeln('<fg=yellow>no files not tracked by rtorrent</>');
         } else {
             $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
-            array_push($dataTable1, new TableSeparator(), ['', "<fg=green>Total recoverable space</>", "<fg=yellow>{$unnecessaryTotalSize}</>"]);
+            array_push($dataTable1, new TableSeparator(), ['', '<fg=green>Total recoverable space</>', "<fg=yellow>{$unnecessaryTotalSize}</>"]);
             $table = new Table($output);
             $table->setHeaders(['', 'Unnecessary files', 'Size'])->setRows($dataTable1);
             $table->render();
