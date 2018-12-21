@@ -43,7 +43,7 @@ class TorrentsCommand extends Command
             '= <fg=yellow>MANAGE MISSING FILES</> =',
             '========================',
             '',
-            ' -> Retrieving the list of torrents files from rtorrent',
+            ' > Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
@@ -53,16 +53,11 @@ class TorrentsCommand extends Command
         $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
         $helper = $this->getHelper('question');
 
+        $output->writeln([' > <fg=cyan>List of torrents with missing files</>']);
+
         if (count($missingFile) == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
         } else {
-            $output->writeln([
-                '-----------------------------------',
-                '<fg=cyan>List of torrents with missing files</>',
-                '-----------------------------------',
-                ''
-            ]);
-
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
             foreach ($torrentMissingFile as $torrent) {

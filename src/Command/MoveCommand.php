@@ -58,13 +58,13 @@ class MoveCommand extends Command
             '= <fg=yellow>MOVE UNNECESSARY FILES</> =',
             '==========================',
             '',
-            ' -> Retrieving the list of torrents files from rtorrent',
+            ' > Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
         // check directory
         if (is_dir($input->getArgument('folder')) === false) {
-            $output->writeln('<fg=red>Please, define a correct directory.</>');
+            $output->writeln('<fg=red>/!\ Please, define a correct directory.</>');
             exit(1);
         } else {
             $folder = realpath($input->getArgument('folder'));
@@ -78,6 +78,8 @@ class MoveCommand extends Command
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $helper = $this->getHelper('question');
 
+        $output->writeln([" > {$unnecessaryFile} unnecessary file(s) to move.", '']);
+
         // move files not tracked
         foreach ($notTracked as $file) {
             $viewFile = Str::truncate($file, 70);
@@ -85,7 +87,7 @@ class MoveCommand extends Command
 
             if ($input->getOption('assume-yes') === true) {
                 rename($file, $folder.'/'.$fileName);
-                $output->writeln(" -> file: <fg=red>{$viewFile}</> has been moved");
+                $output->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
                 $question = new ChoiceQuestion(
                     "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",
@@ -97,7 +99,7 @@ class MoveCommand extends Command
 
                 if ($answer == 'yes') {
                     rename($file, $folder.'/'.$fileName);
-                    $output->writeln("file: <fg=green>{$viewFile}</> has been moved");
+                    $output->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
                 } elseif ($answer == 'no') {
                     $output->writeln('<fg=yellow>file not moved</>');
                 }

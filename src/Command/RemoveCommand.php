@@ -54,7 +54,7 @@ class RemoveCommand extends Command
             '= <fg=yellow>REMOVE UNNECESSARY FILES</> =',
             '============================',
             '',
-            ' -> Retrieving the list of torrents files from rtorrent',
+            ' > Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
@@ -65,15 +65,17 @@ class RemoveCommand extends Command
         $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
         $helper = $this->getHelper('question');
 
+        $output->writeln([" > {$unnecessaryFile} unnecessary file(s) to delete.", '']);
+
         foreach ($notTracked as $file) {
             $viewFile = Str::truncate($file, 70);
 
             if ($input->getOption('assume-yes') === true) {
                 unlink($file);
-                $output->writeln(" -> file: <fg=red>{$viewFile}</> has been removed");
+                $output->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
                 $question = new ChoiceQuestion(
-                    "Do you want delete <fg=red>{$viewFile}</> ? (defaults: no)",
+                    "Do you want delete <fg=yellow>{$viewFile}</> ? (defaults: no)",
                     ['yes', 'no'], 1
                 );
 
@@ -82,7 +84,7 @@ class RemoveCommand extends Command
 
                 if ($answer == 'yes') {
                     unlink($file);
-                    $output->writeln("-> file: <fg=red>{$viewFile}</> has been removed");
+                    $output->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
                 } elseif ($answer == 'no') {
                     $output->writeln('<fg=yellow>file not deleted</>');
                 }
