@@ -58,7 +58,7 @@ composer global require magicalex/rtorrent-cleaner
 Displaying help:
 ```sh
 $ rtorrent-cleaner
-Rtorrent Cleaner 0.3.0
+rtorrent-cleaner 0.4.0
 
 Usage:
   command [options] [arguments]
@@ -84,6 +84,10 @@ Available commands:
 Command `report` for create a report on unnecessary files and missing files:
 ```sh
 $ rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC
+# you can log the console output in a file with the option --log (rtorrent-cleaner.log)
+$ rtorrent-cleaner report --log --url-xmlrpc=http://localhost:80/RPC
+# you can define a path (ex: /var/log/rtorrent-cleaner.log)
+$ rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log --url-xmlrpc=http://localhost:80/RPC
 ```
 
 Command `rm` for delete unnecessary files in your download folder:

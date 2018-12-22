@@ -14,7 +14,7 @@ use RtorrentCleaner\Command\RemoveCommand;
 use RtorrentCleaner\Command\ReportCommand;
 
 // init
-$app = new Application('Rtorrent Cleaner', '0.4.0');
+$app = new Application('rtorrent-cleaner', '0.4.0');
 
 // add commands
 $app->add(new ReportCommand());
