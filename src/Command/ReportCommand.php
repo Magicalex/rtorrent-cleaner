@@ -6,7 +6,6 @@ use RtorrentCleaner\Rtorrent\ListingFile;
 use RtorrentCleaner\Log\Log;
 use RtorrentCleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -90,9 +89,7 @@ class ReportCommand extends Command
         } else {
             $unnecessaryTotalSize = Str::convertFileSize($unnecessaryTotalSize, 2);
             array_push($dataTable1, new TableSeparator(), ['', '<fg=green>Total recoverable space</>', "<fg=yellow>{$unnecessaryTotalSize}</>"]);
-            $table = new Table($console);
-            $table->setHeaders(['', 'Unnecessary files', 'Size'])->setRows($dataTable1);
-            $table->render();
+            $console->table(['', 'Unnecessary files', 'Size'], $dataTable1);
         }
 
         $console->writeln(['', " > {$nbMissingFile} files(s) are missing in the torrents. (Use the `torrents` command for manage torrents with missing files)", '']);
@@ -108,9 +105,7 @@ class ReportCommand extends Command
         if ($nbMissingFile == 0) {
             $console->writeln('<fg=yellow>no missing files</>');
         } else {
-            $table = new Table($console);
-            $table->setHeaders(['', 'Missing files'])->setRows($dataTable2);
-            $table->render();
+            $console->table(['', 'Missing files'], $dataTable2);
         }
 
         $event = $time->stop('report');

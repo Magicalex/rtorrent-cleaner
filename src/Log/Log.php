@@ -2,6 +2,7 @@
 
 namespace RtorrentCleaner\Log;
 
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 
@@ -27,6 +28,19 @@ class Log
 
         if ($this->enabledLog === true) {
             $this->log->writeln($data);
+        }
+    }
+
+    public function table($header, $data)
+    {
+        $console = new Table($this->output);
+        $console->setHeaders($header)->setRows($data);
+        $console->render();
+
+        if ($this->enabledLog === true) {
+            $log = new Table($this->log);
+            $log->setHeaders($header)->setRows($data);
+            $log->render();
         }
     }
 }
