@@ -15,8 +15,12 @@ class ListingFile extends Connect
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
-        // init progress bar
+        // progress bar conf
         $progressBar = new ProgressBar($output, count($torrents));
+        $progressBar->setFormat(' %current%/%max% %bar% %percent:3s%% %remaining:-6s%');
+        $progressBar->setBarCharacter('<fg=green>█</>');
+        $progressBar->setEmptyBarCharacter('█');
+        $progressBar->setProgressCharacter('<fg=green>█</>');
         $progressBar->start();
         $currentTorrent = 0;
 
@@ -44,7 +48,6 @@ class ListingFile extends Connect
         }
 
         $progressBar->finish();
-        $output->writeln([' <fg=green>Completed!</>', '']);
 
         return [
             'path' => $torrentFile,
