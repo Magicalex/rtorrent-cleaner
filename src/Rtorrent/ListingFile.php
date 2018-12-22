@@ -17,7 +17,7 @@ class ListingFile extends Connect
 
         // progress bar
         $progressBar = new ProgressBar($output, count($torrents));
-        $progressBar->setFormat(' %current%/%max% %bar% %percent:3s%% %remaining:-6s%');
+        $progressBar->setFormat(" %current%/%max% %bar% %percent%% %remaining%\n");
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
         $progressBar->setProgressCharacter('<fg=green>█</>');
