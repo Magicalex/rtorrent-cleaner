@@ -48,8 +48,9 @@ class Str
         $sec = (int) $ms / 1000;
         $min = floor($sec / 60);
         $sec = floor($sec - $min * 60);
+        $ms = floor($ms - ($min * 60000) - ($sec * 1000));
 
-        return "{$min} min {$sec} sec";
+        return "{$min} min {$sec} sec {$ms} ms";
     }
 
     public static function humanMemory($bytes)
