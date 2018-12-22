@@ -48,7 +48,7 @@ class TorrentsCommand extends Command
         $nbFile = count($missingFile);
         $helper = $this->getHelper('question');
 
-        $output->writeln([" > {$nbFile} file(s) are missing in the torrents.", '']);
+        $output->writeln(['', " > {$nbFile} file(s) are missing in the torrents.", '']);
 
         if ($nbFile == 0) {
             $output->writeln('<fg=yellow>no missing files</>');

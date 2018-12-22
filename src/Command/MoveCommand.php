@@ -73,7 +73,7 @@ class MoveCommand extends Command
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
 
-        $output->writeln([" > {$nbFile} unnecessary file(s) to move.", '']);
+        $output->writeln(['', " > {$nbFile} unnecessary file(s) to move.", '']);
 
         // move files not tracked
         foreach ($notTracked as $file) {
