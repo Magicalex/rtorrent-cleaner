@@ -1,8 +1,8 @@
 <?php
 
-namespace RtorrentCleaner\Utils;
+namespace Rtorrent\Cleaner\Utils;
 
-use RtorrentCleaner\Rtorrent\Connect;
+use Rtorrent\Cleaner\Rtorrent\Connect;
 use Symfony\Component\Finder\Finder;
 
 class Directory extends Connect

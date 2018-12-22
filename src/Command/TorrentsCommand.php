@@ -1,9 +1,9 @@
 <?php
 
-namespace RtorrentCleaner\Command;
+namespace Rtorrent\Cleaner\Command;
 
-use RtorrentCleaner\Rtorrent\MissingFile;
-use RtorrentCleaner\Utils\Str;
+use Rtorrent\Cleaner\Rtorrent\MissingFile;
+use Rtorrent\Cleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

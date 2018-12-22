@@ -1,6 +1,6 @@
 <?php
 
-namespace RtorrentCleaner\Rtorrent;
+namespace Rtorrent\Cleaner\Rtorrent;
 
 class MissingFile extends ListingFile
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace RtorrentCleaner\Utils;
+namespace Rtorrent\Cleaner\Utils;
 
 class Str
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace RtorrentCleaner\Log;
+namespace Rtorrent\Cleaner\Log;
 
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;

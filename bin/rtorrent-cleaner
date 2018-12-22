@@ -8,10 +8,10 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 }
 
 use Symfony\Component\Console\Application;
-use RtorrentCleaner\Command\TorrentsCommand;
-use RtorrentCleaner\Command\MoveCommand;
-use RtorrentCleaner\Command\RemoveCommand;
-use RtorrentCleaner\Command\ReportCommand;
+use Rtorrent\Cleaner\Command\TorrentsCommand;
+use Rtorrent\Cleaner\Command\MoveCommand;
+use Rtorrent\Cleaner\Command\RemoveCommand;
+use Rtorrent\Cleaner\Command\ReportCommand;
 
 // init
 $app = new Application('rtorrent-cleaner', '0.4.0');

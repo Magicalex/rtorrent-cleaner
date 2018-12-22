@@ -1,10 +1,10 @@
 <?php
 
-namespace RtorrentCleaner\Command;
+namespace Rtorrent\Cleaner\Command;
 
-use RtorrentCleaner\Rtorrent\ListingFile;
-use RtorrentCleaner\Log\Log;
-use RtorrentCleaner\Utils\Str;
+use Rtorrent\Cleaner\Log\Log;
+use Rtorrent\Cleaner\Rtorrent\ListingFile;
+use Rtorrent\Cleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
