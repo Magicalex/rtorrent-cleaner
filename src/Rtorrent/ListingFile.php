@@ -15,7 +15,7 @@ class ListingFile extends Connect
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
-        // progress bar conf
+        // progress bar
         $progressBar = new ProgressBar($output, count($torrents));
         $progressBar->setFormat(' %current%/%max% %bar% %percent:3s%% %remaining:-6s%');
         $progressBar->setBarCharacter('<fg=green>█</>');

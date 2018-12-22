@@ -44,9 +44,9 @@ class RemoveCommand extends Command
         $time->start('remove');
 
         $output->writeln([
-            '============================',
-            '= <fg=yellow>REMOVE UNNECESSARY FILES</> =',
-            '============================',
+            '===============================================',
+            '= <fg=yellow>RTORRENT-CLEANER - REMOVE UNNECESSARY FILES</> =',
+            '===============================================',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''

@@ -33,9 +33,9 @@ class TorrentsCommand extends Command
         $time->start('missingFile');
 
         $output->writeln([
-            '========================',
-            '= <fg=yellow>MANAGE MISSING FILES</> =',
-            '========================',
+            '===========================================',
+            '= <fg=yellow>RTORRENT-CLEANER - MANAGE MISSING FILES</> =',
+            '===========================================',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''
@@ -55,6 +55,7 @@ class TorrentsCommand extends Command
         } else {
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
+////////////////////////////////////////////////////////////////////////////////
             foreach ($torrentMissingFile as $torrent) {
                 $output->writeln("torrent: <fg=yellow>{$torrent['name']}</>");
 
@@ -65,7 +66,7 @@ class TorrentsCommand extends Command
             }
 
             echo PHP_EOL;
-
+////////////////////////////////////////////////////////////////////////////////
             foreach ($torrentMissingFile as $torrent) {
                 $question = new ChoiceQuestion(
                     "What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)",
