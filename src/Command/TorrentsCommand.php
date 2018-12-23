@@ -55,21 +55,16 @@ class TorrentsCommand extends Command
         } else {
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
-////////////////////////////////////////////////////////////////////////////////
             foreach ($torrentMissingFile as $torrent) {
-                $output->writeln("torrent: <fg=yellow>{$torrent['name']}</>");
+                $ask = "What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)";
 
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
-                    $output->writeln(" -> missing file: <fg=cyan>{$file}</>");
+                    $ask .= "\n > missing file: {$file}";
                 }
-            }
 
-            echo PHP_EOL;
-////////////////////////////////////////////////////////////////////////////////
-            foreach ($torrentMissingFile as $torrent) {
                 $question = new ChoiceQuestion(
-                    "What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)",
+                    $ask,
                     ['delete', 'redownload', 'nothing'], 2
                 );
 

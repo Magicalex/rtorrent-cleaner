@@ -20,7 +20,7 @@ class ListingFile extends Connect
         $progressBar->setFormat(" %current%/%max% %bar% %percent%% %remaining%\n");
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
-        $progressBar->setProgressCharacter('<fg=green>█</>');
+        $progressBar->setProgressCharacter('<fg=yellow>█</>');
         $progressBar->start();
         $currentTorrent = 0;
 
