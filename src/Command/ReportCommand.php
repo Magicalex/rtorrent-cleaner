@@ -35,7 +35,7 @@ class ReportCommand extends Command
                 'log',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner/rtorrent-cleaner.log',
+                'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
                 false);
     }
 
