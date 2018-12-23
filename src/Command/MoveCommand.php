@@ -48,9 +48,9 @@ class MoveCommand extends Command
         $time->start('move');
 
         $output->writeln([
-            '=============================================',
-            '= <fg=yellow>RTORRENT-CLEANER - MOVE UNNECESSARY FILES</> =',
-            '=============================================',
+            '╔═══════════════════════════════════════════╗',
+            '║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> ║',
+            '╚═══════════════════════════════════════════╝',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''

@@ -54,9 +54,9 @@ class ReportCommand extends Command
         $console = new Log($output, $logFile);
 
         $console->writeln([
-            '=============================',
-            '= <fg=yellow>RTORRENT-CLEANER - REPORT</> =',
-            '=============================',
+            '╔═══════════════════════════╗',
+            '║ RTORRENT-CLEANER - <fg=cyan>REPORT</> ║',
+            '╚═══════════════════════════╝',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''

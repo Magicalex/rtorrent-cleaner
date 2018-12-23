@@ -33,9 +33,9 @@ class TorrentsCommand extends Command
         $time->start('missingFile');
 
         $output->writeln([
-            '===========================================',
-            '= <fg=yellow>RTORRENT-CLEANER - MANAGE MISSING FILES</> =',
-            '===========================================',
+            '╔═════════════════════════════════════════╗',
+            '║ RTORRENT-CLEANER - <fg=cyan>MANAGE MISSING FILES</> ║',
+            '╚═════════════════════════════════════════╝',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''
@@ -56,18 +56,13 @@ class TorrentsCommand extends Command
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
 
             foreach ($torrentMissingFile as $torrent) {
-                $ask = "What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)";
-
+                $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n\n";
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
-                    $ask .= "\n > missing file: {$file}";
+                    $ask .= " > missing file: <fg=cyan>{$file}</>\n";
                 }
 
-                $question = new ChoiceQuestion(
-                    $ask,
-                    ['delete', 'redownload', 'nothing'], 2
-                );
-
+                $question = new ChoiceQuestion($ask, ['delete', 'redownload', 'nothing'], 2);
                 $question->setErrorMessage('Option %s is invalid.');
                 $answer = $helper->ask($input, $output, $question);
 
