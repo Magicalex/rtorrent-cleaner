@@ -68,10 +68,10 @@ class TorrentsCommand extends Command
 
                 if ($answer == 'delete') {
                     $list->deleteTorrent($torrent['hash']);
-                    $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been removed");
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
                 } elseif ($answer == 'redownload') {
                     $list->redownload($torrent['hash']);
-                    $output->writeln("torrent: <fg=red>{$torrent['name']}</> has been redownloaded");
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
                 } elseif ($answer == 'nothing') {
                     $output->writeln('<fg=yellow>torrent ignored</>');
                 }
