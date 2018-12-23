@@ -77,13 +77,14 @@ class MoveCommand extends Command
 
         // move files not tracked
         foreach ($notTracked as $file) {
-            $viewFile = Str::truncate($file, 70);
             $fileName = basename($file);
 
             if ($input->getOption('assume-yes') === true) {
                 rename($file, $folder.'/'.$fileName);
+                $viewFile = Str::truncate($file);
                 $output->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
+                $viewFile = Str::truncate($file, 70);
                 $question = new ChoiceQuestion(
                     "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",
                     ['yes', 'no'], 1
@@ -94,6 +95,7 @@ class MoveCommand extends Command
 
                 if ($answer == 'yes') {
                     rename($file, $folder.'/'.$fileName);
+                    $viewFile = Str::truncate($file);
                     $output->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
                 } elseif ($answer == 'no') {
                     $output->writeln('<fg=yellow>file not moved</>');

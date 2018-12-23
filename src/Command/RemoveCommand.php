@@ -63,12 +63,12 @@ class RemoveCommand extends Command
         $output->writeln(['', " > {$nbFile} unnecessary file(s) to delete.", '']);
 
         foreach ($notTracked as $file) {
-            $viewFile = Str::truncate($file, 70);
-
             if ($input->getOption('assume-yes') === true) {
                 unlink($file);
+                $viewFile = Str::truncate($file);
                 $output->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
+                $viewFile = Str::truncate($file, 70);
                 $question = new ChoiceQuestion(
                     "Do you want delete <fg=yellow>{$viewFile}</> ? (defaults: no)",
                     ['yes', 'no'], 1
@@ -79,6 +79,7 @@ class RemoveCommand extends Command
 
                 if ($answer == 'yes') {
                     unlink($file);
+                    $viewFile = Str::truncate($file);
                     $output->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
                 } elseif ($answer == 'no') {
                     $output->writeln('<fg=yellow>file not deleted</>');
@@ -101,7 +102,7 @@ class RemoveCommand extends Command
                 $removedDirectory = $directory->removeDirectory($emptyDirectory);
 
                 foreach ($removedDirectory as $folder) {
-                    $output->writeln("empty directory: <fg=red>{$folder}</> has been removed");
+                    $output->writeln("directory: <fg=yellow>{$folder}</> has been removed");
                 }
 
                 $emptyDirectory = $directory->getEmptyDirectory();
