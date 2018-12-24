@@ -11,48 +11,40 @@ class ListingFile extends Connect
 {
     public function listingFromRtorrent(OutputInterface $output)
     {
-        // call to rtorrent
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
         // progress bar
         $progressBar = new ProgressBar($output, count($torrents));
-        $progressBar->setFormat(" %current%/%max% %bar% %percent%% %remaining%\n");
+        $progressBar->setFormat(" %percent%% %bar% %remaining%\n Status: %info%\n");
+        $progressBar->setMessage('<fg=yellow>started!</>', 'info');
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
         $progressBar->setProgressCharacter('<fg=yellow>█</>');
         $progressBar->start();
-        $currentTorrent = 0;
 
-        foreach ($torrents as $torrent) {
-            $basePath = $torrent[2];
-            $currentTorrent++;
+        foreach ($torrents as $nb => $torrent) {
+            $progressBar->setMessage("<fg=yellow>data recovery</> $torrent[1]", 'info');
             $progressBar->advance(1);
-            $torrentInfo[$currentTorrent] = ['name' => $torrent[1], 'hash' => $torrent[0]];
 
-            // call to rtorrent
+            $torrentInfo[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
             $files = $this->rtorrent->call('f.multicall', $f_param);
-            $f_id = 0;
 
             foreach ($files as $file) {
-                $fullPath = "{$basePath}/{$file[0]}";
-                $size = Str::convertFileSize($file[1], 2);
-                $torrentInfo[$currentTorrent]['files']["f{$f_id}"] = [
+                $fullPath = "{$torrent[2]}/{$file[0]}";
+                $torrentInfo[$nb]['files'][] = [
                     'name' => $fullPath,
-                    'size' => $size
+                    'size' => Str::convertFileSize($file[1], 2)
                 ];
                 $torrentFile[] = $fullPath;
-                $f_id++;
             }
         }
 
+        $progressBar->setMessage('<fg=green>completed successfully!</>', 'info');
         $progressBar->finish();
 
-        return [
-            'path' => $torrentFile,
-            'info' => $torrentInfo
-        ];
+        return ['path' => $torrentFile, 'info' => $torrentInfo];
     }
 
     public function listingFromHome($exclude = '')

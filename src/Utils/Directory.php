@@ -17,7 +17,7 @@ class Directory extends Connect
             $isEmpty = true;
             $handle = opendir($dir->getPathname());
 
-            while (false !== ($entry = readdir($handle))) {
+            while (($entry = readdir($handle)) !== false) {
                 if ($entry != '.' && $entry != '..') {
                     $isEmpty = false;
                     break;
@@ -38,8 +38,7 @@ class Directory extends Connect
     {
         foreach ($emptyDirectory as $dir) {
             rmdir($dir);
-            $trunc = Str::truncate($dir);
-            $list[] = $trunc;
+            $list[] = Str::truncate($dir);
         }
 
         return $list;
