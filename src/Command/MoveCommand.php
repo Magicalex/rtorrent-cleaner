@@ -44,13 +44,14 @@ class MoveCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        global $version;
         $time = new Stopwatch();
         $time->start('move');
 
         $output->writeln([
-            '╔═══════════════════════════════════════════╗',
-            '║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> ║',
-            '╚═══════════════════════════════════════════╝',
+            '╔══════════════════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER v$version - <fg=cyan>MOVE UNNECESSARY FILES</> ║",
+            '╚══════════════════════════════════════════════════╝',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''

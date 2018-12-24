@@ -29,13 +29,14 @@ class TorrentsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        global $version;
         $time = new Stopwatch();
         $time->start('missingFile');
 
         $output->writeln([
-            '╔═════════════════════════════════════════╗',
-            '║ RTORRENT-CLEANER - <fg=cyan>MANAGE MISSING FILES</> ║',
-            '╚═════════════════════════════════════════╝',
+            '╔════════════════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER v$version - <fg=cyan>MANAGE MISSING FILES</> ║",
+            '╚════════════════════════════════════════════════╝',
             '',
             ' > Retrieving the list of torrents files from rtorrent',
             ''
