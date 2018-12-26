@@ -23,19 +23,7 @@ apt install php7.0-fpm php7.0 php7.0-xml php7.0-xmlrpc
 
 ### Installation via phar file (recommended)
 
-rtorrent cleaner for php 7.1.3 and above
-```sh
-wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.4.1/rtorrent-cleaner-php7.phar
-mv -f rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner
-chmod +x /usr/local/bin/rtorrent-cleaner
-```
-
-rtorrent cleaner for php 5.6 and above
-```sh
-wget https://github.com/Magicalex/rtorrent-cleaner/releases/download/0.4.1/rtorrent-cleaner-php5.phar
-mv -f rtorrent-cleaner-php5.phar /usr/local/bin/rtorrent-cleaner
-chmod +x /usr/local/bin/rtorrent-cleaner
-```
+See the instructions on the releases: https://github.com/Magicalex/rtorrent-cleaner/releases
 
 ### Installation via composer
 
