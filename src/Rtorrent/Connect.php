@@ -17,11 +17,13 @@ class Connect
 
     protected function rtorrent()
     {
+        $httpClient = new \GuzzleHttp\Client(['verify' => false]);
+
         return new \fXmlRpc\Client(
             $this->urlXmlRpc,
             new \fXmlRpc\Transport\HttpAdapterTransport(
                 new \Http\Message\MessageFactory\DiactorosMessageFactory(),
-                new \Http\Adapter\Guzzle6\Client(new \GuzzleHttp\Client())
+                new \Http\Adapter\Guzzle6\Client($httpClient)
             ),
             new \fXmlRpc\Parser\NativeParser(),
             new \fXmlRpc\Serializer\NativeSerializer()
