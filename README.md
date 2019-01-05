@@ -23,7 +23,7 @@ apt install php7.0-fpm php7.0 php7.0-xml php7.0-xmlrpc
 
 ### Installation via phar file (recommended)
 
-See the instructions on the releases: https://github.com/Magicalex/rtorrent-cleaner/releases
+See the instructions on releases notes: https://github.com/Magicalex/rtorrent-cleaner/releases
 
 ### Installation via composer
 
@@ -46,7 +46,7 @@ composer global require magicalex/rtorrent-cleaner
 Displaying help:
 ```sh
 $ rtorrent-cleaner
-rtorrent-cleaner 0.4.0
+rtorrent-cleaner x.x.x
 
 Usage:
   command [options] [arguments]

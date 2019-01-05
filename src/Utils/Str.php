@@ -50,13 +50,13 @@ class Str
         $sec = floor($sec - $min * 60);
         $ms = floor($ms - ($min * 60000) - ($sec * 1000));
 
-        return "{$min} min {$sec} sec {$ms} ms";
+        return "{$min}min {$sec}sec {$ms}ms";
     }
 
     public static function humanMemory($bytes)
     {
         $mb = round($bytes / (1024 * 1024), 2);
 
-        return "{$mb} MB";
+        return "{$mb}MB";
     }
 }
