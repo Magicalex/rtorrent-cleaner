@@ -38,7 +38,7 @@ class TorrentsCommand extends Command
             "║ RTORRENT-CLEANER v$version - <fg=cyan>MANAGE MISSING FILES</> ║",
             '╚════════════════════════════════════════════════╝',
             '',
-            ' > Retrieving the list of torrents files from rtorrent',
+            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
@@ -49,7 +49,7 @@ class TorrentsCommand extends Command
         $nbFile = count($missingFile);
         $helper = $this->getHelper('question');
 
-        $output->writeln(['', " > {$nbFile} file(s) are missing in the torrents.", '']);
+        $output->writeln(['', "> {$nbFile} file(s) are missing in the torrents.", '']);
 
         if ($nbFile == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
@@ -60,7 +60,7 @@ class TorrentsCommand extends Command
                 $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n\n";
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
-                    $ask .= " > missing file: <fg=cyan>{$file}</>\n";
+                    $ask .= "> missing file: <fg=cyan>{$file}</>\n";
                 }
 
                 $question = new ChoiceQuestion($ask, ['delete', 'redownload', 'nothing'], 2);
@@ -69,12 +69,12 @@ class TorrentsCommand extends Command
 
                 if ($answer == 'delete') {
                     $list->deleteTorrent($torrent['hash']);
-                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data\n");
                 } elseif ($answer == 'redownload') {
                     $list->redownload($torrent['hash']);
-                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched\n");
                 } elseif ($answer == 'nothing') {
-                    $output->writeln('<fg=yellow>torrent ignored</>');
+                    $output->writeln("<fg=yellow>torrent ignored</>\n");
                 }
             }
         }
@@ -83,6 +83,6 @@ class TorrentsCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($dataRtorrent['info']);
-        $output->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

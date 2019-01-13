@@ -16,15 +16,14 @@ class ListingFile extends Connect
 
         // progress bar
         $progressBar = new ProgressBar($output, count($torrents));
-        $progressBar->setFormat(" %percent%% %bar% %remaining%\n Status: %info%\n");
-        $progressBar->setMessage('<fg=yellow>started!</>', 'info');
+        $progressBar->setFormat(" %percent%% %bar% %remaining%\n Status: %status%\n");
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
         $progressBar->setProgressCharacter('<fg=yellow>█</>');
         $progressBar->start();
+        $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
         foreach ($torrents as $nb => $torrent) {
-            $progressBar->setMessage("<fg=yellow>data recovery</> $torrent[1]", 'info');
             $progressBar->advance(1);
 
             $torrentInfo[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
@@ -41,7 +40,7 @@ class ListingFile extends Connect
             }
         }
 
-        $progressBar->setMessage('<fg=green>completed successfully!</>', 'info');
+        $progressBar->setMessage('<fg=green>completed successfully!</>', 'status');
         $progressBar->finish();
 
         return ['path' => $torrentFile, 'info' => $torrentInfo];
@@ -49,6 +48,7 @@ class ListingFile extends Connect
 
     public function listingFromHome($exclude = '')
     {
+        //$fileTorrentHome = [];
         $finder = new Finder();
         $finder->in($this->home)->files()->notName($exclude);
 

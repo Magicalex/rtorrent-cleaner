@@ -59,7 +59,7 @@ class ReportCommand extends Command
             "║ RTORRENT-CLEANER v$version - <fg=cyan>REPORT</> ║",
             '╚══════════════════════════════════╝',
             '',
-            ' > Retrieving the list of torrents files from rtorrent',
+            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
@@ -72,7 +72,7 @@ class ReportCommand extends Command
         $unnecessaryFile = count($notTracked);
         $nbMissingFile = count($missingFile);
         $unnecessaryTotalSize = 0;
-        $console->writeln(['', " > {$unnecessaryFile} file(s) are not tracked by rtorrent. (Use the `rm` command for remove unnecessary file)", '']);
+        $console->writeln(['', "> {$unnecessaryFile} file(s) are not tracked by rtorrent. (Use the `rm` command for remove unnecessary file)", '']);
 
         // display files not tracked by rtorrent
         $i = 0;
@@ -93,7 +93,7 @@ class ReportCommand extends Command
             $console->table(['', 'Unnecessary files', 'Size'], $dataTable1);
         }
 
-        $console->writeln(['', " > {$nbMissingFile} files(s) are missing in the torrents. (Use the `torrents` command for manage torrents with missing files)", '']);
+        $console->writeln(['', "> {$nbMissingFile} files(s) are missing in the torrents. (Use the `torrents` command for manage torrents with missing files)", '']);
 
         // display files missing from a torrent
         $i = 0;
@@ -113,6 +113,6 @@ class ReportCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($dataRtorrent['info']);
-        $console->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

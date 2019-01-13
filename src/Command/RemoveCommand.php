@@ -49,7 +49,7 @@ class RemoveCommand extends Command
             "║ RTORRENT-CLEANER v$version - <fg=cyan>REMOVE UNNECESSARY FILES</> ║",
             '╚════════════════════════════════════════════════════╝',
             '',
-            ' > Retrieving the list of torrents files from rtorrent',
+            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
@@ -61,7 +61,7 @@ class RemoveCommand extends Command
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
 
-        $output->writeln(['', " > {$nbFile} unnecessary file(s) to delete.", '']);
+        $output->writeln(['', "> {$nbFile} unnecessary file(s) to delete.", '']);
 
         foreach ($notTracked as $file) {
             if ($input->getOption('assume-yes') === true) {
@@ -114,6 +114,6 @@ class RemoveCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($dataRtorrent['info']);
-        $output->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

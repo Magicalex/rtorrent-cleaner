@@ -53,13 +53,17 @@ class MoveCommand extends Command
             "║ RTORRENT-CLEANER v$version - <fg=cyan>MOVE UNNECESSARY FILES</> ║",
             '╚══════════════════════════════════════════════════╝',
             '',
-            ' > Retrieving the list of torrents files from rtorrent',
+            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 
         // check directory
         if (is_dir($input->getArgument('folder')) === false) {
-            $output->writeln(' > <fg=red>/!\ Please, define a correct directory.</>');
+            $output->writeln([
+                '<error>                                       </>',
+                '<error>  Please, define a correct directory.  </>',
+                '<error>                                       </>'
+            ]);
             exit(1);
         } else {
             $folder = realpath($input->getArgument('folder'));
@@ -74,7 +78,7 @@ class MoveCommand extends Command
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
 
-        $output->writeln(['', " > {$nbFile} unnecessary file(s) to move.", '']);
+        $output->writeln(['', "> {$nbFile} unnecessary file(s) to move.", '']);
 
         // move files not tracked
         foreach ($notTracked as $file) {
@@ -112,6 +116,6 @@ class MoveCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($dataRtorrent['info']);
-        $output->writeln(['', " > time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }
