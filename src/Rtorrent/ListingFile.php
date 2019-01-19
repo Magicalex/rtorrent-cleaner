@@ -46,11 +46,14 @@ class ListingFile extends Connect
         return ['path' => $torrentFile, 'info' => $torrentInfo];
     }
 
-    public function listingFromHome($exclude = '')
+    public function listingFromHome($exclude)
     {
-        //$fileTorrentHome = [];
         $finder = new Finder();
-        $finder->in($this->home)->files()->notName($exclude);
+        $finder->in($this->home)->files();
+
+        if (! empty($exclude)) {
+            $finder->notName($exclude);
+        }
 
         foreach ($finder as $file) {
             $fileTorrentHome[] = $file->getPathname();

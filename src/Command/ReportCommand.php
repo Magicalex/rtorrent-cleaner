@@ -72,7 +72,7 @@ class ReportCommand extends Command
         $unnecessaryFile = count($notTracked);
         $nbMissingFile = count($missingFile);
         $unnecessaryTotalSize = 0;
-        $console->writeln(['', "> {$unnecessaryFile} file(s) are not tracked by rtorrent. (Use the `rm` command for remove unnecessary file)", '']);
+        $console->writeln(['', "> {$unnecessaryFile} file(s) are not tracked by rtorrent. (use the `rm` or `mv` command)", '']);
 
         // display files not tracked by rtorrent
         $i = 0;
@@ -93,7 +93,7 @@ class ReportCommand extends Command
             $console->table(['', 'Unnecessary files', 'Size'], $dataTable1);
         }
 
-        $console->writeln(['', "> {$nbMissingFile} files(s) are missing in the torrents. (Use the `torrents` command for manage torrents with missing files)", '']);
+        $console->writeln(['', "> {$nbMissingFile} files(s) are missing in the torrents. (use the `torrents` command)", '']);
 
         // display files missing from a torrent
         $i = 0;
