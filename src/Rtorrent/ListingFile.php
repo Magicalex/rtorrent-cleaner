@@ -51,7 +51,7 @@ class ListingFile extends Connect
         $finder = new Finder();
         $finder->in($this->home)->files();
 
-        if (! empty($exclude)) {
+        if (!empty($exclude)) {
             $finder->notName($exclude);
         }
 
