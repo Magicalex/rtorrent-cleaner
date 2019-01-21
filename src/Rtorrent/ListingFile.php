@@ -46,12 +46,12 @@ class ListingFile extends Connect
         return ['path' => $torrentFile, 'info' => $torrentInfo];
     }
 
-    public function listingFromHome($exclude)
+    public function listingFromHome($exclude = null)
     {
         $finder = new Finder();
         $finder->in($this->home)->files();
 
-        if (!empty($exclude)) {
+        if ($exclude !== null) {
             $finder->notName($exclude);
         }
 

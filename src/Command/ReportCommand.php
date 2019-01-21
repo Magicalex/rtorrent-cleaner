@@ -72,7 +72,6 @@ class ReportCommand extends Command
         $unnecessaryTotalSize = 0;
         $console->writeln(['', "> {$unnecessaryFile} file(s) are not tracked by rtorrent. (use the `rm` or `mv` command)", '']);
 
-        // display files not tracked by rtorrent
         $i = 0;
         foreach ($notTracked as $file) {
             $i++;
@@ -93,7 +92,6 @@ class ReportCommand extends Command
 
         $console->writeln(['', "> {$nbMissingFile} files(s) are missing in the torrents. (use the `torrents` command)", '']);
 
-        // display files missing from a torrent
         $i = 0;
         foreach ($missingFile as $file) {
             $i++;
