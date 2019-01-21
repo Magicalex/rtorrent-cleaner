@@ -52,8 +52,6 @@ class MoveCommand extends Command
             '╔══════════════════════════════════════════════════╗',
             "║ RTORRENT-CLEANER v$version - <fg=cyan>MOVE UNNECESSARY FILES</> ║",
             '╚══════════════════════════════════════════════════╝',
-            '',
-            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 

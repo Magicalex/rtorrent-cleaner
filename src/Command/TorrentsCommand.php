@@ -37,8 +37,6 @@ class TorrentsCommand extends Command
             '╔════════════════════════════════════════════════╗',
             "║ RTORRENT-CLEANER v$version - <fg=cyan>MANAGE MISSING FILES</> ║",
             '╚════════════════════════════════════════════════╝',
-            '',
-            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 

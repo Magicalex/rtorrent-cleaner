@@ -58,8 +58,6 @@ class ReportCommand extends Command
             '╔══════════════════════════════════╗',
             "║ RTORRENT-CLEANER v$version - <fg=cyan>REPORT</> ║",
             '╚══════════════════════════════════╝',
-            '',
-            '> Retrieving the list of torrents files from rtorrent',
             ''
         ]);
 

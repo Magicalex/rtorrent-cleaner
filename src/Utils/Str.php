@@ -21,7 +21,7 @@ class Str
             $octets = $octets / 1024;
         }
 
-        return round($octets, 2).' '.$unit[$i];
+        return round($octets, 2).$unit[$i];
     }
 
     public static function getPattern($exclude)
@@ -45,12 +45,23 @@ class Str
 
     public static function humanTime($ms)
     {
+        $humanTime = '';
         $sec = (int) $ms / 1000;
         $min = floor($sec / 60);
         $sec = floor($sec - $min * 60);
         $ms = floor($ms - ($min * 60000) - ($sec * 1000));
 
-        return "{$min}min {$sec}sec {$ms}ms";
+        if ($min > 0) {
+            $humanTime = "{$min}min ";
+        }
+
+        if ($sec > 0) {
+            $humanTime .= "{$sec}sec ";
+        }
+
+        $humanTime .= "{$ms}ms";
+
+        return $humanTime;
     }
 
     public static function humanMemory($bytes)
