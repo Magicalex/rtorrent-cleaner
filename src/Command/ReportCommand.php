@@ -55,9 +55,9 @@ class ReportCommand extends Command
         $console = new Log($output, $logFile);
 
         $console->writeln([
-            '╔══════════════════════════════════╗',
-            "║ RTORRENT-CLEANER v$version - <fg=cyan>REPORT</> ║",
-            '╚══════════════════════════════════╝',
+            '╔════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER - <fg=cyan>REPORT</> - v$version ║",
+            '╚════════════════════════════════════╝',
             ''
         ]);
 

@@ -49,9 +49,9 @@ class MoveCommand extends Command
         $time->start('move');
 
         $output->writeln([
-            '╔══════════════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER v$version - <fg=cyan>MOVE UNNECESSARY FILES</> ║",
-            '╚══════════════════════════════════════════════════╝',
+            '╔════════════════════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> - v$version ║",
+            '╚════════════════════════════════════════════════════╝',
             ''
         ]);
 

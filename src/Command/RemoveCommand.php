@@ -45,9 +45,9 @@ class RemoveCommand extends Command
         $time->start('remove');
 
         $output->writeln([
-            '╔════════════════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER v$version - <fg=cyan>REMOVE UNNECESSARY FILES</> ║",
-            '╚════════════════════════════════════════════════════╝',
+            '╔══════════════════════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> - v$version ║",
+            '╚══════════════════════════════════════════════════════╝',
             ''
         ]);
 

@@ -34,9 +34,9 @@ class TorrentsCommand extends Command
         $time->start('missingFile');
 
         $output->writeln([
-            '╔════════════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER v$version - <fg=cyan>MANAGE MISSING FILES</> ║",
-            '╚════════════════════════════════════════════════╝',
+            '╔══════════════════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER - <fg=cyan>MANAGE MISSING FILES</> - v$version ║",
+            '╚══════════════════════════════════════════════════╝',
             ''
         ]);
 
