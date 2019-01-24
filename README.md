@@ -18,7 +18,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 Example for debian 9
 ```sh
-apt install php7.0-fpm php7.0 php7.0-xml php7.0-xmlrpc
+apt install php7.0-cli php7.0-xml php7.0-xmlrpc
 ```
 
 ### Installation via phar file (recommended)
