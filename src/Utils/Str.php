@@ -27,7 +27,7 @@ class Str
     public static function getPattern($exclude)
     {
         if ($exclude === null) {
-            return null;
+            return; // return null
         }
 
         $pattern = explode(',', $exclude);
