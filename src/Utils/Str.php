@@ -26,7 +26,10 @@ class Str
 
     public static function getPattern($exclude)
     {
-        // exclude file with pattern
+        if ($exclude === null) {
+            return null;
+        }
+
         $pattern = explode(',', $exclude);
         $notName = [];
 

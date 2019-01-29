@@ -48,6 +48,7 @@ class ListingFile extends Connect
 
     public function listingFromHome($exclude = null)
     {
+        $fileTorrentHome = [];
         $finder = new Finder();
         $finder->in($this->home)->files();
 
