@@ -63,12 +63,14 @@ class ReportCommand extends Command
 
         $exclude = Str::getPattern($input->getOption('exclude'));
         $list = new ListingFile($input->getOption('url-xmlrpc'));
-        $dataRtorrent = $list->listingFromRtorrent($output);
-        $dataHome = $list->listingFromHome($exclude);
-        $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
-        $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
+        $data = $list->listingFromRtorrent($output, $exclude);
+
+        $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
+        $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);
+
         $unnecessaryFile = count($notTracked);
         $nbMissingFile = count($missingFile);
+
         $unnecessaryTotalSize = 0;
         $console->writeln(['', "> {$unnecessaryFile} file(s) are not tracked by rtorrent. (use the `rm` or `mv` command)", '']);
 

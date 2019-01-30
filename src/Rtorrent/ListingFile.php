@@ -9,12 +9,14 @@ use Symfony\Component\Finder\Finder;
 
 class ListingFile extends Connect
 {
-    public function listingFromRtorrent(OutputInterface $output)
+    public function listingFromRtorrent(OutputInterface $output, $exclude = null)
     {
+        $localFile = [];
+        $directories = [];
+
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
-        // progress bar
         $progressBar = new ProgressBar($output, count($torrents));
         $progressBar->setFormat(" %bar% %percent%%\n remaining time: <fg=yellow>%remaining%</>\n status: %status%\n");
         $progressBar->setBarCharacter('<fg=green>█</>');
@@ -24,8 +26,7 @@ class ListingFile extends Connect
         $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
         foreach ($torrents as $nb => $torrent) {
-            $progressBar->advance(1);
-
+            $directories[] = $torrent[2];
             $torrentInfo[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
             $files = $this->rtorrent->call('f.multicall', $f_param);
@@ -38,58 +39,39 @@ class ListingFile extends Connect
                 ];
                 $torrentFile[] = $fullPath;
             }
+
+            $progressBar->advance(1);
         }
 
-        // TODO : need refactoring
-        // see : https://mondedie.fr/d/10037-rtorrent-cleaner-un-script-pour-liberer-de-la-place-sur-votre-seedbox/143
-        // bad path to reach all the files
-        $directory = [];
-
-        foreach ($torrents as $torrent) {
-            $directory[] = dirname($torrent[2]);
-        }
-
-        $directory = array_unique($directory);
-
-        if (count($directory) == 2) {
-            if (dirname($directory[0]) == $directory[1]) {
-                $this->home = $directory[0];
-            } elseif (dirname($directory[1]) == $directory[0]) {
-                $this->home = $directory[1];
-            }
-        }
-        // need refactoring
-
-        $progressBar->setMessage('<fg=green>completed successfully!</>', 'status');
-        $progressBar->finish();
-
-        return ['path' => $torrentFile, 'info' => $torrentInfo];
-    }
-
-    public function listingFromHome($exclude = null)
-    {
-        $fileTorrentHome = [];
+        $directories = array_unique($directories);
         $finder = new Finder();
-        $finder->in($this->home)->files();
+        $finder->in($directories)->files();
 
         if ($exclude !== null) {
             $finder->notName($exclude);
         }
 
         foreach ($finder as $file) {
-            $fileTorrentHome[] = $file->getPathname();
+            $localFile[] = $file->getPathname();
         }
 
-        return $fileTorrentHome;
+        $progressBar->setMessage('<fg=green>completed successfully!</>', 'status');
+        $progressBar->finish();
+
+        return [
+            'rtorrent' => $torrentFile,
+            'data-torrent' => $torrentInfo,
+            'local' => array_unique($localFile)
+        ];
     }
 
-    public function getFilesNotTracked($home, $rtorrent)
+    public function getFilesNotTracked($rtorrent, $local)
     {
-        return array_diff($home, $rtorrent);
+        return array_diff($local, $rtorrent);
     }
 
-    public function getFilesMissingFromTorrent($rtorrent, $home)
+    public function getFilesMissingFromTorrent($rtorrent, $local)
     {
-        return array_diff($rtorrent, $home);
+        return array_diff($rtorrent, $local);
     }
 }
