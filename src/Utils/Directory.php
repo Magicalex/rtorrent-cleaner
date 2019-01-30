@@ -2,16 +2,16 @@
 
 namespace Rtorrent\Cleaner\Utils;
 
-use Rtorrent\Cleaner\Rtorrent\Connect;
+use Rtorrent\Cleaner\Rtorrent\ListingFile;
 use Symfony\Component\Finder\Finder;
 
-class Directory extends Connect
+class Directory extends ListingFile
 {
     public function getEmptyDirectory()
     {
         $emptyDirectory = [];
         $finder = new Finder();
-        $finder->in($this->home)->directories();
+        $finder->in($this->directories)->directories();
 
         foreach ($finder as $dir) {
             $isEmpty = true;

@@ -9,16 +9,17 @@ use Symfony\Component\Finder\Finder;
 
 class ListingFile extends Connect
 {
+    protected $directories = [];
+
     public function listingFromRtorrent(OutputInterface $output, $exclude = null)
     {
         $localFile = [];
-        $directories = [];
-
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
         $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
         $progressBar = new ProgressBar($output, count($torrents));
         $progressBar->setFormat(" %bar% %percent%%\n remaining time: <fg=yellow>%remaining%</>\n status: %status%\n");
+        $progressBar->setMessage('<fg=yellow>getting the list of all torrents from rtorrent...</>', 'status');
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
         $progressBar->setProgressCharacter('<fg=yellow>█</>');
@@ -43,9 +44,9 @@ class ListingFile extends Connect
             $progressBar->advance(1);
         }
 
-        $directories = array_unique($directories);
+        $this->directories = array_unique($$this->directories);
         $finder = new Finder();
-        $finder->in($directories)->files();
+        $finder->in($this->directories)->files();
 
         if ($exclude !== null) {
             $finder->notName($exclude);
