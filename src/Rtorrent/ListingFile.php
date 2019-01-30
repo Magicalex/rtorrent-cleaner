@@ -40,6 +40,26 @@ class ListingFile extends Connect
             }
         }
 
+        // TODO : need refactoring
+        // see : https://mondedie.fr/d/10037-rtorrent-cleaner-un-script-pour-liberer-de-la-place-sur-votre-seedbox/143
+        // bad path to reach all the files
+        $directory = [];
+
+        foreach ($torrents as $torrent) {
+            $directory[] = dirname($torrent[2]);
+        }
+
+        $directory = array_unique($directory);
+
+        if (count($directory) == 2) {
+            if (dirname($directory[0]) == $directory[1]) {
+                $this->home = $directory[0];
+            } elseif (dirname($directory[1]) == $directory[0]) {
+                $this->home = $directory[1];
+            }
+        }
+        // need refactoring
+
         $progressBar->setMessage('<fg=green>completed successfully!</>', 'status');
         $progressBar->finish();
 
