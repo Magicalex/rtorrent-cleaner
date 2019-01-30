@@ -25,7 +25,7 @@ class MissingFile extends ListingFile
         $findHash = false;
 
         foreach ($missingFile as $file) {
-            $torrent = $this->findTorrentHash($dataRtorrent['info'], $file);
+            $torrent = $this->findTorrentHash($dataRtorrent['rtorrent'], $file);
 
             // check if $hash has been already add
             foreach ($torrentMissingFile as $id => $info) {

@@ -41,18 +41,17 @@ class TorrentsCommand extends Command
         ]);
 
         $list = new MissingFile($input->getOption('url-xmlrpc'));
-        $dataRtorrent = $list->listingFromRtorrent($output);
-        $dataHome = $list->listingFromHome();
-        $missingFile = $list->getFilesMissingFromTorrent($dataRtorrent['path'], $dataHome);
+        $data = $list->listingFromRtorrent($output);
+        $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);
+
         $nbFile = count($missingFile);
         $helper = $this->getHelper('question');
-
         $output->writeln(['', "> {$nbFile} file(s) are missing in the torrents.", '']);
 
         if ($nbFile == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
         } else {
-            $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $dataRtorrent);
+            $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $data);
 
             foreach ($torrentMissingFile as $torrent) {
                 $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n\n";
@@ -80,7 +79,7 @@ class TorrentsCommand extends Command
         $event = $time->stop('missingFile');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $torrents = count($dataRtorrent['info']);
+        $torrents = count($data['info-torrent']);
         $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

@@ -110,7 +110,7 @@ class ReportCommand extends Command
         $event = $time->stop('report');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $torrents = count($dataRtorrent['info']);
+        $torrents = count($data['data-torrent']);
         $console->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

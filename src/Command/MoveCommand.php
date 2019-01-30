@@ -67,18 +67,15 @@ class MoveCommand extends Command
             $folder = realpath($input->getArgument('folder'));
         }
 
-        // exclude file with pattern
         $exclude = Str::getPattern($input->getOption('exclude'));
         $list = new ListingFile($input->getOption('url-xmlrpc'));
-        $dataRtorrent = $list->listingFromRtorrent($output);
-        $dataHome = $list->listingFromHome($exclude);
-        $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $data = $list->listingFromRtorrent($output, $exclude);
+        $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
+
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
-
         $output->writeln(['', "> {$nbFile} unnecessary file(s) to move.", '']);
 
-        // move files not tracked
         foreach ($notTracked as $file) {
             $fileName = basename($file);
 
@@ -113,7 +110,7 @@ class MoveCommand extends Command
         $event = $time->stop('move');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $torrents = count($dataRtorrent['info']);
+        $torrents = count($data['data-torrent']);
         $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

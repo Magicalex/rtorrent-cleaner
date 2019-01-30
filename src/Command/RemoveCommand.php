@@ -53,12 +53,11 @@ class RemoveCommand extends Command
 
         $exclude = Str::getPattern($input->getOption('exclude'));
         $list = new ListingFile($input->getOption('url-xmlrpc'));
-        $dataRtorrent = $list->listingFromRtorrent($output);
-        $dataHome = $list->listingFromHome($exclude);
-        $notTracked = $list->getFilesNotTracked($dataHome, $dataRtorrent['path']);
+        $data = $list->listingFromRtorrent($output, $exclude);
+        $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
+
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
-
         $output->writeln(['', "> {$nbFile} unnecessary file(s) to delete.", '']);
 
         foreach ($notTracked as $file) {
@@ -111,7 +110,7 @@ class RemoveCommand extends Command
         $event = $time->stop('remove');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
-        $torrents = count($dataRtorrent['info']);
+        $torrents = count($data['data-torrent']);
         $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }
