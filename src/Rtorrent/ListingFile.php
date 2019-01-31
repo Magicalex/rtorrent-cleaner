@@ -27,7 +27,7 @@ class ListingFile extends Connect
         $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
         foreach ($torrents as $nb => $torrent) {
-            $directories[] = $torrent[2];
+            $this->directories[] = $torrent[2];
             $torrentInfo[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
             $files = $this->rtorrent->call('f.multicall', $f_param);

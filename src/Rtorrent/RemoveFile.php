@@ -1,11 +1,10 @@
 <?php
 
-namespace Rtorrent\Cleaner\Utils;
+namespace Rtorrent\Cleaner\Rtorrent;
 
-use Rtorrent\Cleaner\Rtorrent\ListingFile;
 use Symfony\Component\Finder\Finder;
 
-class Directory extends ListingFile
+class RemoveFile extends ListingFile
 {
     public function getEmptyDirectory()
     {

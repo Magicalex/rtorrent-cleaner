@@ -2,8 +2,7 @@
 
 namespace Rtorrent\Cleaner\Command;
 
-use Rtorrent\Cleaner\Rtorrent\ListingFile;
-use Rtorrent\Cleaner\Utils\Directory;
+use Rtorrent\Cleaner\Rtorrent\RemoveFile;
 use Rtorrent\Cleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,7 +51,7 @@ class RemoveCommand extends Command
         ]);
 
         $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('url-xmlrpc'));
+        $list = new RemoveFile($input->getOption('url-xmlrpc'));
         $data = $list->listingFromRtorrent($output, $exclude);
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
 
@@ -89,21 +88,19 @@ class RemoveCommand extends Command
             $output->writeln('<fg=yellow>no files to remove</>');
         }
 
-        // remove empty directory
-        $directory = new Directory($input->getOption('url-xmlrpc'));
-        $emptyDirectory = $directory->getEmptyDirectory();
+        $emptyDirectory = $list->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
             $output->writeln('<fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
-                $removedDirectory = $directory->removeDirectory($emptyDirectory);
+                $removedDirectory = $list->removeDirectory($emptyDirectory);
 
                 foreach ($removedDirectory as $folder) {
                     $output->writeln("directory: <fg=yellow>{$folder}</> has been removed");
                 }
 
-                $emptyDirectory = $directory->getEmptyDirectory();
+                $emptyDirectory = $list->getEmptyDirectory();
             }
         }
 
