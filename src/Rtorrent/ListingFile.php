@@ -44,7 +44,7 @@ class ListingFile extends Connect
             $progressBar->advance(1);
         }
 
-        $this->directories = array_unique($$this->directories);
+        $this->directories = array_unique($this->directories);
         $finder = new Finder();
         $finder->in($this->directories)->files();
 
