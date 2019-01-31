@@ -60,9 +60,9 @@ class ListingFile extends Connect
         $progressBar->finish();
 
         return [
-            'rtorrent' => $torrentFile,
+            'rtorrent'     => $torrentFile,
             'data-torrent' => $torrentInfo,
-            'local' => array_unique($localFile)
+            'local'        => array_unique($localFile)
         ];
     }
 
