@@ -107,6 +107,11 @@ $ rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost:80
 This example exclude all files `.sub` and `.srt` in the output  
 You can add multiple patterns by separating them by `,` only for php 7.1 and above
 
+Option for a Basic authentication `--useranme` and `--password` for the command `report` `rm` `mv` and `torrents`
+```sh
+$ rtorrent-cleaner report --url-xmlrpc=https://domain.tld/RPC --username=john --password=azerty
+```
+
 ## Improve performance
 
 Add this [nginx.conf](https://github.com/Magicalex/rtorrent-cleaner/blob/master/nginx.conf) in your nginx configuration.
