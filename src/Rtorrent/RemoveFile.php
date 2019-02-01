@@ -2,6 +2,7 @@
 
 namespace Rtorrent\Cleaner\Rtorrent;
 
+use Rtorrent\Cleaner\Utils\Str;
 use Symfony\Component\Finder\Finder;
 
 class RemoveFile extends ListingFile
