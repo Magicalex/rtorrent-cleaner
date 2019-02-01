@@ -27,7 +27,6 @@ class ListingFile extends Connect
         $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
         foreach ($torrents as $nb => $torrent) {
-
             if (is_dir($torrent[2]) === true) {
                 $this->directories[] = $torrent[2];
             }
