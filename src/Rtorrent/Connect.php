@@ -6,16 +6,26 @@ class Connect
 {
     protected $rtorrent;
     protected $urlXmlRpc;
+    protected $username;
+    protected $password;
 
-    public function __construct($urlXmlRpc)
+    public function __construct($urlXmlRpc, $username, $password)
     {
         $this->urlXmlRpc = $urlXmlRpc;
+        $this->username = $username;
+        $this->password = $password;
         $this->rtorrent = $this->rtorrent();
     }
 
     protected function rtorrent()
     {
-        $httpClient = new \GuzzleHttp\Client(['verify' => false]);
+        $options = ['verify' => false];
+
+        if ($this->username !== null && $this->password !== null) {
+            $options['auth'] = [$this->username, $this->password];
+        }
+
+        $httpClient = new \GuzzleHttp\Client($options);
 
         return new \fXmlRpc\Client(
             $this->urlXmlRpc,

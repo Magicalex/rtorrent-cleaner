@@ -34,7 +34,17 @@ class RemoveCommand extends Command
                 'assume-yes',
                 null,
                 InputOption::VALUE_NONE,
-                'Delete all the files without confirmation');
+                'Delete all the files without confirmation')
+            ->addOption(
+                'username',
+                'u',
+                InputOption::VALUE_REQUIRED,
+                'Set username for a Basic HTTP authentication')
+            ->addOption(
+                'password',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set password for a Basic HTTP authentication');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -50,9 +60,8 @@ class RemoveCommand extends Command
             ''
         ]);
 
-        $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new RemoveFile($input->getOption('url-xmlrpc'));
-        $data = $list->listingFromRtorrent($output, $exclude);
+        $list = new RemoveFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $data = $list->listingFromRtorrent($output, Str::getPattern($input->getOption('exclude')));
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
 
         $nbFile = count($notTracked);

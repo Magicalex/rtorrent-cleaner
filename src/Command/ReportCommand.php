@@ -36,7 +36,17 @@ class ReportCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
-                false);
+                false)
+            ->addOption(
+                'username',
+                'u',
+                InputOption::VALUE_REQUIRED,
+                'Set username for a Basic HTTP authentication')
+            ->addOption(
+                'password',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set password for a Basic HTTP authentication');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -61,9 +71,8 @@ class ReportCommand extends Command
             ''
         ]);
 
-        $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('url-xmlrpc'));
-        $data = $list->listingFromRtorrent($output, $exclude);
+        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $data = $list->listingFromRtorrent($output, Str::getPattern($input->getOption('exclude')));
 
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
         $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);

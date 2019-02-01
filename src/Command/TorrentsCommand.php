@@ -24,7 +24,17 @@ class TorrentsCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
-                'http://rtorrent:8080/RPC');
+                'http://rtorrent:8080/RPC')
+            ->addOption(
+                'username',
+                'u',
+                InputOption::VALUE_REQUIRED,
+                'Set username for a Basic HTTP authentication')
+            ->addOption(
+                'password',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set password for a Basic HTTP authentication');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,7 +50,7 @@ class TorrentsCommand extends Command
             ''
         ]);
 
-        $list = new MissingFile($input->getOption('url-xmlrpc'));
+        $list = new MissingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
         $data = $list->listingFromRtorrent($output);
         $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);
 

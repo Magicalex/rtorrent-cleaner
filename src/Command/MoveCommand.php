@@ -36,6 +36,16 @@ class MoveCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Move all the files without confirmation')
+            ->addOption(
+                'username',
+                'u',
+                InputOption::VALUE_REQUIRED,
+                'Set username for a Basic HTTP authentication')
+            ->addOption(
+                'password',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set password for a Basic HTTP authentication')
             ->addArgument(
                 'folder',
                 InputArgument::REQUIRED,
@@ -55,7 +65,6 @@ class MoveCommand extends Command
             ''
         ]);
 
-        // check directory
         if (is_dir($input->getArgument('folder')) === false) {
             $output->writeln([
                 '<error>                                       </>',
@@ -67,9 +76,8 @@ class MoveCommand extends Command
             $folder = realpath($input->getArgument('folder'));
         }
 
-        $exclude = Str::getPattern($input->getOption('exclude'));
-        $list = new ListingFile($input->getOption('url-xmlrpc'));
-        $data = $list->listingFromRtorrent($output, $exclude);
+        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $data = $list->listingFromRtorrent($output, Str::getPattern($input->getOption('exclude')));
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
 
         $nbFile = count($notTracked);
