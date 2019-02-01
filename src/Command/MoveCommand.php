@@ -71,6 +71,7 @@ class MoveCommand extends Command
                 '<error>  Please, define a correct directory.  </>',
                 '<error>                                       </>'
             ]);
+
             exit(1);
         } else {
             $folder = realpath($input->getArgument('folder'));

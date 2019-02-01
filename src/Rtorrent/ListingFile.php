@@ -27,7 +27,11 @@ class ListingFile extends Connect
         $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
         foreach ($torrents as $nb => $torrent) {
-            $this->directories[] = $torrent[2];
+
+            if (is_dir($torrent[2]) === true) {
+                $this->directories[] = $torrent[2];
+            }
+
             $torrentInfo[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
             $files = $this->rtorrent->call('f.multicall', $f_param);
@@ -45,6 +49,17 @@ class ListingFile extends Connect
         }
 
         $this->directories = array_unique($this->directories);
+
+        if (count($this->directories) == 0) {
+            $output->writeln([
+                '<error>                                            </>',
+                '<error>  Torrent files are not available locally.  </>',
+                '<error>                                            </>'
+            ]);
+
+            exit(1);
+        }
+
         $finder = new Finder();
         $finder->in($this->directories)->files();
 
