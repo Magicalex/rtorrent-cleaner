@@ -13,7 +13,7 @@ use Rtorrent\Cleaner\Command\MoveCommand;
 use Rtorrent\Cleaner\Command\RemoveCommand;
 use Rtorrent\Cleaner\Command\ReportCommand;
 
-$version = '0.5.1';
+$version = '0.5.2';
 $app = new Application('rtorrent-cleaner', $version);
 
 // add commands
