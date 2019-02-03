@@ -64,7 +64,7 @@ class TorrentsCommand extends Command
             $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $data);
 
             foreach ($torrentMissingFile as $torrent) {
-                $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n\n";
+                $ask = "\n<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n\n";
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
                     $ask .= "> missing file: <fg=cyan>{$file}</>\n";
@@ -76,12 +76,12 @@ class TorrentsCommand extends Command
 
                 if ($answer == 'delete') {
                     $list->deleteTorrent($torrent['hash']);
-                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data\n");
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
                 } elseif ($answer == 'redownload') {
                     $list->redownload($torrent['hash']);
-                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched\n");
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
                 } elseif ($answer == 'nothing') {
-                    $output->writeln("<fg=yellow>torrent ignored</>\n");
+                    $output->writeln("<fg=yellow>torrent ignored</>");
                 }
             }
         }
