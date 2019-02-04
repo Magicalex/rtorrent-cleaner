@@ -22,7 +22,7 @@ class ListingFile extends Connect
         $progressBar->setMessage('<fg=yellow>getting the list of all torrents from rtorrent...</>', 'status');
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
-        $progressBar->setProgressCharacter('<fg=yellow>█</>');
+        $progressBar->setProgressCharacter('<fg=green>█</>');
         $progressBar->start();
         $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
