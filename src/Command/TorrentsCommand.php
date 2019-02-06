@@ -67,7 +67,7 @@ class TorrentsCommand extends Command
                 $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n";
                 foreach ($torrent['files'] as $file) {
                     $file = Str::truncate($file);
-                    $ask .= "> missing file: <fg=cyan>{$file}</>\n";
+                    $ask .= "missing file: <fg=cyan>{$file}</>\n";
                 }
 
                 $question = new ChoiceQuestion($ask, ['delete', 'redownload', 'nothing'], 2);
