@@ -18,13 +18,12 @@ class ListingFile extends Connect
         $torrents = $this->rtorrent->call('d.multicall2', $d_param);
 
         $progressBar = new ProgressBar($output, count($torrents));
-        $progressBar->setFormat(" %bar% %percent%%\n remaining time: <fg=yellow>%remaining%</>\n status: %status%\n");
-        $progressBar->setMessage('<fg=yellow>getting the list of all torrents from rtorrent...</>', 'status');
+        $progressBar->setFormat(" %bar% %percent%%\n remaining time: %remaining%\n status: %status%\n");
+        $progressBar->setMessage('recovering the files list from rtorrent...', 'status');
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
         $progressBar->setProgressCharacter('<fg=green>█</>');
         $progressBar->start();
-        $progressBar->setMessage('<fg=yellow>recovering the files list from rtorrent...</>', 'status');
 
         foreach ($torrents as $nb => $torrent) {
             if (is_dir($torrent[2]) === true) {
