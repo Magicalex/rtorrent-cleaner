@@ -2,11 +2,11 @@
 
 namespace Rtorrent\Cleaner\Console;
 
-use Symfony\Component\Console\Application as App;
-use Rtorrent\Cleaner\Command\TorrentsCommand;
 use Rtorrent\Cleaner\Command\MoveCommand;
 use Rtorrent\Cleaner\Command\RemoveCommand;
 use Rtorrent\Cleaner\Command\ReportCommand;
+use Rtorrent\Cleaner\Command\TorrentsCommand;
+use Symfony\Component\Console\Application as App;
 
 class Application
 {
@@ -33,5 +33,4 @@ class Application
         $this->app->add(new TorrentsCommand());
         $this->app->run();
     }
-
 }

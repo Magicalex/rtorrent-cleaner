@@ -44,7 +44,7 @@ class TorrentsCommand extends Command
 
         $output->writeln([
             '╔═════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER - <fg=cyan>MANAGE MISSING FILES</> ║",
+            '║ RTORRENT-CLEANER - <fg=cyan>MANAGE MISSING FILES</> ║',
             '╚═════════════════════════════════════════╝',
             ''
         ]);

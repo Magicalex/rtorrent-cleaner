@@ -65,7 +65,7 @@ class ReportCommand extends Command
 
         $console->writeln([
             '╔═══════════════════════════╗',
-            "║ RTORRENT-CLEANER - <fg=cyan>REPORT</> ║",
+            '║ RTORRENT-CLEANER - <fg=cyan>REPORT</> ║',
             '╚═══════════════════════════╝',
             ''
         ]);

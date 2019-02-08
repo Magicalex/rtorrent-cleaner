@@ -54,7 +54,7 @@ class RemoveCommand extends Command
 
         $output->writeln([
             '╔═════════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> ║",
+            '║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> ║',
             '╚═════════════════════════════════════════════╝',
             ''
         ]);

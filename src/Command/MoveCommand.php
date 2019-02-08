@@ -59,7 +59,7 @@ class MoveCommand extends Command
 
         $output->writeln([
             '╔═══════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> ║",
+            '║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> ║',
             '╚═══════════════════════════════════════════╝',
             ''
         ]);
