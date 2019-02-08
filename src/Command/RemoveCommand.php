@@ -49,14 +49,13 @@ class RemoveCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        global $version;
         $time = new Stopwatch();
         $time->start('remove');
 
         $output->writeln([
-            '╔══════════════════════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> - v$version ║",
-            '╚══════════════════════════════════════════════════════╝',
+            '╔═════════════════════════════════════════════╗',
+            "║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> ║",
+            '╚═════════════════════════════════════════════╝',
             ''
         ]);
 

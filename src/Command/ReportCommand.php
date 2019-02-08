@@ -51,7 +51,6 @@ class ReportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        global $version;
         $time = new Stopwatch();
         $time->start('report');
         $logFile = false;
@@ -65,9 +64,9 @@ class ReportCommand extends Command
         $console = new Log($output, $logFile);
 
         $console->writeln([
-            '╔════════════════════════════════════╗',
-            "║ RTORRENT-CLEANER - <fg=cyan>REPORT</> - v$version ║",
-            '╚════════════════════════════════════╝',
+            '╔═══════════════════════════╗',
+            "║ RTORRENT-CLEANER - <fg=cyan>REPORT</> ║",
+            '╚═══════════════════════════╝',
             ''
         ]);
 
