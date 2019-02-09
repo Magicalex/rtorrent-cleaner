@@ -51,9 +51,9 @@ class ListingFile extends Connect
         if (count($this->directories) == 0) {
             $output->writeln([
                 '',
-                '<error>                                            </>',
-                '<error>  Torrent files are not available locally.  </>',
-                '<error>                                            </>'
+                '<error>                                                </>',
+                '<error>  The files are not able to be reached locally  </>',
+                '<error>                                                </>'
             ]);
 
             exit(1);

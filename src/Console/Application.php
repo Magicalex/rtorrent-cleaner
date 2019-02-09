@@ -11,7 +11,7 @@ use Symfony\Component\Console\Application as App;
 class Application
 {
     private $app;
-    private $version = '0.5.2';
+    private $version = '0.6.0';
     private $logo = "      _                            _          _
  _ __| |_ ___  _ __ _ __ ___ _ __ | |_    ___| | ___  __ _ _ __   ___ _ __
 | '__| __/ _ \| '__| '__/ _ \ '_ \| __|  / __| |/ _ \/ _` | '_ \ / _ \ '__|
@@ -27,10 +27,13 @@ class Application
 
     public function run()
     {
-        $this->app->add(new ReportCommand());
-        $this->app->add(new RemoveCommand());
-        $this->app->add(new MoveCommand());
-        $this->app->add(new TorrentsCommand());
+        $this->app->addCommands([
+            new MoveCommand(),
+            new ReportCommand(),
+            new RemoveCommand(),
+            new TorrentsCommand()
+        ]);
+
         $this->app->run();
     }
 }
