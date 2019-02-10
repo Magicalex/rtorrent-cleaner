@@ -29,7 +29,7 @@ class RemoveCommand extends Command
                 'exclude',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Exclude files with a pattern. ex: `--exclude=*.sub` exclude all subfiles')
+                'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
                 'assume-yes',
                 null,
