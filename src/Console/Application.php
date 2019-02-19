@@ -25,6 +25,6 @@ class Application extends BaseApplication
 
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
-        return parent::run($input, $output);
+        parent::run($input, $output);
     }
 }
