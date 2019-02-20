@@ -23,7 +23,7 @@ class TorrentsCommand extends Command
                 'url-xmlrpc',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Set url to your scgi mount point like: http(s)://username:password@localhost:80/RPC',
+                'Set url to your scgi mount point like: http(s)://localhost:80/RPC',
                 'http://rtorrent:8080/RPC')
             ->addOption(
                 'username',
