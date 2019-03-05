@@ -5,7 +5,6 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 [![StyleCI](https://github.styleci.io/repos/158750704/shield?branch=master)](https://github.styleci.io/repos/158750704)
 [![Latest Stable Version](https://poser.pugx.org/magicalex/rtorrent-cleaner/v/stable)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
-[![Total Downloads](https://poser.pugx.org/magicalex/rtorrent-cleaner/downloads)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
 [![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
 
 ## Requirements
