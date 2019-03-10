@@ -27,12 +27,12 @@ class RemoveCommand extends Command
                 'http://rtorrent:8080/RPC')
             ->addOption(
                 'exclude',
-                null,
-                InputOption::VALUE_REQUIRED,
+                'e',
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
                 'assume-yes',
-                null,
+                'y',
                 InputOption::VALUE_NONE,
                 'Delete all the files without confirmation')
             ->addOption(
@@ -60,7 +60,7 @@ class RemoveCommand extends Command
         ]);
 
         $list = new RemoveFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
-        $data = $list->listingFromRtorrent($output, Str::getPattern($input->getOption('exclude')));
+        $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
 
         $nbFile = count($notTracked);

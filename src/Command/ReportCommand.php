@@ -28,8 +28,8 @@ class ReportCommand extends Command
                 'http://rtorrent:8080/RPC')
             ->addOption(
                 'exclude',
-                null,
-                InputOption::VALUE_REQUIRED,
+                'e',
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
                 'log',
@@ -53,7 +53,6 @@ class ReportCommand extends Command
     {
         $time = new Stopwatch();
         $time->start('report');
-        $logFile = false;
 
         if ($input->getOption('log') !== false && $input->getOption('log') === null) {
             $logFile = 'rtorrent-cleaner.log';
@@ -71,7 +70,7 @@ class ReportCommand extends Command
         ]);
 
         $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
-        $data = $list->listingFromRtorrent($output, Str::getPattern($input->getOption('exclude')));
+        $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
 
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
         $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);

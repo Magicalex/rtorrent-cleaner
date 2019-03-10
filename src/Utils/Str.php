@@ -24,28 +24,6 @@ class Str
         return round($octets, 2).$unit[$i];
     }
 
-    public static function getPattern($exclude)
-    {
-        if ($exclude === null) {
-            return;
-        }
-
-        $pattern = explode(',', $exclude);
-        $notName = [];
-
-        foreach ($pattern as $value) {
-            if (empty($value) === false) {
-                $notName[] = $value;
-            }
-        }
-
-        if (version_compare(PHP_VERSION, '7.1.3', '<=') === true) {
-            $notName = implode($notName);
-        }
-
-        return $notName;
-    }
-
     public static function humanTime($ms)
     {
         $humanTime = '';

@@ -103,13 +103,10 @@ $ rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC
 
 Option for the command `mv`, `rm` and `report` to ignore files: `--exclude=`
 ```sh
-# php 5.6 and above
 $ rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC
-# php 7.1 and above
-$ rtorrent-cleaner report --exclude=*.sub,*.srt --url-xmlrpc=http://localhost:80/RPC
+$ rtorrent-cleaner report -e *.sub -e *.srt --url-xmlrpc=http://localhost:80/RPC
 ```
-This example exclude all files `.sub` and `.srt` in the output  
-You can add multiple patterns by separating them by `,` only for php 7.1 and above
+The second example excludes all files `.sub` and `.srt` in the output
 
 Option for a Basic authentication `--useranme` and `--password` for the command `report`, `rm`, `mv` and `torrents`
 ```sh
