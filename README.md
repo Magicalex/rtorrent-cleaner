@@ -85,15 +85,15 @@ $ rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log --url-xmlrpc=http:
 Command `rm` for delete unnecessary files in your download folder:
 ```sh
 $ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC
-# delete without confirmation --assume-yes
-$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC --assume-yes
+# delete without confirmation --assume-yes or -y
+$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC -y
 ```
 
 Command `mv` for move unnecessary files in a specified folder (ex: /home/user/old) :
 ```sh
 $ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC
-# move without confirmation --assume-yes
-$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC --assume-yes
+# move without confirmation --assume-yes or -y
+$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC -y
 ```
 
 Command `torrents` for delete torrents or redownload the missing files:
@@ -108,7 +108,7 @@ $ rtorrent-cleaner report -e *.sub -e *.srt --url-xmlrpc=http://localhost:80/RPC
 ```
 The second example excludes all files `.sub` and `.srt` in the output
 
-Option for a Basic authentication `--useranme` and `--password` for the command `report`, `rm`, `mv` and `torrents`
+Option for a Basic authentication `--username` and `--password` for the command `report`, `rm`, `mv` and `torrents`
 ```sh
 $ rtorrent-cleaner report --url-xmlrpc=https://domain.tld/RPC --username=john --password=azerty
 ```
