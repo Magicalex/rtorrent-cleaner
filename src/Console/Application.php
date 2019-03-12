@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends BaseApplication
 {
-    private $version = '0.6.1';
+    private $version = '0.6.2';
     private $name = 'rtorrent-cleaner';
 
     public function __construct()
