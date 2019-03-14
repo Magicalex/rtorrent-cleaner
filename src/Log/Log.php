@@ -8,17 +8,17 @@ use Symfony\Component\Console\Output\StreamOutput;
 
 class Log
 {
-    protected $log;
     protected $output;
-    protected $enabledLog;
+    protected $log = false;
 
-    public function __construct(OutputInterface $output, $logFile)
+    public function __construct(OutputInterface $output, $log)
     {
         $this->output = $output;
-        $this->enabledLog = ($logFile === false) ? false : true;
 
-        if ($this->enabledLog === true) {
-            $this->log = new StreamOutput(fopen($logFile, 'w+'));
+        if ($log === null) {
+            $this->log = new StreamOutput(fopen('rtorrent-cleaner.log', 'w+'));
+        } elseif ($log !== false) {
+            $this->log = new StreamOutput(fopen($log, 'w+'));
         }
     }
 
@@ -26,7 +26,7 @@ class Log
     {
         $this->output->writeln($data);
 
-        if ($this->enabledLog === true) {
+        if ($this->log !== false) {
             $this->log->writeln($data);
         }
     }
@@ -37,7 +37,7 @@ class Log
         $console->setHeaders($header)->setRows($data);
         $console->render();
 
-        if ($this->enabledLog === true) {
+        if ($this->log !== false) {
             $log = new Table($this->log);
             $log->setHeaders($header)->setRows($data);
             $log->render();

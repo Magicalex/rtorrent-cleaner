@@ -31,6 +31,12 @@ class RemoveCommand extends Command
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
+                'log',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
+                false)
+            ->addOption(
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
@@ -52,7 +58,9 @@ class RemoveCommand extends Command
         $time = new Stopwatch();
         $time->start('remove');
 
-        $output->writeln([
+        $console = new Log($output, $input->getOption('log'));
+
+        $console->writeln([
             '╔═════════════════════════════════════════════╗',
             '║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> ║',
             '╚═════════════════════════════════════════════╝',
@@ -65,13 +73,13 @@ class RemoveCommand extends Command
 
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
-        $output->writeln(['', "> {$nbFile} unnecessary file(s) to delete.", '']);
+        $console->writeln(['', "> {$nbFile} unnecessary file(s) to delete.", '']);
 
         foreach ($notTracked as $file) {
             if ($input->getOption('assume-yes') === true) {
                 unlink($file);
                 $viewFile = Str::truncate($file);
-                $output->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
+                $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
             } elseif ($input->getOption('assume-yes') === false) {
                 $viewFile = Str::truncate($file, 70);
                 $question = new ChoiceQuestion(
@@ -85,27 +93,27 @@ class RemoveCommand extends Command
                 if ($answer == 'yes') {
                     unlink($file);
                     $viewFile = Str::truncate($file);
-                    $output->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
+                    $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
                 } elseif ($answer == 'no') {
-                    $output->writeln('<fg=yellow>file not deleted</>');
+                    $console->writeln('<fg=yellow>file not deleted</>');
                 }
             }
         }
 
         if (count($notTracked) == 0) {
-            $output->writeln('<fg=yellow>no files to remove</>');
+            $console->writeln('<fg=yellow>no files to remove</>');
         }
 
         $emptyDirectory = $list->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
-            $output->writeln('<fg=yellow>no empty directory</>');
+            $console->writeln('<fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $list->removeDirectory($emptyDirectory);
 
                 foreach ($removedDirectory as $folder) {
-                    $output->writeln("directory: <fg=yellow>{$folder}</> has been removed");
+                    $console->writeln("directory: <fg=yellow>{$folder}</> has been removed");
                 }
 
                 $emptyDirectory = $list->getEmptyDirectory();
@@ -116,6 +124,6 @@ class RemoveCommand extends Command
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($data['data-torrent']);
-        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }

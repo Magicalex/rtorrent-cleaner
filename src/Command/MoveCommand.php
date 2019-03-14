@@ -32,6 +32,12 @@ class MoveCommand extends Command
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
+                'log',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
+                false)
+            ->addOption(
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
@@ -57,7 +63,9 @@ class MoveCommand extends Command
         $time = new Stopwatch();
         $time->start('move');
 
-        $output->writeln([
+        $console = new Log($output, $input->getOption('log'));
+
+        $console->writeln([
             '╔═══════════════════════════════════════════╗',
             '║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> ║',
             '╚═══════════════════════════════════════════╝',
@@ -65,7 +73,7 @@ class MoveCommand extends Command
         ]);
 
         if (is_dir($input->getArgument('folder')) === false) {
-            $output->writeln([
+            $console->writeln([
                 '<error>                                       </>',
                 '<error>  Please, define a correct directory.  </>',
                 '<error>                                       </>'
@@ -82,7 +90,7 @@ class MoveCommand extends Command
 
         $nbFile = count($notTracked);
         $helper = $this->getHelper('question');
-        $output->writeln(['', "> {$nbFile} unnecessary file(s) to move.", '']);
+        $console->writeln(['', "> {$nbFile} unnecessary file(s) to move.", '']);
 
         foreach ($notTracked as $file) {
             $fileName = basename($file);
@@ -90,7 +98,7 @@ class MoveCommand extends Command
             if ($input->getOption('assume-yes') === true) {
                 rename($file, $folder.'/'.$fileName);
                 $viewFile = Str::truncate($file);
-                $output->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
+                $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
             } elseif ($input->getOption('assume-yes') === false) {
                 $viewFile = Str::truncate($file, 70);
                 $question = new ChoiceQuestion(
@@ -104,21 +112,21 @@ class MoveCommand extends Command
                 if ($answer == 'yes') {
                     rename($file, $folder.'/'.$fileName);
                     $viewFile = Str::truncate($file);
-                    $output->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
+                    $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
                 } elseif ($answer == 'no') {
-                    $output->writeln('<fg=yellow>file not moved</>');
+                    $console->writeln('<fg=yellow>file not moved</>');
                 }
             }
         }
 
         if (count($notTracked) == 0) {
-            $output->writeln('<fg=yellow>no files to move</>');
+            $console->writeln('<fg=yellow>no files to move</>');
         }
 
         $event = $time->stop('move');
         $time = Str::humanTime($event->getDuration());
         $mb = Str::humanMemory($event->getMemory());
         $torrents = count($data['data-torrent']);
-        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
     }
 }
