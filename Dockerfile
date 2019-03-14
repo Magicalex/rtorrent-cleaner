@@ -4,7 +4,7 @@ LABEL description="Docker image for remove unnecessary file in rtorrent" \
       tags="latest" \
       maintainer="magicalex <magicalex@mondedie.fr>"
 
-ARG VERSION=0.6.2
+ARG VERSION=0.7.0
 
 RUN echo "@community https://nl.alpinelinux.org/alpine/v3.9/community" >> /etc/apk/repositories \
   && apk add -U \
