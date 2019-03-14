@@ -40,6 +40,24 @@ Install rtorrent-cleaner in global
 composer global require magicalex/rtorrent-cleaner
 ```
 
+### Install rtorrent-cleaner via Docker
+
+#### Requirements
+
+- docker [install docker](https://docs.docker.com/install/)
+
+Install docker-rtorrent-cleaner
+
+```sh
+docker run -it --rm \
+  -v </home/user/torrents>:/data/torrents \
+  --network <name_of_network> \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner
+```
+
+See the details [here](https://github.com/Magicalex/rtorrent-cleaner#usage-with-docker)
+
 ## Usage
 
 Displaying help:
@@ -121,7 +139,39 @@ Check your nginx configuration and restart nginx.
 
 Now, you can use `--url-xmlrpc=http://127.0.0.1:8888` scgi mount point.
 
-## Build Phar rtorrent-cleaner.phar
+## Usage with docker
+
+Info: change `<rtorrent-rutorrent>` by the name of your container of rtorrent here: rtorrent-rutorrent  
+Info: change `</home/user/torrents>` by your torrents folder
+
+Command for displaying help: `rtorrent-cleaner`
+```sh
+docker run -it --rm \
+  -v </home/user/torrents>:/data/torrents \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner
+```
+
+If you use your container with a network you can connect rtorrent-cleaner like this:  
+Info: change `<name_of_network>` by your network (you can list all the docker networks `docker network ls`)
+```sh
+docker run -it --rm \
+  -v </home/user/torrents>:/data/torrents \
+  --network <name_of_network> \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner
+```
+
+Command for making a report: `rtorrent-cleaner report --url-xmlrpc=http://rtorrent:8080/RPC`
+```sh
+docker run -it --rm \
+  -v </home/user/torrents>:/data/torrents \
+  --network <name_of_network> \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner report --url-xmlrpc=http://rtorrent:8080/RPC
+```
+
+## Build a php archive Phar (rtorrent-cleaner.phar)
 
 To build the archive phar, php7.1 and above is required.
 ```sh
@@ -131,6 +181,12 @@ composer run-script build-phar-php5
 composer run-script build-phar-php7
 ```
 
+## Build docker image
+
+```sh
+docker build -t magicalex/docker-rtorrent-cleaner:latest https://github.com/Magicalex/rtorrent-cleaner.git#master:docker-rtorrent-cleaner
+```
+
 ## License
 
-rtorrent-cleaner is released under the MIT License.
+rtorrent-cleaner is released under the [MIT License](https://github.com/Magicalex/rtorrent-cleaner/blob/master/LICENSE).

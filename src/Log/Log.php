@@ -16,9 +16,9 @@ class Log
         $this->output = $output;
 
         if ($log === null) {
-            $this->log = new StreamOutput(fopen('rtorrent-cleaner.log', 'w+'));
+            $this->log = new StreamOutput(fopen('rtorrent-cleaner.log', 'a'));
         } elseif ($log !== false) {
-            $this->log = new StreamOutput(fopen($log, 'w+'));
+            $this->log = new StreamOutput(fopen($log, 'a'));
         }
     }
 
