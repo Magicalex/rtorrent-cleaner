@@ -2,6 +2,7 @@
 
 namespace Rtorrent\Cleaner\Command;
 
+use Rtorrent\Cleaner\Log\Log;
 use Rtorrent\Cleaner\Rtorrent\RemoveFile;
 use Rtorrent\Cleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
