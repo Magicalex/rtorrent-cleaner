@@ -6,7 +6,7 @@ Script in php for remove unnecessary file in rtorrent.
 [![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
 
 Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner)  
-[![](https://images.microbadger.com/badges/image/magicalex/docker-rtorrent-cleaner.svg)](https://microbadger.com/images/magicalex/docker-rtorrent-cleaner)
+[![](https://images.microbadger.com/badges/image/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/repository/docker/magicalex/docker-rtorrent-cleaner)
 [![](https://img.shields.io/docker/automated/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner/builds)
 [![](https://img.shields.io/docker/pulls/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner)
 [![](https://img.shields.io/docker/stars/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner)
@@ -97,42 +97,42 @@ Available commands:
 
 Command `report` for create a report on unnecessary files and missing files:
 ```sh
-$ rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC
 # you can log the console output in a file with the option --log (rtorrent-cleaner.log)
-$ rtorrent-cleaner report --log --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --log --url-xmlrpc=http://localhost:80/RPC
 # you can define a path (ex: /var/log/rtorrent-cleaner.log)
-$ rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log --url-xmlrpc=http://localhost:80/RPC
 ```
 
 Command `rm` for delete unnecessary files in your download folder:
 ```sh
-$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC
 # delete without confirmation --assume-yes or -y
-$ rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC -y
+rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC -y
 ```
 
 Command `mv` for move unnecessary files in a specified folder (ex: /home/user/old) :
 ```sh
-$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC
 # move without confirmation --assume-yes or -y
-$ rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC -y
+rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC -y
 ```
 
 Command `torrents` for delete torrents or redownload the missing files:
 ```sh
-$ rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC
 ```
 
 Option for the command `mv`, `rm` and `report` to ignore files: `--exclude=`
 ```sh
-$ rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC
-$ rtorrent-cleaner report -e *.sub -e *.srt --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report -e *.sub -e *.srt --url-xmlrpc=http://localhost:80/RPC
 ```
 The second example excludes all files `.sub` and `.srt` in the output
 
 Option for a Basic authentication `--username` and `--password` for the command `report`, `rm`, `mv` and `torrents`
 ```sh
-$ rtorrent-cleaner report --url-xmlrpc=https://domain.tld/RPC --username=john --password=azerty
+rtorrent-cleaner report --url-xmlrpc=https://domain.tld/RPC --username=john --password=azerty
 ```
 
 ## Improve performance
