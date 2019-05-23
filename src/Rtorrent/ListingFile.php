@@ -60,7 +60,7 @@ class ListingFile extends Connect
         }
 
         $finder = new Finder();
-        $finder->in($this->directories)->files();
+        $finder->in($this->directories)->files()->ignoreDotFiles(false);
 
         if ($exclude !== null) {
             foreach ($exclude as $pattern) {
