@@ -173,7 +173,7 @@ docker run -it --rm \
 
 ## Build a php archive Phar (rtorrent-cleaner.phar)
 
-To build the archive phar, php7.1 and above is required.
+To build the archive phar, php 7.1 and above is required.
 ```sh
 git clone https://github.com/Magicalex/rtorrent-cleaner.git
 cd rtorrent-cleaner

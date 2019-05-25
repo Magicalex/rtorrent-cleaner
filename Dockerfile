@@ -24,5 +24,3 @@ RUN echo "@community https://nl.alpinelinux.org/alpine/v3.9/community" >> /etc/a
   && mv rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner \
   && chmod +x /usr/local/bin/rtorrent-cleaner \
   && rm -rf /var/cache/apk/*
-
-ENTRYPOINT ["rtorrent-cleaner", "--scgi=rtorrent", "--port=5000"]
