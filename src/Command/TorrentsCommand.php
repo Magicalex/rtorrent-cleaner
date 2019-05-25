@@ -20,21 +20,17 @@ class TorrentsCommand extends Command
             ->setDescription('Delete torrents or redownload the missing files')
             ->setHelp('Command torrents for delete torrents or redownload the missing files')
             ->addOption(
-                'url-xmlrpc',
+                'scgi',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Set url to your scgi mount point like: http(s)://localhost:80/RPC',
-                'http://rtorrent:8080/RPC')
+                'Set the scgi url of rtorrent. ex: 127.0.0.1',
+                '127.0.0.1')
             ->addOption(
-                'username',
-                'u',
-                InputOption::VALUE_REQUIRED,
-                'Set username for a Basic HTTP authentication')
-            ->addOption(
-                'password',
+                'port',
                 'p',
                 InputOption::VALUE_REQUIRED,
-                'Set password for a Basic HTTP authentication');
+                'Set the scgi port of rtorrent',
+                5000);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,7 +45,7 @@ class TorrentsCommand extends Command
             ''
         ]);
 
-        $list = new MissingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $list = new MissingFile($input->getOption('scgi'), $input->getOption('port'));
         $data = $list->listingFromRtorrent($output);
         $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);
 

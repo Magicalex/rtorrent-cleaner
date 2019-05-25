@@ -21,11 +21,17 @@ class RemoveCommand extends Command
             ->setDescription('Delete your unnecessary files in your download folder')
             ->setHelp('Command rm for delete your unnecessary files in your download folder')
             ->addOption(
-                'url-xmlrpc',
+                'scgi',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Set url to your scgi mount point like: http(s)://localhost:80/RPC',
-                'http://rtorrent:8080/RPC')
+                'Set the scgi url of rtorrent. ex: 127.0.0.1',
+                '127.0.0.1')
+            ->addOption(
+                'port',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the scgi port of rtorrent',
+                5000)
             ->addOption(
                 'exclude',
                 'e',
@@ -41,17 +47,7 @@ class RemoveCommand extends Command
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
-                'Delete all the files without confirmation')
-            ->addOption(
-                'username',
-                'u',
-                InputOption::VALUE_REQUIRED,
-                'Set username for a Basic HTTP authentication')
-            ->addOption(
-                'password',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'Set password for a Basic HTTP authentication');
+                'Delete all the files without confirmation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -68,7 +64,7 @@ class RemoveCommand extends Command
             ''
         ]);
 
-        $list = new RemoveFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $list = new RemoveFile($input->getOption('scgi'), $input->getOption('port'));
         $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
 

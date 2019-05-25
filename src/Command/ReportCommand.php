@@ -21,11 +21,17 @@ class ReportCommand extends Command
             ->setDescription('Create a report on unnecessary files and missing files')
             ->setHelp('Command report for create a report on unnecessary files and missing files')
             ->addOption(
-                'url-xmlrpc',
+                'scgi',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Set url to your scgi mount point like: http(s)://localhost:80/RPC',
-                'http://rtorrent:8080/RPC')
+                'Set the scgi url of rtorrent. ex: 127.0.0.1',
+                '127.0.0.1')
+            ->addOption(
+                'port',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the scgi port of rtorrent',
+                5000)
             ->addOption(
                 'exclude',
                 'e',
@@ -36,17 +42,7 @@ class ReportCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
-                false)
-            ->addOption(
-                'username',
-                'u',
-                InputOption::VALUE_REQUIRED,
-                'Set username for a Basic HTTP authentication')
-            ->addOption(
-                'password',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'Set password for a Basic HTTP authentication');
+                false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -63,7 +59,7 @@ class ReportCommand extends Command
             ''
         ]);
 
-        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $list = new ListingFile($input->getOption('scgi'), $input->getOption('port'));
         $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
 
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);

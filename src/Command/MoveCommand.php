@@ -22,11 +22,17 @@ class MoveCommand extends Command
             ->setDescription('Move your unnecessary files in a specified folder')
             ->setHelp('Command mv for move your unnecessary files in a specified folder')
             ->addOption(
-                'url-xmlrpc',
+                'scgi',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Set url to your scgi mount point like: http(s)://localhost:80/RPC',
-                'http://rtorrent:8080/RPC')
+                'Set the scgi url of rtorrent. ex: 127.0.0.1',
+                '127.0.0.1')
+            ->addOption(
+                'port',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the scgi port of rtorrent',
+                5000)
             ->addOption(
                 'exclude',
                 'e',
@@ -43,16 +49,6 @@ class MoveCommand extends Command
                 'y',
                 InputOption::VALUE_NONE,
                 'Move all the files without confirmation')
-            ->addOption(
-                'username',
-                'u',
-                InputOption::VALUE_REQUIRED,
-                'Set username for a Basic HTTP authentication')
-            ->addOption(
-                'password',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'Set password for a Basic HTTP authentication')
             ->addArgument(
                 'folder',
                 InputArgument::REQUIRED,
@@ -85,7 +81,7 @@ class MoveCommand extends Command
             $folder = realpath($input->getArgument('folder'));
         }
 
-        $list = new ListingFile($input->getOption('url-xmlrpc'), $input->getOption('username'), $input->getOption('password'));
+        $list = new ListingFile($input->getOption('scgi'), $input->getOption('port'));
         $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
         $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
 

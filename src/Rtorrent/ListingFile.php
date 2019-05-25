@@ -7,7 +7,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
-class ListingFile extends Connect
+class ListingFile extends Rtorrent
 {
     protected $directories = [];
 
@@ -15,7 +15,19 @@ class ListingFile extends Connect
     {
         $localFile = [];
         $d_param = ['', 'default', 'd.hash=', 'd.name=', 'd.directory='];
-        $torrents = $this->rtorrent->call('d.multicall2', $d_param);
+
+        try {
+            $torrents = $this->call('d.multicall2', $d_param);
+        }
+
+        catch (\Exception $error) {
+            $output->writeln([
+                '<error>                                                                </>',
+                '<error>  '.$error->getMessage().'  </>',
+                '<error>                                                                </>'
+            ]);
+            exit(1);
+        }
 
         $progressBar = new ProgressBar($output, count($torrents));
         $progressBar->setFormat(" %bar% %percent%%\n remaining time: %remaining%\n status: %status%\n");
@@ -32,7 +44,7 @@ class ListingFile extends Connect
 
             $torrentInfo[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
             $f_param = [$torrent[0], '', 'f.path=', 'f.size_bytes='];
-            $files = $this->rtorrent->call('f.multicall', $f_param);
+            $files = $this->call('f.multicall', $f_param);
 
             foreach ($files as $file) {
                 $fullPath = "{$torrent[2]}/{$file[0]}";
@@ -55,7 +67,6 @@ class ListingFile extends Connect
                 '<error>  The files are not able to be reached locally  </>',
                 '<error>                                                </>'
             ]);
-
             exit(1);
         }
 

@@ -52,16 +52,16 @@ class MissingFile extends ListingFile
 
     public function deleteTorrent($hash)
     {
-        $this->rtorrent->call('d.erase', [$hash]);
+        $this->call('d.erase', [$hash]);
     }
 
     public function redownload($hash)
     {
-        $this->rtorrent->call('d.stop', [$hash]);
-        $this->rtorrent->call('d.close', [$hash]);
-        $this->rtorrent->call('f.multicall', [$hash, '', 'f.set_create_queued=0', 'f.set_resize_queued=0']);
-        $this->rtorrent->call('d.check_hash', [$hash]);
-        $this->rtorrent->call('d.open', [$hash]);
-        $this->rtorrent->call('d.start', [$hash]);
+        $this->call('d.stop', [$hash]);
+        $this->call('d.close', [$hash]);
+        $this->call('f.multicall', [$hash, '', 'f.set_create_queued=0', 'f.set_resize_queued=0']);
+        $this->call('d.check_hash', [$hash]);
+        $this->call('d.open', [$hash]);
+        $this->call('d.start', [$hash]);
     }
 }
