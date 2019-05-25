@@ -13,7 +13,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 ## Requirements
 
-- php 5.6 and above with extension `php-xmlreader` and `php-xmlrpc`
+- php 5.6 and above with extension `php-xmlrpc`
 
 ## Installation
 
@@ -21,7 +21,7 @@ Docker image: [docker-rtorrent-cleaner](https://hub.docker.com/r/magicalex/docke
 
 Example for debian 9
 ```sh
-apt install php7.0-cli php7.0-xml php7.0-xmlrpc
+apt install php7.0-cli php7.0-xmlrpc
 ```
 
 ### Install rtorrent-cleaner via phar file (recommended)
@@ -66,7 +66,7 @@ See the details [here](https://github.com/Magicalex/rtorrent-cleaner#usage-with-
 
 Displaying help:
 ```sh
-$ rtorrent-cleaner
+rtorrent-cleaner
       _                            _          _
  _ __| |_ ___  _ __ _ __ ___ _ __ | |_    ___| | ___  __ _ _ __   ___ _ __
 | '__| __/ _ \| '__| '__/ _ \ '_ \| __|  / __| |/ _ \/ _` | '_ \ / _ \ '__|
@@ -97,51 +97,38 @@ Available commands:
 
 Command `report` for create a report on unnecessary files and missing files:
 ```sh
-rtorrent-cleaner report --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --scgi=localhost --port=5000
 # you can log the console output in a file with the option --log (rtorrent-cleaner.log)
-rtorrent-cleaner report --log --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --scgi=localhost --port=5000 --log
 # you can define a path (ex: /var/log/rtorrent-cleaner.log)
-rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --scgi=localhost --port=5000 --log=/var/log/rtorrent-cleaner.log
 ```
 
 Command `rm` for delete unnecessary files in your download folder:
 ```sh
-rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner rm --scgi=localhost --port=5000
 # delete without confirmation --assume-yes or -y
-rtorrent-cleaner rm --url-xmlrpc=http://localhost:80/RPC -y
+rtorrent-cleaner rm --scgi=localhost --port=5000 -y
 ```
 
 Command `mv` for move unnecessary files in a specified folder (ex: /home/user/old) :
 ```sh
-rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner mv /home/user/old --scgi=localhost --port=5000
 # move without confirmation --assume-yes or -y
-rtorrent-cleaner mv /home/user/old --url-xmlrpc=http://localhost:80/RPC -y
+rtorrent-cleaner mv /home/user/old --scgi=localhost --port=5000 -y
 ```
 
 Command `torrents` for delete torrents or redownload the missing files:
 ```sh
-rtorrent-cleaner torrents --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner torrents --scgi=localhost --port=5000
 ```
 
 Option for the command `mv`, `rm` and `report` to ignore files: `--exclude=`
 ```sh
-rtorrent-cleaner report --exclude=*.sub --url-xmlrpc=http://localhost:80/RPC
-rtorrent-cleaner report -e *.sub -e *.srt --url-xmlrpc=http://localhost:80/RPC
+rtorrent-cleaner report --scgi=localhost --port=5000 --exclude=*.srt
+rtorrent-cleaner report --scgi=localhost --port=5000 -e *.sub -e *.srt
 ```
 The second example excludes all files `.sub` and `.srt` in the output
-
-Option for a Basic authentication `--username` and `--password` for the command `report`, `rm`, `mv` and `torrents`
-```sh
-rtorrent-cleaner report --url-xmlrpc=https://domain.tld/RPC --username=john --password=azerty
-```
-
-## Improve performance
-
-Add this [nginx.conf](https://github.com/Magicalex/rtorrent-cleaner/blob/master/nginx.conf) in your nginx configuration.
-Adapt your scgi address `scgi_pass 127.0.0.1:5000;`
-Check your nginx configuration and restart nginx.
-
-Now, you can use `--url-xmlrpc=http://127.0.0.1:8888` scgi mount point.
 
 ## Usage with docker
 
@@ -153,7 +140,7 @@ Command for displaying help: `rtorrent-cleaner`
 docker run -it --rm \
   -v </home/user/torrents>:/data/torrents \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner --scgi=rtorrent --port=5000
 ```
 
 If you use your container with a network you can connect rtorrent-cleaner like this:  
@@ -163,16 +150,16 @@ docker run -it --rm \
   -v </home/user/torrents>:/data/torrents \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner --scgi=rtorrent --port=5000
 ```
 
-Command for making a report: `rtorrent-cleaner report --url-xmlrpc=http://rtorrent:8080/RPC`
+Command for making a report: `rtorrent-cleaner report --scgi=rtorrent --port=5000`
 ```sh
 docker run -it --rm \
   -v </home/user/torrents>:/data/torrents \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner report --url-xmlrpc=http://rtorrent:8080/RPC
+  magicalex/docker-rtorrent-cleaner rtorrent-cleaner report --scgi=rtorrent --port=5000
 ```
 
 ## Build a php archive Phar (rtorrent-cleaner.phar)
