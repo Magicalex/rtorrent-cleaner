@@ -16,17 +16,14 @@ class Rtorrent
     public function call($method, $params = [])
     {
         $response_xml = '';
-        $stream = @fsockopen('tcp://'.$this->scgi, $this->port);
+        $stream = @fsockopen($this->prefix().$this->scgi, $this->port);
 
         if ($stream === false) {
             throw new \Exception('Unable to connect to rtorrent. Check if rtorrent is running.');
         }
 
         $content = xmlrpc_encode_request($method, $params, ['encoding' => 'UTF-8']);
-        $contentlength = strlen($content);
-
-        // send data
-        $header = "CONTENT_LENGTH\x0".$contentlength."\x0"."SCGI\x0"."1\x0";
+        $header = "CONTENT_LENGTH\x0".strlen($content)."\x0"."SCGI\x0"."1\x0";
         $request = strlen($header).':'.$header.','.$content;
         fwrite($stream, $request, strlen($request));
 
@@ -39,6 +36,15 @@ class Rtorrent
         $response = xmlrpc_decode($response_xml, 'UTF-8');
 
         return $response;
+    }
+
+    protected function prefix()
+    {
+        if ($this->port == -1) {
+            return 'unix://';
+        } else {
+            return 'tcp://';
+        }
     }
 
     protected static function fix_xml($xml)

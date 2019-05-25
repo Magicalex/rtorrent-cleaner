@@ -95,12 +95,21 @@ Available commands:
   torrents  Delete torrents or redownload the missing files
 ```
 
-Command `report` for create a report on unnecessary files and missing files:
+Command `report` for create a report on unnecessary files and missing files:  
+(Configuration in your rtorrent.rc ex: `network.scgi.open_port = localhost:5000`)
 ```sh
 rtorrent-cleaner report --scgi=localhost --port=5000
-# you can log the console output in a file with the option --log (rtorrent-cleaner.log)
+```
+
+Example with a socket (file rtorrent.rc `network.scgi.open_local = /home/user/rpc.socket`)
+```sh
+rtorrent-cleaner report --scgi=/home/user/rpc.socket
+```
+
+You can log the console output in a file with the option --log (path: ./rtorrent-cleaner.log)  
+You can define a path (path: /var/log/rtorrent-cleaner.log)
+```sh
 rtorrent-cleaner report --scgi=localhost --port=5000 --log
-# you can define a path (ex: /var/log/rtorrent-cleaner.log)
 rtorrent-cleaner report --scgi=localhost --port=5000 --log=/var/log/rtorrent-cleaner.log
 ```
 

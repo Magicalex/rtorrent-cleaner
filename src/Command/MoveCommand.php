@@ -32,7 +32,7 @@ class MoveCommand extends Command
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'Set the scgi port of rtorrent',
-                5000)
+                -1)
             ->addOption(
                 'exclude',
                 'e',

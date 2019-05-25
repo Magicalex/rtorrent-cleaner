@@ -30,7 +30,7 @@ class TorrentsCommand extends Command
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'Set the scgi port of rtorrent',
-                5000);
+                -1);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
