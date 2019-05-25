@@ -18,9 +18,7 @@ class ListingFile extends Rtorrent
 
         try {
             $torrents = $this->call('d.multicall2', $d_param);
-        }
-
-        catch (\Exception $error) {
+        } catch (\Exception $error) {
             $output->writeln([
                 '<error>                                                                </>',
                 '<error>  '.$error->getMessage().'  </>',

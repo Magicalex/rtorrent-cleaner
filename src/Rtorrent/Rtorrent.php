@@ -30,7 +30,7 @@ class Rtorrent
         $request = strlen($header).':'.$header.','.$content;
         fwrite($stream, $request, strlen($request));
 
-        while($line = fread($stream, 4096)) {
+        while ($line = fread($stream, 4096)) {
             $response_xml .= $line;
         }
 
