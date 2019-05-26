@@ -156,7 +156,7 @@ docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner --scgi=rtorrent --port=5000
+  magicalex/docker-rtorrent-cleaner
 ```
 
 Command for making a report: `rtorrent-cleaner report --scgi=rtorrent --port=5000`
@@ -166,6 +166,32 @@ docker run -it --rm \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
   magicalex/docker-rtorrent-cleaner report --scgi=rtorrent --port=5000
+```
+
+You can create a script for run rtorrent-cleaner with Docker
+```sh
+# vi /usr/local/bin/rtorrent-cleaner
+
+#!/bin/sh
+
+docker run -it --rm \
+  -v </home/user/torrents>:</data/torrents> \
+  --network <name_of_network> \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/docker-rtorrent-cleaner $*
+```
+
+```sh
+chmod +x /usr/local/bin/rtorrent-cleaner
+```
+
+Usage:
+```
+rtorrent-cleaner
+rtorrent-cleaner report --scgi=rtorrent --port=5000
+rtorrent-cleaner rm --scgi=rtorrent --port=5000
+rtorrent-cleaner torrents --scgi=rtorrent --port=5000
+rtorrent-cleaner mv /home/user/old --scgi=rtorrent --port=5000
 ```
 
 ## Build docker image
