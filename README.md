@@ -48,16 +48,12 @@ composer global require magicalex/rtorrent-cleaner
 
 #### Requirements
 
-- docker [install docker](https://docs.docker.com/install/)
+- docker [install docker](https://docs.docker.com/install)
 
 Install docker-rtorrent-cleaner
 
 ```sh
-docker run -it --rm \
-  -v </home/user/torrents>:/data/torrents \
-  --network <name_of_network> \
-  --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner
+docker pull magicalex/docker-rtorrent-cleaner
 ```
 
 See the details [here](https://github.com/Magicalex/rtorrent-cleaner#usage-with-docker)
@@ -109,33 +105,33 @@ rtorrent-cleaner report --scgi=/home/user/rpc.socket
 You can log the console output in a file with the option --log (path: ./rtorrent-cleaner.log)  
 You can define a path (path: /var/log/rtorrent-cleaner.log)
 ```sh
-rtorrent-cleaner report --scgi=localhost --port=5000 --log
-rtorrent-cleaner report --scgi=localhost --port=5000 --log=/var/log/rtorrent-cleaner.log
+rtorrent-cleaner report --log
+rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log
 ```
 
 Command `rm` for delete unnecessary files in your download folder:
 ```sh
-rtorrent-cleaner rm --scgi=localhost --port=5000
+rtorrent-cleaner rm
 # delete without confirmation --assume-yes or -y
-rtorrent-cleaner rm --scgi=localhost --port=5000 -y
+rtorrent-cleaner rm -y
 ```
 
 Command `mv` for move unnecessary files in a specified folder (ex: /home/user/old) :
 ```sh
-rtorrent-cleaner mv /home/user/old --scgi=localhost --port=5000
+rtorrent-cleaner mv /home/user/old
 # move without confirmation --assume-yes or -y
-rtorrent-cleaner mv /home/user/old --scgi=localhost --port=5000 -y
+rtorrent-cleaner mv /home/user/old -y
 ```
 
 Command `torrents` for delete torrents or redownload the missing files:
 ```sh
-rtorrent-cleaner torrents --scgi=localhost --port=5000
+rtorrent-cleaner torrents
 ```
 
 Option for the command `mv`, `rm` and `report` to ignore files: `--exclude=`
 ```sh
-rtorrent-cleaner report --scgi=localhost --port=5000 --exclude=*.srt
-rtorrent-cleaner report --scgi=localhost --port=5000 -e *.sub -e *.srt
+rtorrent-cleaner report --exclude=*.srt
+rtorrent-cleaner report -e *.sub -e *.srt
 ```
 The second example excludes all files `.sub` and `.srt` in the output
 
@@ -143,48 +139,49 @@ The second example excludes all files `.sub` and `.srt` in the output
 
 Info: change `<rtorrent-rutorrent>` by the name of your container of rtorrent here: rtorrent-rutorrent  
 Info: change `</home/user/torrents>` by your torrents folder
+Info: change `</data/torrents>` by `directory.default` of rtorrent. See your file rtorrent.rc
 
 Command for displaying help: `rtorrent-cleaner`
 ```sh
 docker run -it --rm \
-  -v </home/user/torrents>:/data/torrents \
+  -v </home/user/torrents>:</data/torrents> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner --scgi=rtorrent --port=5000
+  magicalex/docker-rtorrent-cleaner
 ```
 
 If you use your container with a network you can connect rtorrent-cleaner like this:  
 Info: change `<name_of_network>` by your network (you can list all the docker networks `docker network ls`)
 ```sh
 docker run -it --rm \
-  -v </home/user/torrents>:/data/torrents \
+  -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner --scgi=rtorrent --port=5000
+  magicalex/docker-rtorrent-cleaner --scgi=rtorrent --port=5000
 ```
 
 Command for making a report: `rtorrent-cleaner report --scgi=rtorrent --port=5000`
 ```sh
 docker run -it --rm \
-  -v </home/user/torrents>:/data/torrents \
+  -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner rtorrent-cleaner report --scgi=rtorrent --port=5000
-```
-
-## Build a php archive Phar (rtorrent-cleaner.phar)
-
-To build the archive phar, php 7.1 and above is required.
-```sh
-git clone https://github.com/Magicalex/rtorrent-cleaner.git
-cd rtorrent-cleaner
-composer run-script build-phar-php5
-composer run-script build-phar-php7
+  magicalex/docker-rtorrent-cleaner report --scgi=rtorrent --port=5000
 ```
 
 ## Build docker image
 
 ```sh
 docker build -t magicalex/docker-rtorrent-cleaner:latest https://github.com/Magicalex/rtorrent-cleaner.git#master:docker-rtorrent-cleaner
+```
+
+## Build a php archive Phar (rtorrent-cleaner.phar)
+
+To build the archive phar, php 7.2 and php phar extension is required.
+```sh
+git clone https://github.com/Magicalex/rtorrent-cleaner.git
+cd rtorrent-cleaner
+composer run-script build-phar-php5
+composer run-script build-phar-php7
 ```
 
 ## License
