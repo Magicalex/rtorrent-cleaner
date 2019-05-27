@@ -44,11 +44,4 @@ class Str
 
         return $humanTime;
     }
-
-    public static function humanMemory($bytes)
-    {
-        $mb = round($bytes / (1024 * 1024), 2);
-
-        return "{$mb}MB";
-    }
 }

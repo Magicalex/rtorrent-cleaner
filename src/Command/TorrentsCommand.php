@@ -83,8 +83,8 @@ class TorrentsCommand extends Command
 
         $event = $time->stop('missingFile');
         $time = Str::humanTime($event->getDuration());
-        $mb = Str::humanMemory($event->getMemory());
         $torrents = count($data['data-torrent']);
-        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $space = Str::convertFileSize($data['free_space'], 2);
+        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
     }
 }

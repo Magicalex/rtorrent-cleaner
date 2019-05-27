@@ -119,8 +119,8 @@ class RemoveCommand extends Command
 
         $event = $time->stop('remove');
         $time = Str::humanTime($event->getDuration());
-        $mb = Str::humanMemory($event->getMemory());
         $torrents = count($data['data-torrent']);
-        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, memory: {$mb}"]);
+        $space = Str::convertFileSize($data['free_space'], 2);
+        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
     }
 }

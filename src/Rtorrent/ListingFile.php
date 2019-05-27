@@ -87,7 +87,8 @@ class ListingFile extends Rtorrent
         return [
             'rtorrent'     => $torrentFile,
             'data-torrent' => $torrentInfo,
-            'local'        => array_unique($localFile)
+            'local'        => array_unique($localFile),
+            'free_space'   => disk_free_space($this->directories[0])
         ];
     }
 

@@ -26,11 +26,7 @@ class Rtorrent
         $header = "CONTENT_LENGTH\x0".strlen($content)."\x0"."SCGI\x0"."1\x0";
         $request = strlen($header).':'.$header.','.$content;
         fwrite($stream, $request, strlen($request));
-
-        while ($line = fread($stream, 4096)) {
-            $response_xml .= $line;
-        }
-
+        $response_xml = stream_get_contents($stream);
         fclose($stream);
         $response_xml = self::fix_xml($response_xml);
         $response = xmlrpc_decode($response_xml, 'UTF-8');
