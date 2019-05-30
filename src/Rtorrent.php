@@ -1,6 +1,6 @@
 <?php
 
-namespace Rtorrent\Cleaner\Rtorrent;
+namespace Rtorrent\Cleaner;
 
 class Rtorrent
 {
@@ -15,7 +15,6 @@ class Rtorrent
 
     public function call($method, $params = [])
     {
-        $response_xml = '';
         $stream = @fsockopen($this->prefix().$this->scgi, $this->port);
 
         if ($stream === false) {
@@ -28,8 +27,7 @@ class Rtorrent
         fwrite($stream, $request, strlen($request));
         $response_xml = stream_get_contents($stream);
         fclose($stream);
-        $response_xml = self::fix_xml($response_xml);
-        $response = xmlrpc_decode($response_xml, 'UTF-8');
+        $response = xmlrpc_decode(self::fix_xml($response_xml), 'UTF-8');
 
         return $response;
     }

@@ -34,11 +34,13 @@ class Log
     public function table($header, $data)
     {
         $console = new Table($this->output);
+        $console->setStyle('box');
         $console->setHeaders($header)->setRows($data);
         $console->render();
 
         if ($this->log !== false) {
             $log = new Table($this->log);
+            $log->setStyle('box');
             $log->setHeaders($header)->setRows($data);
             $log->render();
         }

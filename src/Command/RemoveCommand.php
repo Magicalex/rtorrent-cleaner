@@ -3,8 +3,7 @@
 namespace Rtorrent\Cleaner\Command;
 
 use Rtorrent\Cleaner\Log\Log;
-use Rtorrent\Cleaner\Rtorrent\RemoveFile;
-use Rtorrent\Cleaner\Utils\Str;
+use Rtorrent\Cleaner\Helpers;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -52,56 +51,58 @@ class RemoveCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $time = new Stopwatch();
-        $time->start('remove');
-
+        $time = (new Stopwatch())->start('rm');
         $console = new Log($output, $input->getOption('log'));
 
         $console->writeln([
-            '╔═════════════════════════════════════════════╗',
-            '║ RTORRENT-CLEANER - <fg=cyan>REMOVE UNNECESSARY FILES</> ║',
-            '╚═════════════════════════════════════════════╝',
+            '┌─────────────────────────────────────────────┐',
+            '│ rtorrent-cleaner • <fg=cyan>remove unnecessary files</> │',
+            '└─────────────────────────────────────────────┘',
             ''
         ]);
 
-        $list = new RemoveFile($input->getOption('scgi'), $input->getOption('port'));
-        $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
-        $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
+        $cleaner = new \Rtorrent\Cleaner\Cleaner(
+            $input->getOption('scgi'),
+            $input->getOption('port'),
+            $input->getOption('exclude'),
+            $output
+        );
 
-        $nbFile = count($notTracked);
+        $filesNotTracked = $cleaner->getFilesNotTracked();
+        $nbFileNotTracked = count($filesNotTracked);
         $helper = $this->getHelper('question');
-        $console->writeln(['', "> {$nbFile} unnecessary file(s) to delete.", '']);
+        $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
 
-        foreach ($notTracked as $file) {
-            if ($input->getOption('assume-yes') === true) {
-                unlink($file);
-                $viewFile = Str::truncate($file);
-                $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
-            } elseif ($input->getOption('assume-yes') === false) {
-                $viewFile = Str::truncate($file, 70);
-                $question = new ChoiceQuestion(
-                    "Do you want delete <fg=yellow>{$viewFile}</> ? (defaults: no)",
-                    ['yes', 'no'], 1
-                );
-
-                $question->setErrorMessage('Option %s is invalid.');
-                $answer = $helper->ask($input, $output, $question);
-
-                if ($answer == 'yes') {
-                    unlink($file);
-                    $viewFile = Str::truncate($file);
+        if ($nbFileNotTracked == 0) {
+            $console->writeln('<fg=yellow>no files to remove</>');
+        } else {
+            foreach ($filesNotTracked as $file) {
+                if ($input->getOption('assume-yes') === true) {
+                    unlink($file['full_path']);
+                    $viewFile = Helpers::truncate($file['full_path']);
                     $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
-                } elseif ($answer == 'no') {
-                    $console->writeln('<fg=yellow>file not deleted</>');
+                } else {
+                    $viewFile = Helpers::truncate($file['full_path'], 70);
+                    $question = new ChoiceQuestion(
+                        "Do you want delete <fg=yellow>{$viewFile}</> ? (defaults: no)",
+                        ['yes', 'no'], 1
+                    );
+
+                    $question->setErrorMessage('Option %s is invalid.');
+                    $answer = $helper->ask($input, $output, $question);
+
+                    if ($answer == 'yes') {
+                        unlink($file['full_path']);
+                        $viewFile = Helpers::truncate($file['full_path']);
+                        $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
+                    } elseif ($answer == 'no') {
+                        $console->writeln('<fg=yellow>file not deleted</>');
+                    }
                 }
             }
         }
 
-        if (count($notTracked) == 0) {
-            $console->writeln('<fg=yellow>no files to remove</>');
-        }
-
-        $emptyDirectory = $list->getEmptyDirectory();
+        $emptyDirectory = $cleaner->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
             $console->writeln('<fg=yellow>no empty directory</>');
@@ -113,14 +114,14 @@ class RemoveCommand extends Command
                     $console->writeln("directory: <fg=yellow>{$folder}</> has been removed");
                 }
 
-                $emptyDirectory = $list->getEmptyDirectory();
+                $emptyDirectory = $cleaner->getEmptyDirectory();
             }
         }
 
-        $event = $time->stop('remove');
-        $time = Str::humanTime($event->getDuration());
-        $torrents = count($data['data-torrent']);
-        $space = Str::convertFileSize($data['free_space'], 2);
+        $event = $time->stop('rm');
+        $time = Helpers::humanTime($event->getDuration());
+        $torrents = $cleaner->getnumTorrents();
+        $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
         $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
     }
 }
