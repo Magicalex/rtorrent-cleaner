@@ -2,8 +2,6 @@
 
 namespace Rtorrent\Cleaner;
 
-use Rtorrent\Cleaner\Rtorrent;
-use Rtorrent\Cleaner\Helpers;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -19,7 +17,7 @@ class Cleaner
     protected $rtorrentFileData;
     protected $directories = [];
 
-    public function __construct($scgi, $port, $exclude = null, OutputInterface $output)
+    public function __construct($scgi, $port, $exclude, OutputInterface $output)
     {
         $this->output = $output;
         $this->exclude = $exclude;
@@ -60,12 +58,12 @@ class Cleaner
                 $fullPath = "{$torrent[2]}/{$file[0]}";
                 $this->rtorrentData[$nb]['file'][] = [
                     'full_path' => $fullPath,
-                    'size' => $file[1]
+                    'size'      => $file[1]
                 ];
 
                 $this->rtorrentFileData[] = [
                     'full_path' => $fullPath,
-                    'size' => $file[1]
+                    'size'      => $file[1]
                 ];
             }
 
@@ -73,7 +71,6 @@ class Cleaner
         }
 
         $this->directories = array_unique($this->directories);
-
         $progressBar->setMessage('<fg=green>completed successfully!</>', 'status');
         $progressBar->finish();
 

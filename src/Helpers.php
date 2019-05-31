@@ -60,11 +60,24 @@ class Helpers
 
     public static function errorMessage($message, $output)
     {
-        $spaces = '    ';
-        for ($i = 0; $i < strlen($message); $i++) {
+        $spaces = '';
+        for ($i = 0; $i < strlen($message) + 4; $i++) {
             $spaces .= ' ';
         }
 
         return $output->writeln(['<error>'.$spaces.'</>', '<error>  '.$message.'  </>', '<error>'.$spaces.'</>']);
+    }
+
+    public static function title($title, $output)
+    {
+        $dash = '';
+        $tmp = preg_replace('/<fg=[a-z]+>(.*)<\/>/', '$1', $title);
+        for ($i = 0; $i < strlen($tmp); $i++) {
+            $dash .= '─';
+        }
+        $top = '┌'.$dash.'┐';
+        $bottom = '└'.$dash.'┘';
+
+        return $output->writeln([$top, '│ '.$title.' │', $bottom, '']);
     }
 }

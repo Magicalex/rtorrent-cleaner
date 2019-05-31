@@ -2,9 +2,8 @@
 
 namespace Rtorrent\Cleaner\Command;
 
+use Rtorrent\Cleaner\Helpers;
 use Rtorrent\Cleaner\Log\Log;
-use Rtorrent\Cleaner\Rtorrent\ListingFile;
-use Rtorrent\Cleaner\Utils\Str;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -57,73 +56,63 @@ class MoveCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $time = new Stopwatch();
-        $time->start('move');
-
+        $time = (new Stopwatch())->start('mv');
         $console = new Log($output, $input->getOption('log'));
-
-        $console->writeln([
-            '╔═══════════════════════════════════════════╗',
-            '║ RTORRENT-CLEANER - <fg=cyan>MOVE UNNECESSARY FILES</> ║',
-            '╚═══════════════════════════════════════════╝',
-            ''
-        ]);
+        Helpers::title('rtorrent-cleaner • <fg=cyan>move unnecessary files</>', $output);
 
         if (is_dir($input->getArgument('folder')) === false) {
-            $console->writeln([
-                '<error>                                       </>',
-                '<error>  Please, define a correct directory.  </>',
-                '<error>                                       </>'
-            ]);
-
+            Helpers::errorMessage('Please, define a correct directory.', $output);
             exit(1);
         } else {
             $folder = realpath($input->getArgument('folder'));
         }
 
-        $list = new ListingFile($input->getOption('scgi'), $input->getOption('port'));
-        $data = $list->listingFromRtorrent($output, $input->getOption('exclude'));
-        $notTracked = $list->getFilesNotTracked($data['rtorrent'], $data['local']);
+        $cleaner = new \Rtorrent\Cleaner\Cleaner(
+            $input->getOption('scgi'),
+            $input->getOption('port'),
+            $input->getOption('exclude'),
+            $output
+        );
 
-        $nbFile = count($notTracked);
+        $filesNotTracked = $cleaner->getFilesNotTracked();
+        $nbFileNotTracked = count($filesNotTracked);
         $helper = $this->getHelper('question');
-        $console->writeln(['', "> {$nbFile} unnecessary file(s) to move.", '']);
+        $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
 
-        foreach ($notTracked as $file) {
-            $fileName = basename($file);
-
-            if ($input->getOption('assume-yes') === true) {
-                rename($file, $folder.'/'.$fileName);
-                $viewFile = Str::truncate($file);
-                $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
-            } elseif ($input->getOption('assume-yes') === false) {
-                $viewFile = Str::truncate($file, 70);
-                $question = new ChoiceQuestion(
-                    "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",
-                    ['yes', 'no'], 1
-                );
-
-                $question->setErrorMessage('Option %s is invalid.');
-                $answer = $helper->ask($input, $output, $question);
-
-                if ($answer == 'yes') {
-                    rename($file, $folder.'/'.$fileName);
-                    $viewFile = Str::truncate($file);
+        if ($nbFileNotTracked == 0) {
+            $console->writeln('<fg=yellow>no files to move</>');
+        } else {
+            foreach ($filesNotTracked as $file) {
+                $fileName = basename($file['full_path']);
+                if ($input->getOption('assume-yes') === true) {
+                    rename($file['full_path'], $folder.'/'.$fileName);
+                    $viewFile = Helpers::truncate($file['full_path']);
                     $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
-                } elseif ($answer == 'no') {
-                    $console->writeln('<fg=yellow>file not moved</>');
+                } elseif ($input->getOption('assume-yes') === false) {
+                    $viewFile = Helpers::truncate($file['full_path'], 70);
+                    $question = new ChoiceQuestion(
+                        "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",
+                        ['yes', 'no'], 1
+                    );
+
+                    $question->setErrorMessage('Option %s is invalid.');
+                    $answer = $helper->ask($input, $output, $question);
+
+                    if ($answer == 'yes') {
+                        rename($file['full_path'], $folder.'/'.$fileName);
+                        $viewFile = Helpers::truncate($file['full_path']);
+                        $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
+                    } elseif ($answer == 'no') {
+                        $console->writeln('<fg=yellow>file not moved</>');
+                    }
                 }
             }
         }
 
-        if (count($notTracked) == 0) {
-            $console->writeln('<fg=yellow>no files to move</>');
-        }
-
-        $event = $time->stop('move');
-        $time = Str::humanTime($event->getDuration());
-        $torrents = count($data['data-torrent']);
-        $space = Str::convertFileSize($data['free_space'], 2);
+        $event = $time->stop('mv');
+        $time = Helpers::humanTime($event->getDuration());
+        $torrents = $cleaner->getnumTorrents();
+        $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
         $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
     }
 }
