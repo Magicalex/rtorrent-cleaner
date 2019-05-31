@@ -2,8 +2,8 @@
 
 namespace Rtorrent\Cleaner\Command;
 
-use Rtorrent\Cleaner\Log\Log;
 use Rtorrent\Cleaner\Helpers;
+use Rtorrent\Cleaner\Log\Log;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -108,7 +108,7 @@ class RemoveCommand extends Command
             $console->writeln('<fg=yellow>no empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
-                $removedDirectory = $list->removeDirectory($emptyDirectory);
+                $removedDirectory = $cleaner->removeDirectory($emptyDirectory);
 
                 foreach ($removedDirectory as $folder) {
                     $console->writeln("directory: <fg=yellow>{$folder}</> has been removed");

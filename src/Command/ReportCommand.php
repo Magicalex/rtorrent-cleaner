@@ -2,8 +2,8 @@
 
 namespace Rtorrent\Cleaner\Command;
 
-use Rtorrent\Cleaner\Log\Log;
 use Rtorrent\Cleaner\Helpers;
+use Rtorrent\Cleaner\Log\Log;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
@@ -67,7 +67,9 @@ class ReportCommand extends Command
         $missingFile = $cleaner->getFilesMissingFromRtorrent();
         $nbFileNotTracked = count($filesNotTracked);
         $nbmissingFile = count($missingFile);
-        $totalSize = 0; $i = 0; $dataTable = [];
+        $totalSize = 0;
+        $dataTable = [];
+        $i = 0;
 
         foreach ($filesNotTracked as $file) {
             $i++;
@@ -86,7 +88,9 @@ class ReportCommand extends Command
             $console->table(['', "<fg=yellow>{$nbFileNotTracked} file(s) are not necessary for rtorrent</>", '<fg=yellow>Size</>'], $dataTable);
         }
 
-        $totalSize = 0; $i = 0; $dataTable = [];
+        $totalSize = 0;
+        $dataTable = [];
+        $i = 0;
 
         foreach ($missingFile as $file) {
             $i++;

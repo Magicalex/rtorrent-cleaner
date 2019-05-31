@@ -123,12 +123,12 @@ class Cleaner
 
     public function getFilesNotTracked()
     {
-        return array_values(Helpers::array_diff_recursive($this->localFileData, $this->rtorrentFileData));
+        return Helpers::array_diff($this->localFileData, $this->rtorrentFileData);
     }
 
     public function getFilesMissingFromRtorrent()
     {
-        return array_values(Helpers::array_diff_recursive($this->rtorrentFileData, $this->localFileData));
+        return Helpers::array_diff($this->rtorrentFileData, $this->localFileData);
     }
 
     public function getEmptyDirectory()
@@ -155,7 +155,7 @@ class Cleaner
             }
         }
 
-        return $emptyDirectory;
+        return array_unique($emptyDirectory);
     }
 
     public function removeDirectory($emptyDirectory)

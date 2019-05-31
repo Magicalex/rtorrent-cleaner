@@ -45,23 +45,13 @@ class Helpers
         return $humanTime;
     }
 
-    public static function array_diff_recursive($arr1, $arr2)
+    public static function array_diff($arr1, $arr2)
     {
         $outputDiff = [];
 
-        foreach ($arr1 as $key => $value) {
-            if (array_key_exists($key, $arr2)) {
-                if (is_array($value)) {
-                    $recursiveDiff = self::array_diff_recursive($value, $arr2[$key]);
-
-                    if (count($recursiveDiff)) {
-                        $outputDiff[$key] = $recursiveDiff;
-                    }
-                } else if (! in_array($value, $arr2)) {
-                    $outputDiff[$key] = $value;
-                }
-            } else if (! in_array($value, $arr2)) {
-                $outputDiff[$key] = $value;
+        foreach ($arr1 as $value) {
+            if (in_array($value['full_path'], array_column($arr2, 'full_path')) === false) {
+                $outputDiff[] = $value;
             }
         }
 
@@ -71,7 +61,7 @@ class Helpers
     public static function errorMessage($message, $output)
     {
         $spaces = '    ';
-        for ($i=0; $i < strlen($message); $i++) {
+        for ($i = 0; $i < strlen($message); $i++) {
             $spaces .= ' ';
         }
 
