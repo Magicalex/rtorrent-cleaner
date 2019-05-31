@@ -3,7 +3,6 @@
 namespace Rtorrent\Cleaner\Command;
 
 use Rtorrent\Cleaner\Helpers;
-use Rtorrent\Cleaner\Log\Log;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -38,46 +37,50 @@ class TorrentsCommand extends Command
         $time = (new Stopwatch())->start('torrent');
         Helpers::title('rtorrent-cleaner • <fg=cyan>manage missing files</>', $output);
 
-        // $list = new MissingFile($input->getOption('scgi'), $input->getOption('port'));
-        // $data = $list->listingFromRtorrent($output);
-        // $missingFile = $list->getFilesMissingFromTorrent($data['rtorrent'], $data['local']);
-        //
-        // $nbFile = count($missingFile);
-        // $helper = $this->getHelper('question');
-        // $output->writeln(['', "> {$nbFile} file(s) are missing in the torrents.", '']);
-        //
-        // if ($nbFile == 0) {
-        //     $output->writeln('<fg=yellow>no missing files</>');
-        // } else {
-        //     $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $data);
-        //
-        //     foreach ($torrentMissingFile as $torrent) {
-        //         $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n";
-        //         foreach ($torrent['files'] as $file) {
-        //             $file = Str::truncate($file);
-        //             $ask .= "missing file: <fg=cyan>{$file}</>\n";
-        //         }
-        //
-        //         $question = new ChoiceQuestion($ask, ['delete', 'redownload', 'nothing'], 2);
-        //         $question->setErrorMessage('Option %s is invalid.');
-        //         $answer = $helper->ask($input, $output, $question);
-        //
-        //         if ($answer == 'delete') {
-        //             $list->deleteTorrent($torrent['hash']);
-        //             $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
-        //         } elseif ($answer == 'redownload') {
-        //             $list->redownload($torrent['hash']);
-        //             $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
-        //         } elseif ($answer == 'nothing') {
-        //             $output->writeln('<fg=yellow>torrent ignored</>');
-        //         }
-        //     }
-        // }
-        //
-        // $event = $time->stop('missingFile');
-        // $time = Str::humanTime($event->getDuration());
-        // $torrents = count($data['data-torrent']);
-        // $space = Str::convertFileSize($data['free_space'], 2);
-        // $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
+        $cleaner = new \Rtorrent\Cleaner\Cleaner(
+            $input->getOption('scgi'),
+            $input->getOption('port'),
+            null,
+            $output
+        );
+
+        $missingFile = $cleaner->getFilesMissingFromRtorrent();
+        $nbmissingFile = count($missingFile);
+        $helper = $this->getHelper('question');
+        $output->writeln(['', "> {$nbmissingFile} file(s) are missing.", '']);
+
+        if ($nbmissingFile == 0) {
+            $output->writeln('<fg=yellow>no missing files</>');
+        } else {
+            // $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $data);
+            //
+            // foreach ($torrentMissingFile as $torrent) {
+            //     $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n";
+            //     foreach ($torrent['files'] as $file) {
+            //         $file = Str::truncate($file);
+            //         $ask .= "missing file: <fg=cyan>{$file}</>\n";
+            //     }
+            //
+            //     $question = new ChoiceQuestion($ask, ['delete', 'redownload', 'nothing'], 2);
+            //     $question->setErrorMessage('Option %s is invalid.');
+            //     $answer = $helper->ask($input, $output, $question);
+            //
+            //     if ($answer == 'delete') {
+            //         $list->deleteTorrent($torrent['hash']);
+            //         $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
+            //     } elseif ($answer == 'redownload') {
+            //         $list->redownload($torrent['hash']);
+            //         $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
+            //     } elseif ($answer == 'nothing') {
+            //         $output->writeln('<fg=yellow>torrent ignored</>');
+            //     }
+            // }
+        }
+
+        $event = $time->stop('torrent');
+        $time = Helpers::humanTime($event->getDuration());
+        $torrents = $cleaner->getnumTorrents();
+        $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
+        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
     }
 }

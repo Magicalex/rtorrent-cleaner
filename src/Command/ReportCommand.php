@@ -58,9 +58,7 @@ class ReportCommand extends Command
         );
 
         $filesNotTracked = $cleaner->getFilesNotTracked();
-        $missingFile = $cleaner->getFilesMissingFromRtorrent();
         $nbFileNotTracked = count($filesNotTracked);
-        $nbmissingFile = count($missingFile);
         $totalSize = 0;
         $dataTable = [];
         $i = 0;
@@ -82,6 +80,8 @@ class ReportCommand extends Command
             $console->table(['', "<fg=yellow>{$nbFileNotTracked} file(s) are not necessary for rtorrent</>", '<fg=yellow>Size</>'], $dataTable);
         }
 
+        $missingFile = $cleaner->getFilesMissingFromRtorrent();
+        $nbmissingFile = count($missingFile);
         $totalSize = 0;
         $dataTable = [];
         $i = 0;

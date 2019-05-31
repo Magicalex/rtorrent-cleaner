@@ -21,9 +21,9 @@
     "require": {
         "php": ">=5.6.0",
         "ext-xmlrpc": "*",
-        "symfony/console": "3.4.* || 4.2.*",
-        "symfony/finder": "3.4.* || 4.2.*",
-        "symfony/stopwatch": "3.4.* || 4.2.*"
+        "symfony/console": "3.4.* || 4.3.*",
+        "symfony/finder": "3.4.* || 4.3.*",
+        "symfony/stopwatch": "3.4.* || 4.3.*"
     },
     "config": {
     },
