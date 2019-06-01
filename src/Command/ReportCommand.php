@@ -71,9 +71,7 @@ class ReportCommand extends Command
             $dataTable[] = [$i, $file, $size];
         }
 
-        if ($nbFileNotTracked == 0) {
-            $console->writeln(['', '<fg=yellow>no files not tracked by rtorrent</>']);
-        } else {
+        if ($nbFileNotTracked > 0) {
             $totalSize = Helpers::convertFileSize($totalSize, 2);
             array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total recoverable space</>', "<fg=yellow>{$totalSize}</>"]);
             $console->writeln('');
@@ -94,9 +92,7 @@ class ReportCommand extends Command
             $dataTable[] = [$i, $file, $size];
         }
 
-        if ($nbmissingFile == 0) {
-            $console->writeln('<fg=yellow>no missing files</>');
-        } else {
+        if ($nbmissingFile > 0) {
             $totalSize = Helpers::convertFileSize($totalSize, 2);
             array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total space to download</>', "<fg=yellow>{$totalSize}</>"]);
             $console->writeln('');

@@ -77,11 +77,11 @@ class MoveCommand extends Command
         $filesNotTracked = $cleaner->getFilesNotTracked();
         $nbFileNotTracked = count($filesNotTracked);
         $helper = $this->getHelper('question');
-        $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
 
         if ($nbFileNotTracked == 0) {
-            $console->writeln('<fg=yellow>no files to move</>');
+            $console->writeln(['', '> <fg=yellow>No files to move.</>']);
         } else {
+            $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
             foreach ($filesNotTracked as $file) {
                 $fileName = basename($file['full_path']);
                 if ($input->getOption('assume-yes') === true) {

@@ -65,11 +65,11 @@ class RemoveCommand extends Command
         $filesNotTracked = $cleaner->getFilesNotTracked();
         $nbFileNotTracked = count($filesNotTracked);
         $helper = $this->getHelper('question');
-        $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
 
         if ($nbFileNotTracked == 0) {
-            $console->writeln('<fg=yellow>no files to remove</>');
+            $console->writeln(['', '> <fg=yellow>No files to remove.</>']);
         } else {
+            $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
             foreach ($filesNotTracked as $file) {
                 if ($input->getOption('assume-yes') === true) {
                     unlink($file['full_path']);
@@ -99,7 +99,7 @@ class RemoveCommand extends Command
         $emptyDirectory = $cleaner->getEmptyDirectory();
 
         if (count($emptyDirectory) == 0) {
-            $console->writeln('<fg=yellow>no empty directory</>');
+            $console->writeln('> <fg=yellow>No empty directory.</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $cleaner->removeDirectory($emptyDirectory);

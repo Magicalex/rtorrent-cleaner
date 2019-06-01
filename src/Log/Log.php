@@ -34,7 +34,9 @@ class Log
     public function table($header, $data)
     {
         $console = new Table($this->output);
-        $console->setStyle('box');
+        if (version_compare(PHP_VERSION, '7.1.3', '>=')) {
+            $console->setStyle('box');
+        }
         $console->setHeaders($header)->setRows($data);
         $console->render();
 

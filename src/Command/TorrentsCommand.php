@@ -44,37 +44,36 @@ class TorrentsCommand extends Command
             $output
         );
 
-        $missingFile = $cleaner->getFilesMissingFromRtorrent();
-        $nbmissingFile = count($missingFile);
+        $missingFile = $cleaner->getTorrentsMissingFile();
         $helper = $this->getHelper('question');
-        $output->writeln(['', "> {$nbmissingFile} file(s) are missing.", '']);
+        $output->writeln(['', '> '.$missingFile['nb'].' file(s) are missing.', '']);
 
-        if ($nbmissingFile == 0) {
+        if ($missingFile['nb'] == 0) {
             $output->writeln('<fg=yellow>no missing files</>');
         } else {
-            // $torrentMissingFile = $list->listTorrentMissingFile($missingFile, $data);
-            //
-            // foreach ($torrentMissingFile as $torrent) {
-            //     $ask = "<options=bold>What do you want to do for the torrent <fg=yellow>{$torrent['name']}</> ? (defaults: nothing)</>\n";
-            //     foreach ($torrent['files'] as $file) {
-            //         $file = Str::truncate($file);
-            //         $ask .= "missing file: <fg=cyan>{$file}</>\n";
-            //     }
-            //
-            //     $question = new ChoiceQuestion($ask, ['delete', 'redownload', 'nothing'], 2);
-            //     $question->setErrorMessage('Option %s is invalid.');
-            //     $answer = $helper->ask($input, $output, $question);
-            //
-            //     if ($answer == 'delete') {
-            //         $list->deleteTorrent($torrent['hash']);
-            //         $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
-            //     } elseif ($answer == 'redownload') {
-            //         $list->redownload($torrent['hash']);
-            //         $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
-            //     } elseif ($answer == 'nothing') {
-            //         $output->writeln('<fg=yellow>torrent ignored</>');
-            //     }
-            // }
+            foreach ($missingFile['data'] as $torrent) {
+                $ask = '<options=bold>What do you want to do for the torrent <fg=yellow>'.$torrent['name'].'</> ? (defaults: nothing)</>'.PHP_EOL;
+
+                foreach ($torrent['file'] as $data) {
+                    $file = Helpers::truncate($data['full_path']);
+                    $size = Helpers::convertFileSize($data['size'], 2);
+                    $ask .= '> file: <fg=green>'.$file.'</> size: <fg=green>'.$size.'</>'.PHP_EOL;
+                }
+
+                $question = new ChoiceQuestion($ask, ['nothing', 'delete', 'redownload'], 0);
+                $question->setErrorMessage('Option %s is invalid.');
+                $answer = $helper->ask($input, $output, $question);
+
+                if ($answer == 'delete') {
+                    $cleaner->deleteTorrent($torrent['hash']);
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
+                } elseif ($answer == 'redownload') {
+                    $cleaner->redownload($torrent['hash']);
+                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
+                } elseif ($answer == 'nothing') {
+                    $output->writeln('<fg=yellow>torrent ignored</>');
+                }
+            }
         }
 
         $event = $time->stop('torrent');

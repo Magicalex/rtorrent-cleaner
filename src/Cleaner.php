@@ -167,24 +167,24 @@ class Cleaner
 
     public function deleteTorrent($hash)
     {
-        $this->call('d.erase', [$hash]);
+        $this->rtorrent->call('d.erase', [$hash]);
     }
 
     public function redownload($hash)
     {
-        $this->call('d.stop', [$hash]);
-        $this->call('d.close', [$hash]);
-        $this->call('f.multicall', [$hash, '', 'f.set_create_queued=0', 'f.set_resize_queued=0']);
-        $this->call('d.check_hash', [$hash]);
-        $this->call('d.open', [$hash]);
-        $this->call('d.start', [$hash]);
+        $this->rtorrent->call('d.stop', [$hash]);
+        $this->rtorrent->call('d.close', [$hash]);
+        $this->rtorrent->call('f.multicall', [$hash, '', 'f.set_create_queued=0', 'f.set_resize_queued=0']);
+        $this->rtorrent->call('d.check_hash', [$hash]);
+        $this->rtorrent->call('d.open', [$hash]);
+        $this->rtorrent->call('d.start', [$hash]);
     }
 
-    protected function findTorrentHash($data, $missingFile)
+    protected function findTorrentHash($missingFile)
     {
-        foreach ($data as $torrent) {
-            foreach ($torrent['files'] as $file) {
-                if ($file['name'] == $missingFile) {
+        foreach ($this->rtorrentData as $torrent) {
+            foreach ($torrent['file'] as $file) {
+                if ($file['full_path'] == $missingFile) {
                     $hash = $torrent['hash'];
                     $name = $torrent['name'];
                     break;
@@ -195,34 +195,35 @@ class Cleaner
         return ['hash' => $hash, 'name' => $name];
     }
 
-    public function listTorrentMissingFile($missingFile, $dataRtorrent)
+    public function getTorrentsMissingFile()
     {
-        $torrentMissingFile = [];
+        $missingFile = $this->getFilesMissingFromRtorrent();
+        $nbMissingFile = count($missingFile);
         $findHash = false;
+        $output = [];
 
         foreach ($missingFile as $file) {
-            $torrent = $this->findTorrentHash($dataRtorrent['data-torrent'], $file);
+            $torrent = $this->findTorrentHash($file['full_path']);
 
-            // check if $hash has been already add
-            foreach ($torrentMissingFile as $id => $info) {
+            foreach ($output as $id => $info) {
                 if ($info['hash'] == $torrent['hash']) {
-                    $torrentMissingFile[$id]['files'][] = $file;
+                    $output[$id]['file'][] = $file;
                     $findHash = true;
                     break;
                 }
             }
 
             if ($findHash === false) {
-                $torrentMissingFile[] = [
-                    'hash'  => $torrent['hash'],
-                    'name'  => $torrent['name'],
-                    'files' => [$file]
+                $output[] = [
+                    'hash' => $torrent['hash'],
+                    'name' => $torrent['name'],
+                    'file' => [$file]
                 ];
             }
 
             $findHash = false;
         }
 
-        return $torrentMissingFile;
+        return ['data' => $output, 'nb' => $nbMissingFile];
     }
 }
