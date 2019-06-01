@@ -84,6 +84,7 @@ class Cleaner
             exit(1);
         }
 
+        $this->localFileData = [];
         $finder = new Finder();
         $finder->in($this->directories)->files()->ignoreDotFiles(false);
 
@@ -120,12 +121,12 @@ class Cleaner
 
     public function getFilesNotTracked()
     {
-        return Helpers::array_diff($this->localFileData, $this->rtorrentFileData);
+        return Helpers::find_diff($this->localFileData, $this->rtorrentFileData);
     }
 
     public function getFilesMissingFromRtorrent()
     {
-        return Helpers::array_diff($this->rtorrentFileData, $this->localFileData);
+        return Helpers::find_diff($this->rtorrentFileData, $this->localFileData);
     }
 
     public function getEmptyDirectory()

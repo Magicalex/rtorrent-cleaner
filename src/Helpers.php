@@ -45,17 +45,23 @@ class Helpers
         return $humanTime;
     }
 
-    public static function array_diff($arr1, $arr2)
+    public static function find_diff($array_one, $array_two)
     {
-        $outputDiff = [];
+        $output = [];
+        $diff_array_one = array_column($array_one, 'full_path');
+        $diff_array_two = array_column($array_two, 'full_path');
+        $diff = array_diff($diff_array_one, $diff_array_two);
 
-        foreach ($arr1 as $value) {
-            if (in_array($value['full_path'], array_column($arr2, 'full_path')) === false) {
-                $outputDiff[] = $value;
+        foreach ($diff as $full_path) {
+            foreach ($array_one as $value_one) {
+                if ($full_path == $value_one['full_path']) {
+                    $output[] = $value_one;
+                    break;
+                }
             }
         }
 
-        return $outputDiff;
+        return $output;
     }
 
     public static function errorMessage($message, $output)

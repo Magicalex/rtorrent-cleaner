@@ -76,6 +76,8 @@ class ReportCommand extends Command
             array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total recoverable space</>', "<fg=yellow>{$totalSize}</>"]);
             $console->writeln('');
             $console->table(['', "<fg=yellow>{$nbFileNotTracked} file(s) are not necessary for rtorrent</>", '<fg=yellow>Size</>'], $dataTable);
+        } else {
+            $console->writeln(['', '> <fg=green>No files not tracked by rtorrent.</>']);
         }
 
         $missingFile = $cleaner->getFilesMissingFromRtorrent();
@@ -97,6 +99,8 @@ class ReportCommand extends Command
             array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total space to download</>', "<fg=yellow>{$totalSize}</>"]);
             $console->writeln('');
             $console->table(['', "<fg=yellow>{$nbmissingFile} files(s) are missing</>", '<fg=yellow>Size</>'], $dataTable);
+        } else {
+            $console->writeln(['', '> <fg=green>No missing files.</>']);
         }
 
         $event = $time->stop('report');
