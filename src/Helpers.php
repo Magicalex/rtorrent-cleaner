@@ -13,15 +13,14 @@ class Helpers
         }
     }
 
-    public static function convertFileSize($octets, $round)
+    public static function convertFileSize($octets, $round = 0)
     {
         $unit = ['o', 'ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
-
         for ($i = 0; $octets >= 1024; $i++) {
             $octets = $octets / 1024;
         }
 
-        return round($octets, 2).$unit[$i];
+        return round($octets, $round).$unit[$i];
     }
 
     public static function humanTime($ms)

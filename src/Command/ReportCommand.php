@@ -48,13 +48,13 @@ class ReportCommand extends Command
     {
         $time = (new Stopwatch())->start('report');
         $console = new Log($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner • <fg=cyan>report</>', $output);
+        Helpers::title('rtorrent-cleaner • <fg=cyan>report</>', $console);
 
         $cleaner = new \Rtorrent\Cleaner\Cleaner(
             $input->getOption('scgi'),
             $input->getOption('port'),
             $input->getOption('exclude'),
-            $output
+            $console
         );
 
         $filesNotTracked = $cleaner->getFilesNotTracked();
@@ -75,7 +75,7 @@ class ReportCommand extends Command
             $totalSize = Helpers::convertFileSize($totalSize, 2);
             array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total recoverable space</>', "<fg=yellow>{$totalSize}</>"]);
             $console->writeln('');
-            $console->table(['', "<fg=yellow>{$nbFileNotTracked} file(s) are not necessary for rtorrent</>", '<fg=yellow>Size</>'], $dataTable);
+            $console->table(['', "<fg=yellow>{$nbFileNotTracked} file(s) are not tracked by rtorrent</>", '<fg=yellow>Size</>'], $dataTable);
         } else {
             $console->writeln(['', '> <fg=green>No files not tracked by rtorrent.</>']);
         }

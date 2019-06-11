@@ -58,10 +58,10 @@ class MoveCommand extends Command
     {
         $time = (new Stopwatch())->start('mv');
         $console = new Log($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner • <fg=cyan>move unnecessary files</>', $output);
+        Helpers::title('rtorrent-cleaner • <fg=cyan>move unnecessary files</>', $console);
 
         if (is_dir($input->getArgument('folder')) === false) {
-            Helpers::errorMessage('Please, define a correct directory.', $output);
+            Helpers::errorMessage('Please, define a correct directory.', $console);
             exit(1);
         } else {
             $folder = realpath($input->getArgument('folder'));
@@ -71,7 +71,7 @@ class MoveCommand extends Command
             $input->getOption('scgi'),
             $input->getOption('port'),
             $input->getOption('exclude'),
-            $output
+            $console
         );
 
         $filesNotTracked = $cleaner->getFilesNotTracked();

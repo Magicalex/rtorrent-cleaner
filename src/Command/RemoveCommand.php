@@ -53,13 +53,13 @@ class RemoveCommand extends Command
     {
         $time = (new Stopwatch())->start('rm');
         $console = new Log($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner • <fg=cyan>remove unnecessary files</>', $output);
+        Helpers::title('rtorrent-cleaner • <fg=cyan>remove unnecessary files</>', $console);
 
         $cleaner = new \Rtorrent\Cleaner\Cleaner(
             $input->getOption('scgi'),
             $input->getOption('port'),
             $input->getOption('exclude'),
-            $output
+            $console
         );
 
         $filesNotTracked = $cleaner->getFilesNotTracked();
