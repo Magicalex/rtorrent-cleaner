@@ -66,7 +66,7 @@ class RemoveCommand extends Command
         $nbFileNotTracked = count($filesNotTracked);
         $helper = $this->getHelper('question');
 
-        if ($nbFileNotTracked == 0) {
+        if ($nbFileNotTracked === 0) {
             $console->writeln(['', '> <fg=yellow>No files to remove.</>']);
         } else {
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
@@ -98,7 +98,7 @@ class RemoveCommand extends Command
 
         $emptyDirectory = $cleaner->getEmptyDirectory();
 
-        if (count($emptyDirectory) == 0) {
+        if (count($emptyDirectory) === 0) {
             $console->writeln('> <fg=yellow>No empty directory.</>');
         } else {
             while (count($emptyDirectory) > 0) {
@@ -112,7 +112,7 @@ class RemoveCommand extends Command
             }
         }
 
-        $event = $time->stop('rm');
+        $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);

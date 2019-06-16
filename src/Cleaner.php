@@ -30,7 +30,7 @@ class Cleaner
         try {
             $torrents = $this->rtorrent->call('d.multicall2', ['', 'default', 'd.hash=', 'd.name=', 'd.directory=']);
             $this->numTorrents = count($torrents);
-            if ($this->numTorrents == 0) {
+            if ($this->numTorrents === 0) {
                 throw new \Exception('There is no torrent in rtorrent.');
             }
         } catch (\Exception $error) {
@@ -47,7 +47,7 @@ class Cleaner
         $progressBar->start();
 
         foreach ($torrents as $nb => $torrent) {
-            if (is_dir($torrent[2]) === true) {
+            if (is_dir($torrent[2])) {
                 $this->directories[] = $torrent[2];
             }
 
@@ -79,7 +79,7 @@ class Cleaner
 
     protected function getFileListFromDisk()
     {
-        if (count($this->directories) == 0) {
+        if (count($this->directories) === 0) {
             Helpers::errorMessage('The files are not able to be reached locally.', $this->output);
             exit(1);
         }
@@ -140,7 +140,7 @@ class Cleaner
             $handle = opendir($dir->getPathname());
 
             while (($entry = readdir($handle)) !== false) {
-                if ($entry != '.' && $entry != '..') {
+                if ($entry !== '.' && $entry !== '..') {
                     $isEmpty = false;
                     break;
                 }
@@ -148,7 +148,7 @@ class Cleaner
 
             closedir($handle);
 
-            if ($isEmpty === true) {
+            if ($isEmpty) {
                 $emptyDirectory[] = $dir->getPathname();
             }
         }
@@ -185,7 +185,7 @@ class Cleaner
     {
         foreach ($this->rtorrentData as $torrent) {
             foreach ($torrent['file'] as $file) {
-                if ($file['full_path'] == $missingFile) {
+                if ($file['full_path'] === $missingFile) {
                     $hash = $torrent['hash'];
                     $name = $torrent['name'];
                     break;
@@ -207,14 +207,14 @@ class Cleaner
             $torrent = $this->findTorrentHash($file['full_path']);
 
             foreach ($output as $id => $info) {
-                if ($info['hash'] == $torrent['hash']) {
+                if ($info['hash'] === $torrent['hash']) {
                     $output[$id]['file'][] = $file;
                     $findHash = true;
                     break;
                 }
             }
 
-            if ($findHash === false) {
+            if (!$findHash) {
                 $output[] = [
                     'hash' => $torrent['hash'],
                     'name' => $torrent['name'],

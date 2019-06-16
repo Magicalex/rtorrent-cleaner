@@ -65,7 +65,7 @@ class ReportCommand extends Command
 
         foreach ($filesNotTracked as $file) {
             $i++;
-            $totalSize = $totalSize + $file['size'];
+            $totalSize += $file['size'];
             $size = Helpers::convertFileSize($file['size'], 2);
             $file = Helpers::truncate($file['full_path']);
             $dataTable[] = [$i, $file, $size];
@@ -88,7 +88,7 @@ class ReportCommand extends Command
 
         foreach ($missingFile as $file) {
             $i++;
-            $totalSize = $totalSize + $file['size'];
+            $totalSize += $file['size'];
             $size = Helpers::convertFileSize($file['size'], 2);
             $file = Helpers::truncate($file['full_path']);
             $dataTable[] = [$i, $file, $size];
@@ -103,7 +103,7 @@ class ReportCommand extends Command
             $console->writeln(['', '> <fg=green>No missing files.</>']);
         }
 
-        $event = $time->stop('report');
+        $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);

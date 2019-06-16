@@ -60,7 +60,7 @@ class MoveCommand extends Command
         $console = new Log($output, $input->getOption('log'));
         Helpers::title('rtorrent-cleaner • <fg=cyan>move unnecessary files</>', $console);
 
-        if (is_dir($input->getArgument('folder')) === false) {
+        if (!is_dir($input->getArgument('folder'))) {
             Helpers::errorMessage('Please, define a correct directory.', $console);
             exit(1);
         } else {
@@ -78,7 +78,7 @@ class MoveCommand extends Command
         $nbFileNotTracked = count($filesNotTracked);
         $helper = $this->getHelper('question');
 
-        if ($nbFileNotTracked == 0) {
+        if ($nbFileNotTracked === 0) {
             $console->writeln(['', '> <fg=yellow>No files to move.</>']);
         } else {
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
@@ -109,7 +109,7 @@ class MoveCommand extends Command
             }
         }
 
-        $event = $time->stop('mv');
+        $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);

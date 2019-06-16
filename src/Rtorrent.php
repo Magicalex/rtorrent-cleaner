@@ -27,9 +27,8 @@ class Rtorrent
         fwrite($stream, $request, strlen($request));
         $response_xml = stream_get_contents($stream);
         fclose($stream);
-        $response = xmlrpc_decode(self::fix_xml($response_xml), 'UTF-8');
 
-        return $response;
+        return xmlrpc_decode(self::fix_xml($response_xml), 'UTF-8');
     }
 
     protected function prefix()
@@ -44,8 +43,7 @@ class Rtorrent
     protected static function fix_xml($xml)
     {
         $xml = preg_replace('/^(.*\n){4}/', '', $xml);
-        $xml = str_replace('i8>', 'int>', $xml);
 
-        return $xml;
+        return str_replace('i8>', 'int>', $xml);
     }
 }

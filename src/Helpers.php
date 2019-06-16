@@ -17,7 +17,7 @@ class Helpers
     {
         $unit = ['o', 'ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
         for ($i = 0; $octets >= 1024; $i++) {
-            $octets = $octets / 1024;
+            $octets /= 1024;
         }
 
         return round($octets, $round).$unit[$i];
@@ -53,7 +53,7 @@ class Helpers
 
         foreach ($diff as $full_path) {
             foreach ($array_one as $value_one) {
-                if ($full_path == $value_one['full_path']) {
+                if ($full_path === $value_one['full_path']) {
                     $output[] = $value_one;
                     break;
                 }

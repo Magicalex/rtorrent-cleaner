@@ -76,7 +76,7 @@ class TorrentsCommand extends Command
             }
         }
 
-        $event = $time->stop('torrent');
+        $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
