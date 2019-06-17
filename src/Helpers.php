@@ -15,6 +15,10 @@ class Helpers
 
     public static function convertFileSize($octets, $round = 0)
     {
+        if ($octets < 0) {
+            return 'err';
+        }
+
         $unit = ['o', 'ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
         for ($i = 0; $octets >= 1024; $i++) {
             $octets /= 1024;

@@ -1,4 +1,4 @@
 composer.lock
 vendor
-*.phar
+box.phar
 test.php
