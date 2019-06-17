@@ -7,7 +7,7 @@ LABEL description="Docker image for remove unnecessary file in rtorrent" \
 ARG VERSION=master
 
 RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/v3.9/community" >> /etc/apk/repositories \
-  && apk add -U php7@community php7-phar@community php7-mbstring@community php7-xmlrpc@community \
+  && apk add -U php7@community php7-phar@community php7-mbstring@community php7-xmlrpc@community php7-json@community \
   && wget https://github.com/Magicalex/rtorrent-cleaner/raw/${VERSION}/rtorrent-cleaner-php7.phar \
   && mv rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner \
   && chmod +x /usr/local/bin/rtorrent-cleaner \

@@ -43,7 +43,7 @@ class Log
         if ($this->log !== false) {
             $log = new Table($this->log);
             if (version_compare(PHP_VERSION, '7.1.3', '>=')) {
-                $console->setStyle('box');
+                $log->setStyle('box');
             }
             $log->setHeaders($header)->setRows($data);
             $log->render();

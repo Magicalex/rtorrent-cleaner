@@ -17,6 +17,8 @@ class Helpers
     {
         if ($octets < 0) {
             return 'err';
+        } elseif ($octets === 0) {
+            return 0;
         }
 
         $unit = ['o', 'ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
