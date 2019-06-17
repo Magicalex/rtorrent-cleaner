@@ -71,7 +71,7 @@ class MoveCommand extends Command
             $input->getOption('scgi'),
             $input->getOption('port'),
             $input->getOption('exclude'),
-            $console
+            $output
         );
 
         $filesNotTracked = $cleaner->getFilesNotTracked();

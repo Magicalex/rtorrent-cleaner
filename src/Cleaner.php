@@ -3,6 +3,7 @@
 namespace Rtorrent\Cleaner;
 
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
 class Cleaner
@@ -16,7 +17,7 @@ class Cleaner
     protected $rtorrentFileData;
     protected $directories = [];
 
-    public function __construct($scgi, $port, $exclude, $output)
+    public function __construct($scgi, $port, $exclude, OutputInterface $output)
     {
         $this->output = $output;
         $this->exclude = $exclude;
