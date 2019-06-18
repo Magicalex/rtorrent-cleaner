@@ -11,11 +11,11 @@ class Cleaner
     protected $output;
     protected $exclude;
     protected $rtorrent;
+    protected $directories;
     protected $numTorrents;
     protected $rtorrentData;
     protected $localFileData;
     protected $rtorrentFileData;
-    protected $directories = [];
 
     public function __construct($scgi, $port, $exclude, OutputInterface $output)
     {
@@ -127,6 +127,16 @@ class Cleaner
     public function getFilesMissingFromRtorrent()
     {
         return Helpers::find_diff($this->rtorrentFileData, $this->localFileData);
+    }
+
+    public function getDirectories()
+    {
+        return $this->directories;
+    }
+
+    public function setDirectories($directories)
+    {
+        $this->directories = $directories;
     }
 
     public function getEmptyDirectory()
