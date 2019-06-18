@@ -21,8 +21,9 @@ class Rtorrent
             throw new \Exception('Unable to connect to rtorrent. Check if rtorrent is running.');
         }
 
+        $null = "\x00";
         $content = xmlrpc_encode_request($method, $params, ['encoding' => 'UTF-8']);
-        $header = "CONTENT_LENGTH\x0".strlen($content)."\x0"."SCGI\x0"."1\x0";
+        $header = "CONTENT_LENGTH{$null}".strlen($content)."{$null}SCGI{$null}1{$null}";
         $request = strlen($header).':'.$header.','.$content;
         fwrite($stream, $request, strlen($request));
         $xml = stream_get_contents($stream);

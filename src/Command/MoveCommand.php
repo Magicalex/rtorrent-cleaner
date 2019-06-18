@@ -23,9 +23,9 @@ class MoveCommand extends Command
             ->setHelp('Command mv for move your unnecessary files in a specified folder')
             ->addOption(
                 'scgi',
-                null,
+                'u',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent. ex: 127.0.0.1',
+                'Set the scgi url of rtorrent',
                 '127.0.0.1')
             ->addOption(
                 'port',
@@ -40,7 +40,7 @@ class MoveCommand extends Command
                 'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
             ->addOption(
                 'log',
-                null,
+                'l',
                 InputOption::VALUE_OPTIONAL,
                 'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
                 false)
