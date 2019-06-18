@@ -2,10 +2,10 @@
 
 namespace Rtorrent\Cleaner\Console;
 
-use Rtorrent\Cleaner\Command\MoveCommand;
-use Rtorrent\Cleaner\Command\ReportCommand;
-use Rtorrent\Cleaner\Command\RemoveCommand;
 use Rtorrent\Cleaner\Command\DefaultCommand;
+use Rtorrent\Cleaner\Command\MoveCommand;
+use Rtorrent\Cleaner\Command\RemoveCommand;
+use Rtorrent\Cleaner\Command\ReportCommand;
 use Rtorrent\Cleaner\Command\TorrentsCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;
