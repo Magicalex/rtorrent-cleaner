@@ -16,7 +16,7 @@ class Helpers
     public static function convertFileSize($octets, $round = 0)
     {
         if ($octets < 0) {
-            return 'err';
+            return 'error';
         } elseif ($octets === 0) {
             return 0;
         }
@@ -82,7 +82,7 @@ class Helpers
     public static function title($title, $output)
     {
         $dash = '';
-        $tmp = preg_replace('/<fg=[a-z]+>(.*)<\/>/', '$1', $title);
+        $tmp = preg_replace('#<fg=[a-z]+>(.*)<\/>#', '$1', $title);
         for ($i = 0; $i < strlen($tmp); $i++) {
             $dash .= '─';
         }

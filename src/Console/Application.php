@@ -2,6 +2,11 @@
 
 namespace Rtorrent\Cleaner\Console;
 
+use Rtorrent\Cleaner\Command\MoveCommand;
+use Rtorrent\Cleaner\Command\ReportCommand;
+use Rtorrent\Cleaner\Command\RemoveCommand;
+use Rtorrent\Cleaner\Command\DefaultCommand;
+use Rtorrent\Cleaner\Command\TorrentsCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,11 +20,11 @@ class Application extends BaseApplication
     {
         parent::__construct($this->name, '<fg=white>version</> <comment>'.$this->version.'</>');
         $this->addCommands([
-            new \Rtorrent\Cleaner\Command\MoveCommand(),
-            new \Rtorrent\Cleaner\Command\ReportCommand(),
-            new \Rtorrent\Cleaner\Command\RemoveCommand(),
-            new \Rtorrent\Cleaner\Command\DefaultCommand(),
-            new \Rtorrent\Cleaner\Command\TorrentsCommand()
+            new MoveCommand(),
+            new ReportCommand(),
+            new RemoveCommand(),
+            new DefaultCommand(),
+            new TorrentsCommand()
         ]);
     }
 

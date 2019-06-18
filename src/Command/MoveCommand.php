@@ -2,6 +2,7 @@
 
 namespace Rtorrent\Cleaner\Command;
 
+use Rtorrent\Cleaner\Cleaner;
 use Rtorrent\Cleaner\Helpers;
 use Rtorrent\Cleaner\Log\Log;
 use Symfony\Component\Console\Command\Command;
@@ -67,7 +68,7 @@ class MoveCommand extends Command
             $folder = realpath($input->getArgument('folder'));
         }
 
-        $cleaner = new \Rtorrent\Cleaner\Cleaner(
+        $cleaner = new Cleaner(
             $input->getOption('scgi'),
             $input->getOption('port'),
             $input->getOption('exclude'),
@@ -88,7 +89,7 @@ class MoveCommand extends Command
                     rename($file['full_path'], $folder.'/'.$fileName);
                     $viewFile = Helpers::truncate($file['full_path']);
                     $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
-                } elseif ($input->getOption('assume-yes') === false) {
+                } elseif (!$input->getOption('assume-yes')) {
                     $viewFile = Helpers::truncate($file['full_path'], 70);
                     $question = new ChoiceQuestion(
                         "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",

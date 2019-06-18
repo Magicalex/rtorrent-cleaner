@@ -33,8 +33,8 @@ class Cleaner
             if ($this->numTorrents === 0) {
                 throw new \Exception('There is no torrent in rtorrent.');
             }
-        } catch (\Exception $error) {
-            Helpers::errorMessage($error->getMessage(), $this->output);
+        } catch (\Exception $exception) {
+            Helpers::errorMessage($exception->getMessage(), $this->output);
             exit(1);
         }
 

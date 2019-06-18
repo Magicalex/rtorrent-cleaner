@@ -2,6 +2,7 @@
 
 namespace Rtorrent\Cleaner\Command;
 
+use Rtorrent\Cleaner\Cleaner;
 use Rtorrent\Cleaner\Helpers;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,7 +38,7 @@ class TorrentsCommand extends Command
         $time = (new Stopwatch())->start('torrent');
         Helpers::title('rtorrent-cleaner • <fg=cyan>manage missing files</>', $output);
 
-        $cleaner = new \Rtorrent\Cleaner\Cleaner(
+        $cleaner = new Cleaner(
             $input->getOption('scgi'),
             $input->getOption('port'),
             null,

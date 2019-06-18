@@ -2,6 +2,7 @@
 
 namespace Rtorrent\Cleaner\Command;
 
+use Rtorrent\Cleaner\Cleaner;
 use Rtorrent\Cleaner\Helpers;
 use Rtorrent\Cleaner\Log\Log;
 use Symfony\Component\Console\Command\Command;
@@ -55,7 +56,7 @@ class RemoveCommand extends Command
         $console = new Log($output, $input->getOption('log'));
         Helpers::title('rtorrent-cleaner • <fg=cyan>remove unnecessary files</>', $console);
 
-        $cleaner = new \Rtorrent\Cleaner\Cleaner(
+        $cleaner = new Cleaner(
             $input->getOption('scgi'),
             $input->getOption('port'),
             $input->getOption('exclude'),

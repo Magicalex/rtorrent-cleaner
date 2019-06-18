@@ -17,7 +17,7 @@ class Rtorrent
     {
         $stream = @fsockopen($this->prefix().$this->scgi, $this->port);
 
-        if ($stream === false) {
+        if (!$stream) {
             throw new \Exception('Unable to connect to rtorrent. Check if rtorrent is running.');
         }
 
@@ -25,10 +25,14 @@ class Rtorrent
         $header = "CONTENT_LENGTH\x0".strlen($content)."\x0"."SCGI\x0"."1\x0";
         $request = strlen($header).':'.$header.','.$content;
         fwrite($stream, $request, strlen($request));
-        $response_xml = stream_get_contents($stream);
+        $xml = stream_get_contents($stream);
         fclose($stream);
 
-        return xmlrpc_decode(self::fix_xml($response_xml), 'UTF-8');
+        $xml = preg_replace('#^(.*\n){4}#', '', $xml);
+        $xml = preg_replace('#\<i8>(.+)\<\/i8>#', '<string>$1</string>', $xml);
+        $xml = preg_replace('#\<i4>(.+)\<\/i4>#', '<string>$1</string>', $xml);
+
+        return xmlrpc_decode($xml, 'UTF-8');
     }
 
     protected function prefix()
@@ -38,12 +42,5 @@ class Rtorrent
         } else {
             return 'tcp://';
         }
-    }
-
-    protected static function fix_xml($xml)
-    {
-        $xml = preg_replace('/^(.*\n){4}/', '', $xml);
-
-        return str_replace('i8>', 'int>', $xml);
     }
 }
