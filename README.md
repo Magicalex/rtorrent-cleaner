@@ -181,6 +181,18 @@ docker run -it --rm \
   magicalex/docker-rtorrent-cleaner $*
 ```
 
+Or if you use a socket with rtorrent `--scgi=/run/php/.rtorrent.sock`.
+```sh
+# vi /usr/local/bin/rtorrent-cleaner
+
+#!/bin/sh
+
+docker run -it --rm \
+   -v </home/user/torrents>:</data/torrents> \
+   -v /run/php/.rtorrent.sock:/run/php/.rtorrent.sock \
+   magicalex/docker-rtorrent-cleaner $*
+```
+
 ```sh
 chmod +x /usr/local/bin/rtorrent-cleaner
 ```
@@ -206,8 +218,7 @@ To build the archive phar, php 7.2 and php phar extension is required.
 ```sh
 git clone https://github.com/Magicalex/rtorrent-cleaner.git
 cd rtorrent-cleaner
-composer run-script build-phar-php5
-composer run-script build-phar-php7
+composer run-script build
 ```
 
 ## License
