@@ -80,7 +80,7 @@ class MoveCommand extends Command
         $helper = $this->getHelper('question');
 
         if ($nbFileNotTracked === 0) {
-            $console->writeln(['', '> <fg=yellow>No files to move.</>']);
+            $console->writeln(['', '> <fg=green>No files to move.</>']);
         } else {
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
             foreach ($filesNotTracked as $file) {

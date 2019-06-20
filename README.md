@@ -170,8 +170,6 @@ docker run -it --rm \
 
 You can create a script for run rtorrent-cleaner with Docker
 ```sh
-# vi /usr/local/bin/rtorrent-cleaner
-
 #!/bin/sh
 
 docker run -it --rm \
@@ -183,8 +181,6 @@ docker run -it --rm \
 
 Or if you use a socket with rtorrent `--scgi=/run/php/.rtorrent.sock`.
 ```sh
-# vi /usr/local/bin/rtorrent-cleaner
-
 #!/bin/sh
 
 docker run -it --rm \
@@ -199,12 +195,17 @@ chmod +x /usr/local/bin/rtorrent-cleaner
 
 Usage:
 ```
-rtorrent-cleaner
 rtorrent-cleaner report --scgi=rtorrent --port=5000
 rtorrent-cleaner rm --scgi=rtorrent --port=5000
 rtorrent-cleaner torrents --scgi=rtorrent --port=5000
 rtorrent-cleaner mv /home/user/old --scgi=rtorrent --port=5000
 ```
+Or with a socket
+```
+rtorrent-cleaner report --scgi=/run/php/.rtorrent.sock
+rtorrent-cleaner rm --scgi=/run/php/.rtorrent.sock
+rtorrent-cleaner torrents --scgi=/run/php/.rtorrent.sock
+rtorrent-cleaner mv /home/user/old --scgi=/run/php/.rtorrent.sock
 
 ## Build docker image
 

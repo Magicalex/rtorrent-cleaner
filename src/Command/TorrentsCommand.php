@@ -47,11 +47,12 @@ class TorrentsCommand extends Command
 
         $missingFile = $cleaner->getTorrentsMissingFile();
         $helper = $this->getHelper('question');
-        $output->writeln(['', '> '.$missingFile['nb'].' file(s) are missing.', '']);
 
-        if ($missingFile['nb'] == 0) {
-            $output->writeln('<fg=yellow>no missing files</>');
+        if ($missingFile['nb'] === 0) {
+            $output->writeln(['', '> <fg=green>No missing files.</>']);
         } else {
+            $output->writeln(['', '> '.$missingFile['nb'].' file(s) are missing.', '']);
+
             foreach ($missingFile['data'] as $torrent) {
                 $ask = '<options=bold>What do you want to do for the torrent <fg=yellow>'.$torrent['name'].'</> ? (defaults: nothing)</>'.PHP_EOL;
 
@@ -67,10 +68,10 @@ class TorrentsCommand extends Command
 
                 if ($answer == 'delete') {
                     $cleaner->deleteTorrent($torrent['hash']);
-                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> was deleted without the data");
+                    $output->writeln('torrent: <fg=yellow>'.$torrent['name'].'</> was deleted without the data');
                 } elseif ($answer == 'redownload') {
                     $cleaner->redownload($torrent['hash']);
-                    $output->writeln("torrent: <fg=yellow>{$torrent['name']}</> download has been launched");
+                    $output->writeln('torrent: <fg=yellow>'.$torrent['name'].'</> download has been launched');
                 } elseif ($answer == 'nothing') {
                     $output->writeln('<fg=yellow>torrent ignored</>');
                 }

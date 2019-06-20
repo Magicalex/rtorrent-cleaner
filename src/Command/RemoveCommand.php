@@ -68,7 +68,7 @@ class RemoveCommand extends Command
         $helper = $this->getHelper('question');
 
         if ($nbFileNotTracked === 0) {
-            $console->writeln(['', '> <fg=yellow>No files to remove.</>']);
+            $console->writeln(['', '> <fg=green>No files to remove.</>']);
         } else {
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
             foreach ($filesNotTracked as $file) {
@@ -100,7 +100,7 @@ class RemoveCommand extends Command
         $emptyDirectory = $cleaner->getEmptyDirectory();
 
         if (count($emptyDirectory) === 0) {
-            $console->writeln('> <fg=yellow>No empty directory.</>');
+            $console->writeln('> <fg=green>No empty directory.</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $cleaner->removeDirectory($emptyDirectory);
