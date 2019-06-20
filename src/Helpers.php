@@ -91,4 +91,19 @@ class Helpers
 
         return $output->writeln([$top, '│ '.$title.' │', $bottom, '']);
     }
+
+    public function getParentFolder($array)
+    {
+        sort($array);
+        $directories = [];
+
+        foreach ($array as $value) {
+            $test_path = preg_replace('#\/([^\/]+)$#', '', $value);
+            if (!in_array($test_path, $directories)) {
+                $directories[] = $value;
+            }
+        }
+
+        return array_unique($directories);
+    }
 }

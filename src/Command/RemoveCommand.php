@@ -109,13 +109,6 @@ class RemoveCommand extends Command
                     $console->writeln("directory: <fg=yellow>{$folder}</> has been removed");
                 }
 
-                foreach ($cleaner->getDirectories() as $dir) {
-                    if (is_dir($dir)) {
-                        $directories[] = $dir;
-                    }
-                }
-
-                $cleaner->setDirectories($directories);
                 $emptyDirectory = $cleaner->getEmptyDirectory();
             }
         }

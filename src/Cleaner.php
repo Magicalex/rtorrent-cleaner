@@ -70,7 +70,7 @@ class Cleaner
             $progressBar->advance(1);
         }
 
-        $this->directories = array_unique($this->directories);
+        $this->directories = Helpers::getParentFolder($this->directories);
         $progressBar->setMessage('<fg=green>completed successfully!</>', 'status');
         $progressBar->finish();
 
@@ -101,11 +101,6 @@ class Cleaner
             $i++;
         }
 
-        $this->localFileData = array_intersect_key(
-            $this->localFileData,
-            array_unique(array_map('serialize', $this->localFileData))
-        );
-
         return $this;
     }
 
@@ -127,16 +122,6 @@ class Cleaner
     public function getFilesMissingFromRtorrent()
     {
         return Helpers::find_diff($this->rtorrentFileData, $this->localFileData);
-    }
-
-    public function getDirectories()
-    {
-        return $this->directories;
-    }
-
-    public function setDirectories($directories)
-    {
-        $this->directories = $directories;
     }
 
     public function getEmptyDirectory()
@@ -163,7 +148,7 @@ class Cleaner
             }
         }
 
-        return array_unique($emptyDirectory);
+        return $emptyDirectory;
     }
 
     public function removeDirectory($emptyDirectory)
