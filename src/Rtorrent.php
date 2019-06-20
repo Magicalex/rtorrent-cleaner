@@ -40,8 +40,8 @@ class Rtorrent
     {
         if ($this->port == -1) {
             return 'unix://';
-        } else {
-            return 'tcp://';
         }
+
+        return 'tcp://';
     }
 }

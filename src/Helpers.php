@@ -4,20 +4,22 @@ namespace Rtorrent\Cleaner;
 
 class Helpers
 {
-    public static function truncate($text, $maxChars = 100, $separator = '[...]')
+    public static function truncate($text, $maxChars = 100, $separator = '...')
     {
         if (($length = strlen($text)) > $maxChars) {
             return substr_replace($text, $separator, $maxChars / 2, $length - $maxChars);
-        } else {
-            return $text;
         }
+
+        return $text;
     }
 
     public static function convertFileSize($octets, $round = 0)
     {
         if ($octets < 0) {
             return 'error';
-        } elseif ($octets === 0) {
+        }
+
+        if ($octets === 0) {
             return 0;
         }
 

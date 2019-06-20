@@ -84,9 +84,9 @@ class Cleaner
             exit(1);
         }
 
-        $this->localFileData = [];
         $finder = new Finder();
         $finder->in($this->directories)->files()->ignoreDotFiles(false);
+        $this->localFileData = [];
 
         if ($this->exclude !== null) {
             foreach ($this->exclude as $pattern) {
@@ -94,11 +94,11 @@ class Cleaner
             }
         }
 
-        $i = 0;
         foreach ($finder as $file) {
-            $this->localFileData[$i]['full_path'] = $file->getPathname();
-            $this->localFileData[$i]['size'] = $file->getSize();
-            $i++;
+            $this->localFileData[] = [
+                'full_path' => $file->getPathname(),
+                'size'      => $file->getSize()
+            ];
         }
 
         return $this;
