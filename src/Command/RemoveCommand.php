@@ -1,10 +1,10 @@
 <?php
 
-namespace Rtorrent\Cleaner\Command;
+namespace Rtcleaner\Command;
 
-use Rtorrent\Cleaner\Cleaner;
-use Rtorrent\Cleaner\Helpers;
-use Rtorrent\Cleaner\Log\Log;
+use Rtcleaner\Cleaner;
+use Rtcleaner\Helpers;
+use Rtcleaner\Log\Output;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -53,7 +53,7 @@ class RemoveCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $time = (new Stopwatch())->start('rm');
-        $console = new Log($output, $input->getOption('log'));
+        $console = new Output($output, $input->getOption('log'));
         Helpers::title('rtorrent-cleaner • <fg=cyan>remove unnecessary files</>', $console);
 
         $cleaner = new Cleaner(
@@ -68,7 +68,7 @@ class RemoveCommand extends Command
         $helper = $this->getHelper('question');
 
         if ($nbFileNotTracked === 0) {
-            $console->writeln(['', '> <fg=green>No files to remove.</>']);
+            $console->writeln(['', '> <fg=green>No files to remove</>']);
         } else {
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
             foreach ($filesNotTracked as $file) {
@@ -100,7 +100,7 @@ class RemoveCommand extends Command
         $emptyDirectory = $cleaner->getEmptyDirectory();
 
         if (count($emptyDirectory) === 0) {
-            $console->writeln('> <fg=green>No empty directory.</>');
+            $console->writeln('> <fg=green>No empty directory</>');
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $cleaner->removeDirectory($emptyDirectory);

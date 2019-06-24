@@ -1,6 +1,6 @@
 <?php
 
-namespace Rtorrent\Cleaner\Command;
+namespace Rtcleaner\Command;
 
 use Symfony\Component\Console\Command\ListCommand;
 use Symfony\Component\Console\Input\InputInterface;

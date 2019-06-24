@@ -1,12 +1,11 @@
 <?php
 
-namespace Rtorrent\Cleaner\Command;
+namespace Rtcleaner\Command;
 
-use Rtorrent\Cleaner\Cleaner;
-use Rtorrent\Cleaner\Helpers;
-use Rtorrent\Cleaner\Log\Log;
+use Rtcleaner\Cleaner;
+use Rtcleaner\Helpers;
+use Rtcleaner\Log\Output;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,7 +47,7 @@ class ReportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $time = (new Stopwatch())->start('report');
-        $console = new Log($output, $input->getOption('log'));
+        $console = new Output($output, $input->getOption('log'));
         Helpers::title('rtorrent-cleaner • <fg=cyan>report</>', $console);
 
         $cleaner = new Cleaner(
@@ -58,50 +57,54 @@ class ReportCommand extends Command
             $output
         );
 
+        $console->writeln('');
         $filesNotTracked = $cleaner->getFilesNotTracked();
         $nbFileNotTracked = count($filesNotTracked);
-        $totalSize = 0;
-        $dataTable = [];
-        $i = 0;
-
-        foreach ($filesNotTracked as $file) {
-            $i++;
-            $totalSize += $file['size'];
-            $size = Helpers::convertFileSize($file['size'], 2);
-            $file = Helpers::truncate($file['full_path']);
-            $dataTable[] = [$i, $file, $size];
-        }
 
         if ($nbFileNotTracked > 0) {
-            $totalSize = Helpers::convertFileSize($totalSize, 2);
-            array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total recoverable space</>', "<fg=yellow>{$totalSize}</>"]);
-            $console->writeln('');
-            $console->table(['', "<fg=yellow>{$nbFileNotTracked} file(s) are not tracked by rtorrent</>", '<fg=yellow>Size</>'], $dataTable);
+            $rows = [];
+            $totalSize = 0;
+            foreach ($filesNotTracked as $i => $file) {
+                $totalSize += $file['size'];
+                $rows[] = [
+                    $i + 1,
+                    Helpers::truncate($file['full_path']),
+                    Helpers::convertFileSize($file['size'], 2)
+                ];
+            }
+
+            $console->table(
+                ['', "<fg=yellow>{$nbFileNotTracked} file(s) are not tracked by rtorrent</>", '<fg=yellow>size</>'],
+                $rows,
+                ['', '<fg=yellow>Total recoverable space</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
+            );
         } else {
-            $console->writeln(['', '> <fg=green>No files not tracked by rtorrent.</>']);
+            $console->writeln('> <fg=green>There is no file that is not tracked by rtorrent.</>');
         }
 
+        $console->writeln('');
         $missingFile = $cleaner->getFilesMissingFromRtorrent();
         $nbmissingFile = count($missingFile);
-        $totalSize = 0;
-        $dataTable = [];
-        $i = 0;
-
-        foreach ($missingFile as $file) {
-            $i++;
-            $totalSize += $file['size'];
-            $size = Helpers::convertFileSize($file['size'], 2);
-            $file = Helpers::truncate($file['full_path']);
-            $dataTable[] = [$i, $file, $size];
-        }
 
         if ($nbmissingFile > 0) {
-            $totalSize = Helpers::convertFileSize($totalSize, 2);
-            array_push($dataTable, new TableSeparator(), ['', '<fg=yellow>Total space to download</>', "<fg=yellow>{$totalSize}</>"]);
-            $console->writeln('');
-            $console->table(['', "<fg=yellow>{$nbmissingFile} files(s) are missing</>", '<fg=yellow>Size</>'], $dataTable);
+            $rows = [];
+            $totalSize = 0;
+            foreach ($missingFile as $i => $file) {
+                $totalSize += $file['size'];
+                $rows[] = [
+                    $i + 1,
+                    Helpers::truncate($file['full_path']),
+                    Helpers::convertFileSize($file['size'], 2)
+                ];
+            }
+
+            $console->table(
+                ['', "<fg=yellow>{$nbmissingFile} files(s) are missing</>", '<fg=yellow>size</>'],
+                $rows,
+                ['', '<fg=yellow>Total space to download</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
+            );
         } else {
-            $console->writeln(['', '> <fg=green>No missing files.</>']);
+            $console->writeln('> <fg=green>No missing files.</>');
         }
 
         $event = $time->stop();

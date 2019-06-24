@@ -1,6 +1,6 @@
 <?php
 
-namespace Rtorrent\Cleaner;
+namespace Rtcleaner;
 
 class Helpers
 {
@@ -88,6 +88,7 @@ class Helpers
         for ($i = 0; $i < strlen($tmp); $i++) {
             $dash .= '─';
         }
+
         $top = '┌'.$dash.'┐';
         $bottom = '└'.$dash.'┘';
 

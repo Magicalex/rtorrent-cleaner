@@ -1,9 +1,9 @@
 <?php
 
-namespace Rtorrent\Cleaner\Command;
+namespace Rtcleaner\Command;
 
-use Rtorrent\Cleaner\Cleaner;
-use Rtorrent\Cleaner\Helpers;
+use Rtcleaner\Cleaner;
+use Rtcleaner\Helpers;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -49,7 +49,7 @@ class TorrentsCommand extends Command
         $helper = $this->getHelper('question');
 
         if ($missingFile['nb'] === 0) {
-            $output->writeln(['', '> <fg=green>No missing files.</>']);
+            $output->writeln(['', '> <fg=green>No missing files</>']);
         } else {
             $output->writeln(['', '> '.$missingFile['nb'].' file(s) are missing.', '']);
 

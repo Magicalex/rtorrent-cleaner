@@ -1,12 +1,13 @@
 <?php
 
-namespace Rtorrent\Cleaner\Log;
+namespace Rtcleaner\Log;
 
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 
-class Log
+class Output
 {
     protected $output;
     protected $log = false;
@@ -31,22 +32,30 @@ class Log
         }
     }
 
-    public function table($header, $data)
+    public function table($header, $rows, $footer)
     {
         $console = new Table($this->output);
         if (version_compare(PHP_VERSION, '7.1.3', '>=')) {
             $console->setStyle('box');
         }
-        $console->setHeaders($header)->setRows($data);
-        $console->render();
+        $console
+            ->setHeaders($header)
+            ->setRows($rows)
+            ->addRow(new TableSeparator())
+            ->addRow($footer)
+            ->render();
 
         if ($this->log !== false) {
             $log = new Table($this->log);
             if (version_compare(PHP_VERSION, '7.1.3', '>=')) {
                 $log->setStyle('box');
             }
-            $log->setHeaders($header)->setRows($data);
-            $log->render();
+            $log
+                ->setHeaders($header)
+                ->setRows($rows)
+                ->addRow(new TableSeparator())
+                ->addRow($footer)
+                ->render();
         }
     }
 }
