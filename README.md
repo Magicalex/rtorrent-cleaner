@@ -19,9 +19,14 @@ Docker image
 
 ### Install php
 
-Example for debian 9
+For Debian 9
 ```sh
 apt install php7.0-cli php7.0-xmlrpc
+```
+
+For Debian 10
+```sh
+apt install php7.3-cli php7.3-xmlrpc
 ```
 
 ### Install rtorrent-cleaner via phar file (recommended)
