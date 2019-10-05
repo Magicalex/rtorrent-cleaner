@@ -42,6 +42,7 @@ class TorrentsCommand extends Command
             $input->getOption('scgi'),
             $input->getOption('port'),
             null,
+            null,
             $output
         );
 

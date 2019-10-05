@@ -17,10 +17,11 @@ class Cleaner
     protected $localFileData;
     protected $rtorrentFileData;
 
-    public function __construct($scgi, $port, $exclude, OutputInterface $output)
+    public function __construct($scgi, $port, $excludeFiles, $excludeDirectories, OutputInterface $output)
     {
         $this->output = $output;
-        $this->exclude = $exclude;
+        $this->excludeFiles = $excludeFiles;
+        $this->excludeDirectories = $excludeDirectories;
         $this->rtorrent = new Rtorrent($scgi, $port);
         $this->getFileListFromRtorrent()->getFileListFromDisk();
     }
@@ -88,9 +89,15 @@ class Cleaner
         $finder->in($this->directories)->files()->ignoreDotFiles(false);
         $this->localFileData = [];
 
-        if ($this->exclude !== null) {
-            foreach ($this->exclude as $pattern) {
-                $finder->notName($pattern);
+        if ($this->excludeDirectories !== null) {
+            foreach ($this->excludeDirectories as $dir) {
+                $finder->exclude($dir);
+            }
+        }
+
+        if ($this->excludeFiles !== null) {
+            foreach ($this->excludeFiles as $file) {
+                $finder->notName($file);
             }
         }
 

@@ -38,7 +38,7 @@
     "scripts": {
         "box": [
             "rm -f box.phar",
-            "wget https://github.com/humbug/box/releases/download/3.8.0/box.phar",
+            "wget https://github.com/humbug/box/releases/download/3.8.1/box.phar",
             "chmod +x box.phar"
         ],
         "phar-php5": [

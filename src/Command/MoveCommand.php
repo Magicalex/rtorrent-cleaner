@@ -34,10 +34,15 @@ class MoveCommand extends Command
                 'Set the scgi port of rtorrent',
                 -1)
             ->addOption(
-                'exclude',
-                'e',
+                'exclude-files',
+                'f',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Exclude files with a pattern. ex: --exclude=*.sub exclude all subfiles')
+                'Excludes files with a pattern. ex: --exclude-files=*.sub exclude all subfiles')
+            ->addOption(
+                'exclude-dirs',
+                'd',
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                'Excludes directories. ex: --exclude-dirs=doc exclude the doc/ directory')
             ->addOption(
                 'log',
                 'l',
@@ -71,7 +76,8 @@ class MoveCommand extends Command
         $cleaner = new Cleaner(
             $input->getOption('scgi'),
             $input->getOption('port'),
-            $input->getOption('exclude'),
+            $input->getOption('exclude-files'),
+            $input->getOption('exclude-dirs'),
             $output
         );
 
