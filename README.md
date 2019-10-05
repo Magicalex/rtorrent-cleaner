@@ -106,6 +106,7 @@ You can log the console output in a file with the option --log (path: ./rtorrent
 You can define a path (path: /var/log/rtorrent-cleaner.log)
 ```sh
 rtorrent-cleaner report --log
+rtorrent-cleaner report -l /var/log/rtorrent-cleaner.log
 rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log
 ```
 
@@ -113,7 +114,7 @@ Command `rm` for delete unnecessary files in your download folder:
 ```sh
 rtorrent-cleaner rm
 # delete without confirmation --assume-yes or -y
-rtorrent-cleaner rm -y
+rtorrent-cleaner rm --assume-yes
 ```
 
 Command `mv` for move unnecessary files in a specified folder (ex: /home/user/old) :
@@ -128,12 +129,19 @@ Command `torrents` for delete torrents or redownload the missing files:
 rtorrent-cleaner torrents
 ```
 
-Option for the command `mv`, `rm` and `report` to ignore files: `--exclude=`
+Option for the command `mv`, `rm` and `report` to ignore files: `--exclude-files=`
 ```sh
-rtorrent-cleaner report --exclude=*.srt
-rtorrent-cleaner report -e *.sub -e *.srt
+rtorrent-cleaner report --exclude-files=*.srt
+rtorrent-cleaner report -f *.sub -f *.srt
 ```
 The second example excludes all files `.sub` and `.srt` in the output
+
+Option for the command `mv`, `rm` and `report` to ignore directories: `--exclude-dirs=`
+```sh
+rtorrent-cleaner report --exclude-dirs=movies
+rtorrent-cleaner report -d movies -d series
+```
+The second example excludes the `movies` and `series` directories
 
 ## Usage with docker
 
