@@ -53,11 +53,15 @@ class Cleaner
             }
 
             $this->rtorrentData[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
-            $files = $this->rtorrent->call('f.multicall', [$torrent[0], '', 'f.frozen_path=', 'f.size_bytes=']);
+            $files = $this->rtorrent->call('f.multicall', [$torrent[0], '', 'f.frozen_path=', 'f.size_bytes=', 'f.path=']);
 
             foreach ($files as $file) {
                 if (is_file($file[0]) === false) {
-                    continue;
+                    if (is_file($torrent[2].'/'.$file[2]) === true) {
+                        $file[0] = $torrent[2].'/'.$file[2];
+                    } else {
+                        $file[0] = 'error: '.$file[2];
+                    }
                 }
 
                 $this->rtorrentData[$nb]['file'][] = [
