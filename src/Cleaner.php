@@ -62,12 +62,12 @@ class Cleaner
 
                 $this->rtorrentData[$nb]['file'][] = [
                     'absolute_path' => $file[0],
-                    'size'      => $file[1]
+                    'size'          => $file[1]
                 ];
 
                 $this->rtorrentFileData[] = [
                     'absolute_path' => $file[0],
-                    'size'      => $file[1]
+                    'size'          => $file[1]
                 ];
             }
 
@@ -107,7 +107,7 @@ class Cleaner
         foreach ($finder as $file) {
             $this->localFileData[] = [
                 'absolute_path' => $file->getPathname(),
-                'size'      => $file->getSize()
+                'size'          => $file->getSize()
             ];
         }
 
