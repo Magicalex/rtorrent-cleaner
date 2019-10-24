@@ -20,6 +20,8 @@
     ],
     "require": {
         "php": ">=5.6.0",
+        "ext-json": "*",
+        "ext-iconv": "*",
         "ext-xmlrpc": "*",
         "symfony/console": "3.4.* || 4.3.*",
         "symfony/finder": "3.4.* || 4.3.*",
