@@ -213,12 +213,14 @@ rtorrent-cleaner rm --scgi=rtorrent --port=5000
 rtorrent-cleaner torrents --scgi=rtorrent --port=5000
 rtorrent-cleaner mv /home/user/old --scgi=rtorrent --port=5000
 ```
+
 Or with a socket
 ```
 rtorrent-cleaner report --scgi=/run/php/.rtorrent.sock
 rtorrent-cleaner rm --scgi=/run/php/.rtorrent.sock
 rtorrent-cleaner torrents --scgi=/run/php/.rtorrent.sock
 rtorrent-cleaner mv /home/user/old --scgi=/run/php/.rtorrent.sock
+```
 
 ## Build docker image
 
