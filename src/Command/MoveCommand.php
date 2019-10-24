@@ -25,8 +25,7 @@ class MoveCommand extends Command
                 'scgi',
                 'u',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent',
-                '127.0.0.1')
+                'Set the scgi url of rtorrent')
             ->addOption(
                 'port',
                 'p',
@@ -64,7 +63,7 @@ class MoveCommand extends Command
     {
         $time = (new Stopwatch())->start('mv');
         $console = new Output($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner • <fg=cyan>move unnecessary files</>', $console);
+        Helpers::title('rtorrent-cleaner - move unnecessary files', $console);
 
         if (!is_dir($input->getArgument('folder'))) {
             Helpers::errorMessage('Please, define a correct directory.', $console);
@@ -90,13 +89,13 @@ class MoveCommand extends Command
         } else {
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
             foreach ($filesNotTracked as $file) {
-                $fileName = basename($file['full_path']);
+                $fileName = basename($file['absolute_path']);
                 if ($input->getOption('assume-yes') === true) {
-                    rename($file['full_path'], $folder.'/'.$fileName);
-                    $viewFile = Helpers::truncate($file['full_path']);
+                    rename($file['absolute_path'], $folder.'/'.$fileName);
+                    $viewFile = Helpers::truncate($file['absolute_path']);
                     $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
                 } elseif (!$input->getOption('assume-yes')) {
-                    $viewFile = Helpers::truncate($file['full_path'], 70);
+                    $viewFile = Helpers::truncate($file['absolute_path'], 70);
                     $question = new ChoiceQuestion(
                         "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",
                         ['yes', 'no'], 1
@@ -106,8 +105,8 @@ class MoveCommand extends Command
                     $answer = $helper->ask($input, $output, $question);
 
                     if ($answer == 'yes') {
-                        rename($file['full_path'], $folder.'/'.$fileName);
-                        $viewFile = Helpers::truncate($file['full_path']);
+                        rename($file['absolute_path'], $folder.'/'.$fileName);
+                        $viewFile = Helpers::truncate($file['absolute_path']);
                         $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
                     } elseif ($answer == 'no') {
                         $console->writeln('<fg=yellow>file not moved</>');

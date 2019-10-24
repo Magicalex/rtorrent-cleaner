@@ -24,8 +24,7 @@ class RemoveCommand extends Command
                 'scgi',
                 'u',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent',
-                '127.0.0.1')
+                'Set the scgi url of rtorrent')
             ->addOption(
                 'port',
                 'p',
@@ -59,7 +58,7 @@ class RemoveCommand extends Command
     {
         $time = (new Stopwatch())->start('rm');
         $console = new Output($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner • <fg=cyan>remove unnecessary files</>', $console);
+        Helpers::title('rtorrent-cleaner - remove unnecessary files', $console);
 
         $cleaner = new Cleaner(
             $input->getOption('scgi'),
@@ -79,11 +78,11 @@ class RemoveCommand extends Command
             $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
             foreach ($filesNotTracked as $file) {
                 if ($input->getOption('assume-yes') === true) {
-                    unlink($file['full_path']);
-                    $viewFile = Helpers::truncate($file['full_path']);
+                    unlink($file['absolute_path']);
+                    $viewFile = Helpers::truncate($file['absolute_path']);
                     $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
                 } else {
-                    $viewFile = Helpers::truncate($file['full_path'], 70);
+                    $viewFile = Helpers::truncate($file['absolute_path'], 70);
                     $question = new ChoiceQuestion(
                         "Do you want delete <fg=yellow>{$viewFile}</> ? (defaults: no)",
                         ['yes', 'no'], 1
@@ -93,8 +92,8 @@ class RemoveCommand extends Command
                     $answer = $helper->ask($input, $output, $question);
 
                     if ($answer == 'yes') {
-                        unlink($file['full_path']);
-                        $viewFile = Helpers::truncate($file['full_path']);
+                        unlink($file['absolute_path']);
+                        $viewFile = Helpers::truncate($file['absolute_path']);
                         $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
                     } elseif ($answer == 'no') {
                         $console->writeln('<fg=yellow>file not deleted</>');

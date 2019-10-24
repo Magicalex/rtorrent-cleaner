@@ -53,17 +53,20 @@ class Cleaner
             }
 
             $this->rtorrentData[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
-            $files = $this->rtorrent->call('f.multicall', [$torrent[0], '', 'f.path=', 'f.size_bytes=']);
+            $files = $this->rtorrent->call('f.multicall', [$torrent[0], '', 'f.frozen_path=', 'f.size_bytes=']);
 
             foreach ($files as $file) {
-                $fullPath = "{$torrent[2]}/{$file[0]}";
+                if (is_file($file[0]) === false) {
+                    continue;
+                }
+
                 $this->rtorrentData[$nb]['file'][] = [
-                    'full_path' => $fullPath,
+                    'absolute_path' => $file[0],
                     'size'      => $file[1]
                 ];
 
                 $this->rtorrentFileData[] = [
-                    'full_path' => $fullPath,
+                    'absolute_path' => $file[0],
                     'size'      => $file[1]
                 ];
             }
@@ -103,7 +106,7 @@ class Cleaner
 
         foreach ($finder as $file) {
             $this->localFileData[] = [
-                'full_path' => $file->getPathname(),
+                'absolute_path' => $file->getPathname(),
                 'size'      => $file->getSize()
             ];
         }
@@ -187,7 +190,7 @@ class Cleaner
     {
         foreach ($this->rtorrentData as $torrent) {
             foreach ($torrent['file'] as $file) {
-                if ($file['full_path'] === $missingFile) {
+                if ($file['absolute_path'] === $missingFile) {
                     $hash = $torrent['hash'];
                     $name = $torrent['name'];
                     break;
@@ -206,7 +209,7 @@ class Cleaner
         $output = [];
 
         foreach ($missingFile as $file) {
-            $torrent = $this->findTorrentHash($file['full_path']);
+            $torrent = $this->findTorrentHash($file['absolute_path']);
 
             foreach ($output as $id => $info) {
                 if ($info['hash'] === $torrent['hash']) {

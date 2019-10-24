@@ -23,8 +23,7 @@ class TorrentsCommand extends Command
                 'scgi',
                 'u',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent',
-                '127.0.0.1')
+                'Set the scgi url of rtorrent')
             ->addOption(
                 'port',
                 'p',
@@ -36,7 +35,7 @@ class TorrentsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $time = (new Stopwatch())->start('torrent');
-        Helpers::title('rtorrent-cleaner • <fg=cyan>manage missing files</>', $output);
+        Helpers::title('rtorrent-cleaner - manage missing files', $output);
 
         $cleaner = new Cleaner(
             $input->getOption('scgi'),
@@ -58,7 +57,7 @@ class TorrentsCommand extends Command
                 $ask = '<options=bold>What do you want to do for the torrent <fg=yellow>'.$torrent['name'].'</> ? (defaults: nothing)</>'.PHP_EOL;
 
                 foreach ($torrent['file'] as $data) {
-                    $file = Helpers::truncate($data['full_path']);
+                    $file = Helpers::truncate($data['absolute_path']);
                     $size = Helpers::convertFileSize($data['size'], 2);
                     $ask .= '> file: <fg=green>'.$file.'</> size: <fg=green>'.$size.'</>'.PHP_EOL;
                 }

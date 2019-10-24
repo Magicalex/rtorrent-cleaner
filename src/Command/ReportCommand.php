@@ -23,8 +23,7 @@ class ReportCommand extends Command
                 'scgi',
                 'u',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent',
-                '127.0.0.1')
+                'Set the scgi url of rtorrent')
             ->addOption(
                 'port',
                 'p',
@@ -53,7 +52,7 @@ class ReportCommand extends Command
     {
         $time = (new Stopwatch())->start('report');
         $console = new Output($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner • <fg=cyan>report</>', $console);
+        Helpers::title('rtorrent-cleaner - report', $console);
 
         $cleaner = new Cleaner(
             $input->getOption('scgi'),
@@ -74,7 +73,7 @@ class ReportCommand extends Command
                 $totalSize += $file['size'];
                 $rows[] = [
                     $i + 1,
-                    Helpers::truncate($file['full_path']),
+                    Helpers::truncate($file['absolute_path']),
                     Helpers::convertFileSize($file['size'], 2)
                 ];
             }
@@ -99,7 +98,7 @@ class ReportCommand extends Command
                 $totalSize += $file['size'];
                 $rows[] = [
                     $i + 1,
-                    Helpers::truncate($file['full_path']),
+                    Helpers::truncate($file['absolute_path']),
                     Helpers::convertFileSize($file['size'], 2)
                 ];
             }

@@ -28,7 +28,7 @@ class Helpers
             $octets /= 1024;
         }
 
-        return round($octets, $round).$unit[$i];
+        return round($octets, $round).' '.$unit[$i];
     }
 
     public static function humanTime($ms)
@@ -55,13 +55,13 @@ class Helpers
     public static function find_diff($array_one, $array_two)
     {
         $output = [];
-        $diff_array_one = array_column($array_one, 'full_path');
-        $diff_array_two = array_column($array_two, 'full_path');
+        $diff_array_one = array_column($array_one, 'absolute_path');
+        $diff_array_two = array_column($array_two, 'absolute_path');
         $diff = array_diff($diff_array_one, $diff_array_two);
 
         foreach ($diff as $full_path) {
             foreach ($array_one as $value_one) {
-                if ($full_path === $value_one['full_path']) {
+                if ($full_path === $value_one['absolute_path']) {
                     $output[] = $value_one;
                     break;
                 }
@@ -84,8 +84,8 @@ class Helpers
     public static function title($title, $output)
     {
         $dash = '';
-        $tmp = preg_replace('#<fg=[a-z]+>(.*)<\/>#', '$1', $title);
-        for ($i = 0; $i < strlen($tmp); $i++) {
+        $characters = iconv_strlen(preg_replace('#<fg=[a-z]+>(.*)<\/>#', '$1', $title)) + 2;
+        for ($i = 0; $i < $characters; $i++) {
             $dash .= '─';
         }
 
