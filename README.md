@@ -232,7 +232,7 @@ To build the archive phar, php 7.2 and php phar extension is required.
 ```sh
 git clone https://github.com/Magicalex/rtorrent-cleaner.git
 cd rtorrent-cleaner
-composer run-script build
+composer build
 ```
 
 ## License
