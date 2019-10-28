@@ -6,6 +6,7 @@ use Rtcleaner\Cleaner;
 use Rtcleaner\Helpers;
 use Rtcleaner\Log\Output;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -68,18 +69,18 @@ class ReportCommand extends Command
 
         if ($nbFileNotTracked > 0) {
             $rows = [];
-            $totalSize = 0;
-            foreach ($filesNotTracked as $i => $file) {
+            $totalSize = $i = 0;
+            foreach ($filesNotTracked as $file) {
                 $totalSize += $file['size'];
                 $rows[] = [
-                    $i + 1,
+                    ++$i,
                     Helpers::truncate($file['absolute_path']),
                     Helpers::convertFileSize($file['size'], 2)
                 ];
             }
 
             $console->table(
-                ['', "<fg=yellow>{$nbFileNotTracked} file(s) are not tracked by rtorrent</>", '<fg=yellow>size</>'],
+                ['', "<fg=yellow>{$nbFileNotTracked} files are not tracked by rtorrent</>", '<fg=yellow>Size</>'],
                 $rows,
                 ['', '<fg=yellow>Total recoverable space</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
             );
@@ -88,25 +89,29 @@ class ReportCommand extends Command
         }
 
         $console->writeln('');
-        $missingFile = $cleaner->getFilesMissingFromRtorrent();
+        $missingFile = $cleaner->getMissingFiles();
         $nbmissingFile = count($missingFile);
 
         if ($nbmissingFile > 0) {
             $rows = [];
-            $totalSize = 0;
-            foreach ($missingFile as $i => $file) {
-                $totalSize += $file['size'];
-                $rows[] = [
-                    $i + 1,
-                    Helpers::truncate($file['absolute_path']),
-                    Helpers::convertFileSize($file['size'], 2)
-                ];
+            $totalSize = $i = 0;
+
+            foreach ($missingFile as $torrent) {
+                foreach ($torrent['files'] as $file) {
+                    $totalSize += $file['size'];
+                    $rows[] = [
+                        ++$i,
+                        Helpers::truncate($file['name']),
+                        $torrent['torrent'],
+                        Helpers::convertFileSize($file['size'], 2)
+                    ];
+                }
             }
 
             $console->table(
-                ['', "<fg=yellow>{$nbmissingFile} files(s) are missing</>", '<fg=yellow>size</>'],
+                ['', "<fg=yellow>$i files are missing</>", '<fg=yellow>Torrent</>', '<fg=yellow>Size</>'],
                 $rows,
-                ['', '<fg=yellow>Total space to download</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
+                ['', new TableCell('<fg=yellow>Total space to download</>', ['colspan' => 2]), '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
             );
         } else {
             $console->writeln('> <fg=green>No missing files.</>');

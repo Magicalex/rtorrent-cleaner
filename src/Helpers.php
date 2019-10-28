@@ -52,25 +52,6 @@ class Helpers
         return $humanTime;
     }
 
-    public static function find_diff($array_one, $array_two)
-    {
-        $output = [];
-        $diff_array_one = array_column($array_one, 'absolute_path');
-        $diff_array_two = array_column($array_two, 'absolute_path');
-        $diff = array_diff($diff_array_one, $diff_array_two);
-
-        foreach ($diff as $full_path) {
-            foreach ($array_one as $value_one) {
-                if ($full_path === $value_one['absolute_path']) {
-                    $output[] = $value_one;
-                    break;
-                }
-            }
-        }
-
-        return $output;
-    }
-
     public static function errorMessage($message, $output)
     {
         $spaces = '';

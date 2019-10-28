@@ -13,8 +13,8 @@ class Cleaner
     protected $rtorrent;
     protected $directories;
     protected $numTorrents;
-    protected $rtorrentData;
     protected $localFileData;
+    protected $missingFileData;
     protected $rtorrentFileData;
 
     public function __construct($scgi, $port, $excludeFiles, $excludeDirectories, OutputInterface $output)
@@ -39,6 +39,8 @@ class Cleaner
             exit(1);
         }
 
+        $this->missingFileData = [];
+
         $progressBar = new ProgressBar($this->output, $this->numTorrents);
         $progressBar->setFormat(" %bar% %percent%%\n remaining time: %remaining%\n status: %status%\n");
         $progressBar->setMessage('recovering the files list from rtorrent...', 'status');
@@ -47,27 +49,38 @@ class Cleaner
         $progressBar->setProgressCharacter('<fg=green>█</>');
         $progressBar->start();
 
-        foreach ($torrents as $nb => $torrent) {
+        foreach ($torrents as $torrent) {
             if (is_dir($torrent[2])) {
                 $this->directories[] = $torrent[2];
             }
 
-            $this->rtorrentData[] = ['name' => $torrent[1], 'hash' => $torrent[0]];
-            $files = $this->rtorrent->call('f.multicall', [$torrent[0], '', 'f.frozen_path=', 'f.size_bytes=', 'f.path=']);
+            $files = $this->rtorrent->call('f.multicall', [
+                $torrent[0], '', 'f.frozen_path=', 'f.path=', 'f.size_bytes='
+            ]);
 
             foreach ($files as $file) {
-                if (is_file($file[0]) === false) {
-                    if (is_file($torrent[2].'/'.$file[2]) === true) {
-                        $file[0] = $torrent[2].'/'.$file[2];
+                if (is_file($file[0])) {
+                    $file[0];
+                } elseif (is_file($torrent[2].'/'.$file[1])) {
+                    $file[0] = $torrent[2].'/'.$file[1];
+                } else {
+                    if (array_key_exists($torrent[0], $this->missingFileData)) {
+                        $this->missingFileData[$torrent[0]]['files'][] = [
+                            'name' => $file[1],
+                            'size' => $file[2]
+                        ];
                     } else {
-                        $file[0] = 'error: '.$file[2];
+                        $this->missingFileData[$torrent[0]] = [
+                            'hash'     => $torrent[0],
+                            'torrent'  => $torrent[1],
+                            'files'    => [
+                                ['name' => $file[1], 'size' => $file[2]]
+                            ]
+                        ];
+
+                        $file[0] = 'not found';
                     }
                 }
-
-                $this->rtorrentData[$nb]['file'][] = [
-                    'absolute_path' => $file[0],
-                    'size'          => $file[1]
-                ];
 
                 $this->rtorrentFileData[] = [
                     'absolute_path' => $file[0],
@@ -128,14 +141,28 @@ class Cleaner
         return $this->numTorrents;
     }
 
-    public function getFilesNotTracked()
+    public function getMissingFiles()
     {
-        return Helpers::find_diff($this->localFileData, $this->rtorrentFileData);
+        return $this->missingFileData;
     }
 
-    public function getFilesMissingFromRtorrent()
+    public function getFilesNotTracked()
     {
-        return Helpers::find_diff($this->rtorrentFileData, $this->localFileData);
+        $output = [];
+        $array_local = array_column($this->localFileData, 'absolute_path');
+        $array_rtorrent = array_column($this->rtorrentFileData, 'absolute_path');
+        $diff = array_diff($array_local, $array_rtorrent);
+
+        foreach ($diff as $absolute_path) {
+            foreach ($this->localFileData as $value_local) {
+                if ($absolute_path === $value_local['absolute_path']) {
+                    $output[] = $value_local;
+                    break;
+                }
+            }
+        }
+
+        return $output;
     }
 
     public function getEmptyDirectory()
@@ -188,52 +215,5 @@ class Cleaner
         $this->rtorrent->call('d.check_hash', [$hash]);
         $this->rtorrent->call('d.open', [$hash]);
         $this->rtorrent->call('d.start', [$hash]);
-    }
-
-    protected function findTorrentHash($missingFile)
-    {
-        foreach ($this->rtorrentData as $torrent) {
-            foreach ($torrent['file'] as $file) {
-                if ($file['absolute_path'] === $missingFile) {
-                    $hash = $torrent['hash'];
-                    $name = $torrent['name'];
-                    break;
-                }
-            }
-        }
-
-        return ['hash' => $hash, 'name' => $name];
-    }
-
-    public function getTorrentsMissingFile()
-    {
-        $missingFile = $this->getFilesMissingFromRtorrent();
-        $nbMissingFile = count($missingFile);
-        $findHash = false;
-        $output = [];
-
-        foreach ($missingFile as $file) {
-            $torrent = $this->findTorrentHash($file['absolute_path']);
-
-            foreach ($output as $id => $info) {
-                if ($info['hash'] === $torrent['hash']) {
-                    $output[$id]['file'][] = $file;
-                    $findHash = true;
-                    break;
-                }
-            }
-
-            if (!$findHash) {
-                $output[] = [
-                    'hash' => $torrent['hash'],
-                    'name' => $torrent['name'],
-                    'file' => [$file]
-                ];
-            }
-
-            $findHash = false;
-        }
-
-        return ['data' => $output, 'nb' => $nbMissingFile];
     }
 }

@@ -34,11 +34,7 @@ class Output
 
     public function table($header, $rows, $footer)
     {
-        $console = new Table($this->output);
-        if (version_compare(PHP_VERSION, '7.1.3', '>=')) {
-            $console->setStyle('box');
-        }
-        $console
+        $console = (new Table($this->output))
             ->setHeaders($header)
             ->setRows($rows)
             ->addRow(new TableSeparator())
@@ -46,12 +42,7 @@ class Output
             ->render();
 
         if ($this->log !== false) {
-            $log = new Table($this->log);
-            if (version_compare(PHP_VERSION, '7.1.3', '>=')) {
-                $log->setStyle('box');
-            }
-            $log
-                ->setHeaders($header)
+            $log = (new Table($this->log))->setHeaders($header)
                 ->setRows($rows)
                 ->addRow(new TableSeparator())
                 ->addRow($footer)

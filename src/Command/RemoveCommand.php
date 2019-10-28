@@ -75,7 +75,7 @@ class RemoveCommand extends Command
         if ($nbFileNotTracked === 0) {
             $console->writeln(['', '> <fg=green>No files to remove</>']);
         } else {
-            $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to delete.", '']);
+            $console->writeln(['', "> {$nbFileNotTracked} unnecessary files to delete."]);
             foreach ($filesNotTracked as $file) {
                 if ($input->getOption('assume-yes') === true) {
                     unlink($file['absolute_path']);
@@ -83,11 +83,8 @@ class RemoveCommand extends Command
                     $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed");
                 } else {
                     $viewFile = Helpers::truncate($file['absolute_path'], 70);
-                    $question = new ChoiceQuestion(
-                        "Do you want delete <fg=yellow>{$viewFile}</> ? (defaults: no)",
-                        ['yes', 'no'], 1
-                    );
-
+                    $ask = PHP_EOL.'<options=bold>Do you want delete: <fg=red;options=bold,underscore>'.$viewFile.'</> ? (defaults: no)</>';
+                    $question = new ChoiceQuestion($ask, ['yes', 'no'], 1);
                     $question->setErrorMessage('Option %s is invalid.');
                     $answer = $helper->ask($input, $output, $question);
 
