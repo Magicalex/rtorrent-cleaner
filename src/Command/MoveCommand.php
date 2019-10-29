@@ -41,7 +41,7 @@ class MoveCommand extends Command
                 'exclude-dirs',
                 'd',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Excludes directories. ex: --exclude-dirs=doc exclude the doc/ directory')
+                'Excludes directories (must be relative to directory default of rtorrent). ex: --exclude-dirs=doc exclude the doc/ directory')
             ->addOption(
                 'log',
                 'l',

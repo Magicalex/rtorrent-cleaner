@@ -60,31 +60,31 @@ class Cleaner
 
             foreach ($files as $file) {
                 if (is_file($file[0])) {
-                    $file[0];
+                    $path = $file[0];
                 } elseif (is_file($torrent[2].'/'.$file[1])) {
-                    $file[0] = $torrent[2].'/'.$file[1];
+                    $path = $torrent[2].'/'.$file[1];
                 } else {
+                    $path = 'not found';
+
                     if (array_key_exists($torrent[0], $this->missingFileData)) {
                         $this->missingFileData[$torrent[0]]['files'][] = [
                             'name' => $file[1],
-                            'size' => $file[2]
+                            'size' => (int) $file[2]
                         ];
                     } else {
                         $this->missingFileData[$torrent[0]] = [
                             'hash'     => $torrent[0],
                             'torrent'  => $torrent[1],
                             'files'    => [
-                                ['name' => $file[1], 'size' => $file[2]]
+                                ['name' => $file[1], 'size' => (int) $file[2]]
                             ]
                         ];
-
-                        $file[0] = 'not found';
                     }
                 }
 
                 $this->rtorrentFileData[] = [
-                    'absolute_path' => $file[0],
-                    'size'          => $file[1]
+                    'absolute_path' => $path,
+                    'size'          => (int) $file[2]
                 ];
             }
 
@@ -105,9 +105,8 @@ class Cleaner
             exit(1);
         }
 
-        $finder = new Finder();
-        $finder->in($this->directories)->files()->ignoreDotFiles(false);
         $this->localFileData = [];
+        $finder = (new Finder())->in($this->directories)->ignoreDotFiles(false)->files();
 
         if ($this->excludeDirectories !== null) {
             foreach ($this->excludeDirectories as $dir) {
@@ -168,8 +167,7 @@ class Cleaner
     public function getEmptyDirectory()
     {
         $emptyDirectory = [];
-        $finder = new Finder();
-        $finder->in($this->directories)->directories();
+        $finder = (new Finder())->in($this->directories)->directories();
 
         foreach ($finder as $dir) {
             $isEmpty = true;
