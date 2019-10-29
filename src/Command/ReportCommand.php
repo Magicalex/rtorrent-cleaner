@@ -82,7 +82,7 @@ class ReportCommand extends Command
             $console->table(
                 ['', "<fg=yellow>{$nbFileNotTracked} files are not tracked by rtorrent</>", '<fg=yellow>Size</>'],
                 $rows,
-                ['', '<fg=yellow>Total recoverable space</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
+                ['', '<fg=yellow>Total recoverable space</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize, 2).'</>']
             );
         } else {
             $console->writeln('> <fg=green>There is no file that is not tracked by rtorrent.</>');
@@ -101,8 +101,8 @@ class ReportCommand extends Command
                     $totalSize += $file['size'];
                     $rows[] = [
                         ++$i,
-                        Helpers::truncate($file['name']),
-                        $torrent['torrent'],
+                        Helpers::truncate($file['name'], 50),
+                        Helpers::truncate($torrent['torrent'], 50),
                         Helpers::convertFileSize($file['size'], 2)
                     ];
                 }
@@ -111,7 +111,7 @@ class ReportCommand extends Command
             $console->table(
                 ['', "<fg=yellow>$i files are missing</>", '<fg=yellow>Torrent</>', '<fg=yellow>Size</>'],
                 $rows,
-                ['', new TableCell('<fg=yellow>Total space to download</>', ['colspan' => 2]), '<fg=yellow>'.Helpers::convertFileSize($totalSize).'</>']
+                ['', new TableCell('<fg=yellow>Total space to download</>', ['colspan' => 2]), '<fg=yellow>'.Helpers::convertFileSize($totalSize, 2).'</>']
             );
         } else {
             $console->writeln('> <fg=green>No missing files.</>');

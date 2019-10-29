@@ -85,31 +85,28 @@ class MoveCommand extends Command
         $helper = $this->getHelper('question');
 
         if ($nbFileNotTracked === 0) {
-            $console->writeln(['', '> <fg=green>No files to move</>']);
+            $console->writeln(['', '> <fg=green>No files to move.</>']);
         } else {
-            $console->writeln(['', "> {$nbFileNotTracked} unnecessary file(s) to move.", '']);
+            $console->writeln(['', "> {$nbFileNotTracked} unnecessary files to move."]);
             foreach ($filesNotTracked as $file) {
                 $fileName = basename($file['absolute_path']);
                 if ($input->getOption('assume-yes') === true) {
                     rename($file['absolute_path'], $folder.'/'.$fileName);
                     $viewFile = Helpers::truncate($file['absolute_path']);
-                    $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
+                    $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved.");
                 } elseif (!$input->getOption('assume-yes')) {
                     $viewFile = Helpers::truncate($file['absolute_path'], 70);
-                    $question = new ChoiceQuestion(
-                        "Do you want move <fg=yellow>{$viewFile}</> ? (defaults: no)",
-                        ['yes', 'no'], 1
-                    );
-
+                    $ask = PHP_EOL.'<options=bold>Do you want move: <fg=green;options=bold,underscore>'.$viewFile.'</> ? (defaults: no)</>';
+                    $question = new ChoiceQuestion($ask, ['yes', 'no'], 1);
                     $question->setErrorMessage('Option %s is invalid.');
                     $answer = $helper->ask($input, $output, $question);
 
                     if ($answer == 'yes') {
                         rename($file['absolute_path'], $folder.'/'.$fileName);
                         $viewFile = Helpers::truncate($file['absolute_path']);
-                        $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved");
+                        $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved.");
                     } elseif ($answer == 'no') {
-                        $console->writeln('<fg=yellow>file not moved</>');
+                        $console->writeln('<fg=yellow>file not moved.</>');
                     }
                 }
             }
