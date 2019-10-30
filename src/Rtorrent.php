@@ -18,7 +18,11 @@ class Rtorrent
         $stream = @fsockopen($this->prefix().$this->scgi, $this->port);
 
         if (!$stream) {
-            throw new \Exception('Unable to connect to rtorrent. Check if rtorrent is running.');
+            if ($this->port == -1 && file_exists($this->scgi) === false) {
+                throw new \Exception('Unable to connect to rtorrent. Socket file "'.$this->scgi.'" not found.');
+            } else {
+                throw new \Exception('Unable to connect to rtorrent. If scgi hostname "'.$this->scgi.'" and scgi port "'.$this->port.'" is correct, check if rtorrent is running.');
+            }
         }
 
         $null = "\x00";
