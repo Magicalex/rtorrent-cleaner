@@ -21,9 +21,9 @@ class TorrentsCommand extends Command
             ->setHelp('Command torrents for delete torrents or redownload the missing files')
             ->addOption(
                 'scgi',
-                'u',
+                's',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent')
+                'Set the scgi hostname or socket file of rtorrent')
             ->addOption(
                 'port',
                 'p',

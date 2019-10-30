@@ -22,9 +22,9 @@ class RemoveCommand extends Command
             ->setHelp('Command rm for delete your unnecessary files in your download folder')
             ->addOption(
                 'scgi',
-                'u',
+                's',
                 InputOption::VALUE_REQUIRED,
-                'Set the scgi url of rtorrent')
+                'Set the scgi hostname or socket file of rtorrent')
             ->addOption(
                 'port',
                 'p',
@@ -40,7 +40,7 @@ class RemoveCommand extends Command
                 'exclude-dirs',
                 'd',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Excludes directories (must be relative to directory default of rtorrent). ex: --exclude-dirs=doc exclude the doc/ directory')
+                'Excludes directories (must be relative to the default rtorrent directory). ex: --exclude-dirs=doc exclude the doc/ directory')
             ->addOption(
                 'log',
                 'l',
