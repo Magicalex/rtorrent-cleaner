@@ -200,6 +200,18 @@ docker run -it --rm \
   magicalex/docker-rtorrent-cleaner report --scgi=rtorrent --port=5000
 ```
 
+You can increase php memory limit if needed with PHP_MEMORY_LIMIT environment variable.  
+By default, the memory limit is 128M.
+
+```sh
+docker run -it --rm \
+  -e PHP_MEMORY_LIMIT=256M \
+  -v </home/user/torrents>:</data/torrents> \
+  --network <name_of_network> \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/docker-rtorrent-cleaner report --scgi=rtorrent --port=5000
+```
+
 You can create a script for run rtorrent-cleaner with Docker
 
 ```sh
