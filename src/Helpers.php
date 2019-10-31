@@ -76,7 +76,7 @@ class Helpers
         return $output->writeln([$top, '│ '.$title.' │', $bottom, '']);
     }
 
-    public function getParentFolder($array)
+    public static function getParentFolder($array)
     {
         sort($array);
         $directories = [];
@@ -89,5 +89,19 @@ class Helpers
         }
 
         return array_unique($directories);
+    }
+
+    public static function scgiArgument($string)
+    {
+        $string = explode(':', $string);
+
+        if (!isset($string[1])) {
+            $string[1] = -1;
+        }
+
+        return [
+            'hostname' => $string[0],
+            'port'     => $string[1]
+        ];
     }
 }

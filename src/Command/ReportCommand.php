@@ -7,6 +7,7 @@ use Rtcleaner\Helpers;
 use Rtcleaner\Log\Output;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\TableCell;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,17 +21,10 @@ class ReportCommand extends Command
             ->setName('report')
             ->setDescription('Create a report on unnecessary files and missing files')
             ->setHelp('Command report for create a report on unnecessary files and missing files')
-            ->addOption(
+            ->addArgument(
                 'scgi',
-                's',
-                InputOption::VALUE_REQUIRED,
-                'Set the scgi hostname or socket file of rtorrent')
-            ->addOption(
-                'port',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'Set the scgi port of rtorrent',
-                -1)
+                InputArgument::REQUIRED,
+                'Set the scgi hostname:port or socket file of rtorrent. hostname: 127.0.0.1:5000 or socket: /run/rtorrent/rpc.socket')
             ->addOption(
                 'exclude-files',
                 'f',
@@ -54,10 +48,11 @@ class ReportCommand extends Command
         $time = (new Stopwatch())->start('report');
         $console = new Output($output, $input->getOption('log'));
         Helpers::title('rtorrent-cleaner - report', $console);
+        $scgi = Helpers::scgiArgument($input->getArgument('scgi'));
 
         $cleaner = new Cleaner(
-            $input->getOption('scgi'),
-            $input->getOption('port'),
+            $scgi['hostname'],
+            $scgi['port'],
             $input->getOption('exclude-files'),
             $input->getOption('exclude-dirs'),
             $output

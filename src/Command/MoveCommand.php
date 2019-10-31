@@ -21,17 +21,14 @@ class MoveCommand extends Command
             ->setName('mv')
             ->setDescription('Move your unnecessary files in a specified folder')
             ->setHelp('Command mv for move your unnecessary files in a specified folder')
-            ->addOption(
+            ->addArgument(
                 'scgi',
-                's',
-                InputOption::VALUE_REQUIRED,
-                'Set the scgi hostname or socket file of rtorrent')
-            ->addOption(
-                'port',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'Set the scgi port of rtorrent',
-                -1)
+                InputArgument::REQUIRED,
+                'Set the scgi hostname:port or socket file of rtorrent. hostname: 127.0.0.1:5000 or socket: /run/rtorrent/rpc.socket')
+            ->addArgument(
+                'folder',
+                InputArgument::REQUIRED,
+                'Set a folder to move unnecessary files')
             ->addOption(
                 'exclude-files',
                 'f',
@@ -52,11 +49,7 @@ class MoveCommand extends Command
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
-                'Move all the files without confirmation')
-            ->addArgument(
-                'folder',
-                InputArgument::REQUIRED,
-                'Set a folder to move unnecessary files');
+                'Move all the files without confirmation');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -64,6 +57,7 @@ class MoveCommand extends Command
         $time = (new Stopwatch())->start('mv');
         $console = new Output($output, $input->getOption('log'));
         Helpers::title('rtorrent-cleaner - move unnecessary files', $console);
+        $scgi = Helpers::scgiArgument($input->getArgument('scgi'));
 
         if (!is_dir($input->getArgument('folder'))) {
             Helpers::errorMessage('Please, define a correct directory.', $console);
@@ -73,8 +67,8 @@ class MoveCommand extends Command
         }
 
         $cleaner = new Cleaner(
-            $input->getOption('scgi'),
-            $input->getOption('port'),
+            $scgi['hostname'],
+            $scgi['port'],
             $input->getOption('exclude-files'),
             $input->getOption('exclude-dirs'),
             $output
