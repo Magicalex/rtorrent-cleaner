@@ -118,7 +118,7 @@ You can log the console output in a file with the option --log (path: ./rtorrent
 You can define a path (path: /var/log/rtorrent-cleaner.log)
 
 ```sh
-rtorrent-cleaner report --log 127.0.0.1:5000
+rtorrent-cleaner report --log -- 127.0.0.1:5000
 rtorrent-cleaner report -l /var/log/rtorrent-cleaner.log 127.0.0.1:5000
 rtorrent-cleaner report --log=/var/log/rtorrent-cleaner.log 127.0.0.1:5000
 ```
