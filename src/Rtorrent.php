@@ -15,18 +15,10 @@ class Rtorrent
 
     public function call($method, $params = [])
     {
-        $stream = @fsockopen($this->prefix().$this->scgi, $this->port);
+        $stream = @fsockopen($this->prefix().$this->scgi, $this->port, $error_code , $error_message, 10);
 
         if (!$stream) {
-            if ($this->port == -1 && !file_exists($this->scgi)) {
-                throw new \Exception('Unable to connect to rtorrent. Socket file "'.$this->scgi.'" not found.');
-            } elseif ($this->port > 65535) {
-                throw new \Exception('Unable to connect to rtorrent, the port must be between 0 and 65535.');
-            } elseif ($this->port !== -1) {
-                throw new \Exception('Unable to connect to rtorrent. If scgi hostname "'.$this->scgi.'" and scgi port "'.$this->port.'" is correct, check if rtorrent is running.');
-            } else {
-                throw new \Exception('Unable to connect to rtorrent. Check if rtorrent is running.');
-            }
+            throw new \Exception('Unable to connect to rtorrent. '.$error_message.' (code: '.$error_code.')');
         }
 
         $null = "\x00";
