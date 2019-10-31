@@ -15,7 +15,7 @@ class Rtorrent
 
     public function call($method, $params = [])
     {
-        $stream = @fsockopen($this->prefix().$this->scgi, $this->port, $error_code , $error_message, 10);
+        $stream = @fsockopen($this->prefix().$this->scgi, $this->port, $error_code, $error_message, 10);
 
         if (!$stream) {
             throw new \Exception('Unable to connect to rtorrent. '.$error_message.' (code: '.$error_code.')');
