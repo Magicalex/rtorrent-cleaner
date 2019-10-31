@@ -1,6 +1,6 @@
 # rtorrent-cleaner
 
-Script in php for remove unnecessary file in rtorrent  
+rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent.  
 [![StyleCI](https://github.styleci.io/repos/158750704/shield?branch=master)](https://github.styleci.io/repos/158750704)
 [![Latest Stable Version](https://poser.pugx.org/magicalex/rtorrent-cleaner/v/stable)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
 [![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://packagist.org/packages/magicalex/rtorrent-cleaner)

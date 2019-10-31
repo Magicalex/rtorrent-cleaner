@@ -1,7 +1,7 @@
 {
     "name": "magicalex/rtorrent-cleaner",
-    "type": "library",
-    "description": "rtorrent-cleaner script in php for remove unnecessary file in rtorrent",
+    "type": "project",
+    "description": "rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent",
     "keywords": [
         "rtorrent",
         "rutorrent",

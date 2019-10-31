@@ -1,6 +1,6 @@
 FROM alpine:3.10
 
-LABEL description="Docker image for remove unnecessary file in rtorrent" \
+LABEL description="rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent" \
       tags="latest" \
       maintainer="magicalex <magicalex@mondedie.fr>"
 
