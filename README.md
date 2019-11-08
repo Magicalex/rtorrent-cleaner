@@ -215,7 +215,7 @@ docker run -it --rm \
 You can create a script for run rtorrent-cleaner with Docker
 
 ```sh
-#!/bin/sh
+#!/usr/bin/env sh
 
 docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
@@ -227,7 +227,7 @@ docker run -it --rm \
 Or if you use a socket with rtorrent `/run/php/.rtorrent.sock`.
 
 ```sh
-#!/bin/sh
+#!/usr/bin/env sh
 
 docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
@@ -292,7 +292,7 @@ docker-compose up -d
 Create your rtorrent-cleaner script in `/usr/local/bin` folder
 
 ```sh
-#!/bin/sh
+#!/usr/bin/env sh
 
 docker run -it --rm \
   -v /path/to/rutorrent/downloads:/downloads \

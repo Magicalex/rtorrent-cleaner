@@ -56,7 +56,7 @@ class TorrentsCommand extends Command
                     $ask .= '> file: <fg=cyan>'.$filename.'</> size: <fg=cyan>'.$size.'</>'.PHP_EOL;
                 }
 
-                $question = new ChoiceQuestion($ask, ['nothing', 'delete', 'redownload'], 0);
+                $question = new ChoiceQuestion($ask, ['nothing', 'delete', 'redownload', 'quit'], 0);
                 $question->setErrorMessage('Option %s is invalid.');
                 $answer = $helper->ask($input, $output, $question);
 
@@ -68,6 +68,8 @@ class TorrentsCommand extends Command
                     $output->writeln('torrent: <fg=yellow>'.$torrent['torrent'].'</> download has been launched');
                 } elseif ($answer == 'nothing') {
                     $output->writeln('<fg=yellow>torrent ignored</>');
+                } elseif ($answer == 'quit') {
+                    break;
                 }
             }
         }
@@ -76,6 +78,7 @@ class TorrentsCommand extends Command
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $output->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
+        $date = date('r');
+        $output->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }

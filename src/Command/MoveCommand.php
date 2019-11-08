@@ -91,7 +91,7 @@ class MoveCommand extends Command
                 } elseif (!$input->getOption('assume-yes')) {
                     $viewFile = Helpers::truncate($file['absolute_path'], 70);
                     $ask = PHP_EOL.'<options=bold>Do you want move: <fg=green;options=bold,underscore>'.$viewFile.'</> ? (defaults: no)</>';
-                    $question = new ChoiceQuestion($ask, ['yes', 'no'], 1);
+                    $question = new ChoiceQuestion($ask, ['yes', 'no', 'quit'], 1);
                     $question->setErrorMessage('Option %s is invalid.');
                     $answer = $helper->ask($input, $output, $question);
 
@@ -101,6 +101,8 @@ class MoveCommand extends Command
                         $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved.");
                     } elseif ($answer == 'no') {
                         $console->writeln('<fg=yellow>file not moved.</>');
+                    } elseif ($answer == 'quit') {
+                        break;
                     }
                 }
             }
@@ -110,6 +112,7 @@ class MoveCommand extends Command
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
+        $date = date('r');
+        $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }

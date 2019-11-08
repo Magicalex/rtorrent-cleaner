@@ -116,6 +116,7 @@ class ReportCommand extends Command
         $time = Helpers::humanTime($event->getDuration());
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $console->writeln(['', "> time: {$time}, torrents: {$torrents}, free space: {$space}"]);
+        $date = date('r');
+        $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }
