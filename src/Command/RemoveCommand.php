@@ -70,12 +70,12 @@ class RemoveCommand extends Command
         if ($nbFileNotTracked === 0) {
             $console->writeln(['', '> <fg=green>No files to remove.</>']);
         } else {
-            $console->writeln(['', "> {$nbFileNotTracked} unnecessary files to delete."]);
+            $console->writeln(['', '> '.$nbFileNotTracked.' unnecessary files to delete.']);
             foreach ($filesNotTracked as $file) {
                 if ($input->getOption('assume-yes') === true) {
                     unlink($file['absolute_path']);
                     $viewFile = Helpers::truncate($file['absolute_path']);
-                    $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed.");
+                    $console->writeln('file: <fg=yellow>'.$viewFile.'</> has been removed.');
                 } else {
                     $viewFile = Helpers::truncate($file['absolute_path'], 70);
                     $ask = PHP_EOL.'<options=bold>Do you want delete: <fg=red;options=bold,underscore>'.$viewFile.'</> ? (defaults: no)</>';
@@ -86,7 +86,7 @@ class RemoveCommand extends Command
                     if ($answer == 'yes') {
                         unlink($file['absolute_path']);
                         $viewFile = Helpers::truncate($file['absolute_path']);
-                        $console->writeln("file: <fg=yellow>{$viewFile}</> has been removed.");
+                        $console->writeln('file: <fg=yellow>'.$viewFile.'</> has been removed.');
                     } elseif ($answer == 'no') {
                         $console->writeln('<fg=yellow>file not deleted.</>');
                     } elseif ($answer == 'quit') {
@@ -103,20 +103,18 @@ class RemoveCommand extends Command
         } else {
             while (count($emptyDirectory) > 0) {
                 $removedDirectory = $cleaner->removeDirectory($emptyDirectory);
-
                 foreach ($removedDirectory as $folder) {
-                    $console->writeln("directory: <fg=yellow>{$folder}</> has been removed.");
+                    $console->writeln('directory: <fg=yellow>'.$folder.'</> has been removed.');
                 }
-
                 $emptyDirectory = $cleaner->getEmptyDirectory();
             }
         }
 
-        $event = $time->stop();
-        $time = Helpers::humanTime($event->getDuration());
+        $date = date('D, j M Y H:i:s');
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $date = date('r');
+        $event = $time->stop();
+        $time = Helpers::humanTime($event->getDuration());
         $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }

@@ -23,7 +23,7 @@ class Rtorrent
 
         $null = "\x00";
         $content = xmlrpc_encode_request($method, $params, ['encoding' => 'UTF-8']);
-        $header = "CONTENT_LENGTH{$null}".strlen($content)."{$null}SCGI{$null}1{$null}";
+        $header = 'CONTENT_LENGTH'.$null.strlen($content).$null.'SCGI'.$null.'1'.$null;
         $request = strlen($header).':'.$header.','.$content;
         fwrite($stream, $request, strlen($request));
         $xml = stream_get_contents($stream);

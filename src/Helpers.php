@@ -40,14 +40,14 @@ class Helpers
         $ms = floor($ms - ($min * 60000) - ($sec * 1000));
 
         if ($min > 0) {
-            $humanTime = "{$min}min ";
+            $humanTime = $min.'min ';
         }
 
         if ($sec > 0) {
-            $humanTime .= "{$sec}sec ";
+            $humanTime .= $sec.'sec ';
         }
 
-        $humanTime .= "{$ms}ms";
+        $humanTime .= $ms.'ms';
 
         return $humanTime;
     }

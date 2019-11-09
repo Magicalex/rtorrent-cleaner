@@ -75,7 +75,7 @@ class ReportCommand extends Command
             }
 
             $console->table(
-                ['', "<fg=yellow>{$nbFileNotTracked} files are not tracked by rtorrent</>", '<fg=yellow>Size</>'],
+                ['', '<fg=yellow>'.$nbFileNotTracked.' files are not tracked by rtorrent</>', '<fg=yellow>Size</>'],
                 $rows,
                 ['', '<fg=yellow>Total recoverable space</>', '<fg=yellow>'.Helpers::convertFileSize($totalSize, 2).'</>']
             );
@@ -104,7 +104,7 @@ class ReportCommand extends Command
             }
 
             $console->table(
-                ['', "<fg=yellow>$i files are missing</>", '<fg=yellow>Torrent</>', '<fg=yellow>Size</>'],
+                ['', '<fg=yellow>'.$i.' files are missing</>', '<fg=yellow>Torrent</>', '<fg=yellow>Size</>'],
                 $rows,
                 ['', new TableCell('<fg=yellow>Total space to download</>', ['colspan' => 2]), '<fg=yellow>'.Helpers::convertFileSize($totalSize, 2).'</>']
             );
@@ -112,11 +112,11 @@ class ReportCommand extends Command
             $console->writeln('> <fg=green>No missing files.</>');
         }
 
-        $event = $time->stop();
-        $time = Helpers::humanTime($event->getDuration());
+        $date = date('D, j M Y H:i:s');
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $date = date('r');
+        $event = $time->stop();
+        $time = Helpers::humanTime($event->getDuration());
         $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }

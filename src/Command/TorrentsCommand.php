@@ -74,11 +74,11 @@ class TorrentsCommand extends Command
             }
         }
 
-        $event = $time->stop();
-        $time = Helpers::humanTime($event->getDuration());
+        $date = date('D, j M Y H:i:s');
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $date = date('r');
+        $event = $time->stop();
+        $time = Helpers::humanTime($event->getDuration());
         $output->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }

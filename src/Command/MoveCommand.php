@@ -81,13 +81,13 @@ class MoveCommand extends Command
         if ($nbFileNotTracked === 0) {
             $console->writeln(['', '> <fg=green>No files to move.</>']);
         } else {
-            $console->writeln(['', "> {$nbFileNotTracked} unnecessary files to move."]);
+            $console->writeln(['', '> '.$nbFileNotTracked.' unnecessary files to move.']);
             foreach ($filesNotTracked as $file) {
                 $fileName = basename($file['absolute_path']);
                 if ($input->getOption('assume-yes') === true) {
                     rename($file['absolute_path'], $folder.'/'.$fileName);
                     $viewFile = Helpers::truncate($file['absolute_path']);
-                    $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved.");
+                    $console->writeln('file: <fg=yellow>'.$viewFile.'</> has been moved.');
                 } elseif (!$input->getOption('assume-yes')) {
                     $viewFile = Helpers::truncate($file['absolute_path'], 70);
                     $ask = PHP_EOL.'<options=bold>Do you want move: <fg=green;options=bold,underscore>'.$viewFile.'</> ? (defaults: no)</>';
@@ -98,7 +98,7 @@ class MoveCommand extends Command
                     if ($answer == 'yes') {
                         rename($file['absolute_path'], $folder.'/'.$fileName);
                         $viewFile = Helpers::truncate($file['absolute_path']);
-                        $console->writeln("file: <fg=yellow>{$viewFile}</> has been moved.");
+                        $console->writeln('file: <fg=yellow>'.$viewFile.'</> has been moved.');
                     } elseif ($answer == 'no') {
                         $console->writeln('<fg=yellow>file not moved.</>');
                     } elseif ($answer == 'quit') {
@@ -108,11 +108,11 @@ class MoveCommand extends Command
             }
         }
 
-        $event = $time->stop();
-        $time = Helpers::humanTime($event->getDuration());
+        $date = date('D, j M Y H:i:s');
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
-        $date = date('r');
+        $event = $time->stop();
+        $time = Helpers::humanTime($event->getDuration());
         $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
     }
 }

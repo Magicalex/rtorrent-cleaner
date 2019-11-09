@@ -42,7 +42,7 @@ class Cleaner
         $this->missingFileData = [];
 
         $progressBar = new ProgressBar($this->output, $this->numTorrents);
-        $progressBar->setFormat(" %bar% %percent%%\n remaining time: %remaining%\n status: %status%\n");
+        $progressBar->setFormat(' %bar% %percent%%'.PHP_EOL.' remaining time: %remaining%'.PHP_EOL.' status: %status%'.PHP_EOL);
         $progressBar->setMessage('recovering the files list from rtorrent...', 'status');
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
@@ -65,7 +65,6 @@ class Cleaner
                     $path = $torrent[2].'/'.$file[1];
                 } else {
                     $path = 'not found';
-
                     if (array_key_exists($torrent[0], $this->missingFileData)) {
                         $this->missingFileData[$torrent[0]]['files'][] = [
                             'name' => $file[1],
