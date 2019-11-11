@@ -112,7 +112,7 @@ class ReportCommand extends Command
             $console->writeln('> <fg=green>No missing files.</>');
         }
 
-        $date = date('D, j M Y H:i:s');
+        $date = (new \DateTime())->format('D, j M Y H:i:s');
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
         $event = $time->stop();
