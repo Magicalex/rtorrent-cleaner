@@ -1,61 +1,61 @@
 {
-    "name": "magicalex/rtorrent-cleaner",
-    "type": "project",
-    "description": "rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent",
-    "keywords": [
-        "rtorrent",
-        "rutorrent",
-        "cleaner",
-        "clean",
-        "file",
-        "phar",
-        "console"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "magicalex",
-            "email": "magicalex@mondedie.fr"
-        }
-    ],
-    "require": {
-        "php": ">=5.6.0",
-        "ext-json": "*",
-        "ext-iconv": "*",
-        "ext-xmlrpc": "*",
-        "symfony/console": "3.4.* || 4.3.*",
-        "symfony/finder": "3.4.* || 4.3.*",
-        "symfony/stopwatch": "3.4.* || 4.3.*"
-    },
-    "config": {
-    },
-    "autoload": {
-        "psr-4": {
-            "Rtcleaner\\": "src"
-        }
-    },
-    "bin": [
-        "bin/rtorrent-cleaner"
-    ],
-    "scripts": {
-        "build": [
-            "rm -f box.phar",
-            "wget https://github.com/humbug/box/releases/download/3.8.1/box.phar",
-            "chmod +x box.phar",
-            "rm -Rf vendor composer.lock rtorrent-cleaner-php5.phar",
-            "composer config platform.php 5.6.0",
-            "composer install",
-            "./box.phar compile",
-            "mv rtorrent-cleaner.phar rtorrent-cleaner-php5.phar",
-            "rm -Rf vendor composer.lock rtorrent-cleaner-php7.phar",
-            "composer config platform.php 7.1.3",
-            "composer install",
-            "./box.phar compile",
-            "mv rtorrent-cleaner.phar rtorrent-cleaner-php7.phar",
-            "composer config --unset platform"
-        ]
-    },
-    "scripts-descriptions": {
-        "build": "Build php phar archives for rtorrent-cleaner"
+  "name": "magicalex/rtorrent-cleaner",
+  "type": "project",
+  "description": "rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent",
+  "keywords": [
+    "rtorrent",
+    "rutorrent",
+    "cleaner",
+    "clean",
+    "file",
+    "phar",
+    "console"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "magicalex",
+      "email": "magicalex@mondedie.fr"
     }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "ext-json": "*",
+    "ext-iconv": "*",
+    "ext-xmlrpc": "*",
+    "symfony/console": "3.4.* || 4.3.*",
+    "symfony/finder": "3.4.* || 4.3.*",
+    "symfony/stopwatch": "3.4.* || 4.3.*"
+  },
+  "config": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Rtcleaner\\": "src"
+    }
+  },
+  "bin": [
+    "bin/rtorrent-cleaner"
+  ],
+  "scripts": {
+    "build": [
+      "rm -f box.phar",
+      "wget https://github.com/humbug/box/releases/download/3.8.1/box.phar",
+      "chmod +x box.phar",
+      "rm -Rf vendor composer.lock rtorrent-cleaner-php5.phar",
+      "composer config platform.php 5.6.0",
+      "composer install",
+      "./box.phar compile",
+      "mv rtorrent-cleaner.phar rtorrent-cleaner-php5.phar",
+      "rm -Rf vendor composer.lock rtorrent-cleaner-php7.phar",
+      "composer config platform.php 7.1.3",
+      "composer install",
+      "./box.phar compile",
+      "mv rtorrent-cleaner.phar rtorrent-cleaner-php7.phar",
+      "composer config --unset platform"
+    ]
+  },
+  "scripts-descriptions": {
+    "build": "Build php phar archives for rtorrent-cleaner"
+  }
 }

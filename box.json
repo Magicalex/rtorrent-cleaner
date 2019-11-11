@@ -1,20 +1,27 @@
 {
-    "compactors": [
-        "KevinGH\\Box\\Compactor\\Json",
-        "KevinGH\\Box\\Compactor\\Php"
-    ],
-    "finder": [
-        {
-            "in": "vendor",
-            "exclude": ["Tests", "tests", "Test", "test"],
-            "name": "*.php"
-        },
-        {
-            "in": "src",
-            "name": "*.php"
-        }
-    ],
-    "files": ["vendor/composer/installed.json"],
-    "compression": "GZ",
-    "output": "rtorrent-cleaner.phar"
+  "compactors": [
+    "KevinGH\\Box\\Compactor\\Json",
+    "KevinGH\\Box\\Compactor\\Php"
+  ],
+  "finder": [
+    {
+      "in": "vendor",
+      "exclude": [
+        "Tests",
+        "tests",
+        "Test",
+        "test"
+      ],
+      "name": "*.php"
+    },
+    {
+      "in": "src",
+      "name": "*.php"
+    }
+  ],
+  "files": [
+    "vendor/composer/installed.json"
+  ],
+  "compression": "GZ",
+  "output": "rtorrent-cleaner.phar"
 }

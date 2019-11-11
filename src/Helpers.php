@@ -15,10 +15,6 @@ class Helpers
 
     public static function convertFileSize($octets, $round = 0)
     {
-        if ($octets < 0) {
-            return 'error';
-        }
-
         if ($octets === 0) {
             return 0;
         }
