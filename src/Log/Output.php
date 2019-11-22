@@ -34,7 +34,7 @@ class Output
 
     public function table($header, $rows, $footer)
     {
-        $console = (new Table($this->output))
+        (new Table($this->output))
             ->setHeaders($header)
             ->setRows($rows)
             ->addRow(new TableSeparator())
@@ -42,7 +42,7 @@ class Output
             ->render();
 
         if ($this->log !== false) {
-            $log = (new Table($this->log))->setHeaders($header)
+            (new Table($this->log))->setHeaders($header)
                 ->setRows($rows)
                 ->addRow(new TableSeparator())
                 ->addRow($footer)

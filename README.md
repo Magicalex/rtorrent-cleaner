@@ -19,16 +19,10 @@ Docker image
 
 ### Install php
 
-For Debian 9
+For Debian
 
 ```sh
-apt install php7.0-cli php7.0-xmlrpc
-```
-
-For Debian 10
-
-```sh
-apt install php7.3-cli php7.3-xmlrpc
+apt install php-cli php-xmlrpc
 ```
 
 ### Install rtorrent-cleaner via phar file (recommended)
@@ -93,6 +87,7 @@ Options:
   -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
 Available commands:
+  debug     Debug torrents
   help      Displays help for a command
   list      Lists commands
   mv        Move your unnecessary files in a specified folder

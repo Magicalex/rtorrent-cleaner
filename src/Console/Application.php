@@ -2,6 +2,7 @@
 
 namespace Rtcleaner\Console;
 
+use Rtcleaner\Command\DebugCommand;
 use Rtcleaner\Command\DefaultCommand;
 use Rtcleaner\Command\MoveCommand;
 use Rtcleaner\Command\RemoveCommand;
@@ -24,7 +25,8 @@ class Application extends BaseApplication
             new ReportCommand(),
             new RemoveCommand(),
             new DefaultCommand(),
-            new TorrentsCommand()
+            new TorrentsCommand(),
+            new DebugCommand()
         ]);
     }
 
