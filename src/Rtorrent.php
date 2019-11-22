@@ -23,9 +23,9 @@ class Rtorrent
 
         $xmlrpc_options = [
             'output_type' => 'xml',
-            'verbosity' => 'no_white_space',
-            'version' => 'xmlrpc',
-            'encoding' => 'UTF-8'
+            'verbosity'   => 'no_white_space',
+            'version'     => 'xmlrpc',
+            'encoding'    => 'UTF-8'
         ];
 
         $null = "\x00";
@@ -44,6 +44,6 @@ class Rtorrent
 
     protected function prefix()
     {
-        return ($this->port == -1) ? 'unix://':'tcp://';
+        return ($this->port == -1) ? 'unix://' : 'tcp://';
     }
 }
