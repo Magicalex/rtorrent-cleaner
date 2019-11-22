@@ -22,7 +22,7 @@ class TorrentsCommand extends Command
             ->addArgument(
                 'scgi',
                 InputArgument::REQUIRED,
-                'Set the scgi hostname:port or socket file of rtorrent. hostname: 127.0.0.1:5000 or socket: /run/rtorrent/rpc.socket');
+                'Set the scgi hostname:port or socket file of rtorrent');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

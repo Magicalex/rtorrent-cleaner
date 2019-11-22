@@ -24,22 +24,22 @@ class ReportCommand extends Command
             ->addArgument(
                 'scgi',
                 InputArgument::REQUIRED,
-                'Set the scgi hostname:port or socket file of rtorrent. hostname: 127.0.0.1:5000 or socket: /run/rtorrent/rpc.socket')
+                'Set the scgi hostname:port or socket file of rtorrent')
             ->addOption(
                 'exclude-files',
                 'f',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Excludes files with a pattern. ex: --exclude-files=*.sub exclude all subfiles')
+                'Excludes files with a pattern')
             ->addOption(
                 'exclude-dirs',
                 'd',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Excludes directories (must be relative to the default rtorrent directory). ex: --exclude-dirs=doc exclude the doc/ directory')
+                'Excludes directories, must be relative to the default rtorrent directory')
             ->addOption(
                 'log',
                 'l',
                 InputOption::VALUE_OPTIONAL,
-                'Log output console in a file. ex: --log=/var/log/rtorrent-cleaner.log',
+                'Log output console in a file',
                 false);
     }
 
