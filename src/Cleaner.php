@@ -55,36 +55,31 @@ class Cleaner
             }
 
             $files = $this->rtorrent->call('f.multicall', [
-                $torrent[0], '', 'f.frozen_path=', 'f.path=', 'f.size_bytes='
+                $torrent[0], '', 'f.path=', 'f.size_bytes='
             ]);
 
             foreach ($files as $file) {
-                if (is_file($file[0])) {
-                    $path = $file[0];
-                } elseif (is_file($torrent[2].'/'.$file[1])) {
-                    $path = $torrent[2].'/'.$file[1];
+                if (is_file($torrent[2].'/'.$file[0])) {
+                    $this->rtorrentFileData[] = [
+                        'absolute_path' => $torrent[2].'/'.$file[0],
+                        'size'          => (int) $file[1]
+                    ];
                 } else {
-                    $path = 'not found';
                     if (array_key_exists($torrent[0], $this->missingFileData)) {
                         $this->missingFileData[$torrent[0]]['files'][] = [
-                            'name' => $file[1],
-                            'size' => (int) $file[2]
+                            'name' => $file[0],
+                            'size' => (int) $file[1]
                         ];
                     } else {
                         $this->missingFileData[$torrent[0]] = [
                             'hash'     => $torrent[0],
                             'torrent'  => $torrent[1],
                             'files'    => [
-                                ['name' => $file[1], 'size' => (int) $file[2]]
+                                ['name' => $file[0], 'size' => (int) $file[1]]
                             ]
                         ];
                     }
                 }
-
-                $this->rtorrentFileData[] = [
-                    'absolute_path' => $path,
-                    'size'          => (int) $file[2]
-                ];
             }
 
             $progressBar->advance(1);
