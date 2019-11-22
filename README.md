@@ -3,7 +3,7 @@
 rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent.  
 [![StyleCI](https://github.styleci.io/repos/158750704/shield?branch=master)](https://github.styleci.io/repos/158750704)
 [![Latest Stable Version](https://poser.pugx.org/magicalex/rtorrent-cleaner/v/stable)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
-[![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
+[![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://github.com/Magicalex/rtorrent-cleaner/blob/master/LICENSE)
 
 Docker image  
 [![](https://images.microbadger.com/badges/image/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/repository/docker/magicalex/docker-rtorrent-cleaner)
@@ -22,7 +22,7 @@ Docker image
 For Debian
 
 ```sh
-apt install php-cli php-xmlrpc
+apt install php-cli php-xmlrpc php-simplexml php-zip php-intl php-mbstring
 ```
 
 ### Install rtorrent-cleaner via phar file (recommended)
