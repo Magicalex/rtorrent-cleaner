@@ -56,12 +56,11 @@ class MoveCommand extends Command
     {
         $time = (new Stopwatch())->start('mv');
         $console = new Output($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner - move unnecessary files', $console);
+        Helpers::title('rtorrent-cleaner - mv', $console);
         $scgi = Helpers::scgiArgument($input->getArgument('scgi'));
 
         if (!is_dir($input->getArgument('folder'))) {
-            Helpers::errorMessage('Please, define a correct directory.', $console);
-            exit(1);
+            throw new \Exception('The folder: "'.$input->getArgument('folder').'" does not exist.');
         } else {
             $folder = realpath($input->getArgument('folder'));
         }

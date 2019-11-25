@@ -52,7 +52,7 @@ class RemoveCommand extends Command
     {
         $time = (new Stopwatch())->start('rm');
         $console = new Output($output, $input->getOption('log'));
-        Helpers::title('rtorrent-cleaner - remove unnecessary files', $console);
+        Helpers::title('rtorrent-cleaner - rm', $console);
         $scgi = Helpers::scgiArgument($input->getArgument('scgi'));
 
         $cleaner = new Cleaner(

@@ -28,15 +28,11 @@ class Cleaner
 
     protected function getFileListFromRtorrent()
     {
-        try {
-            $torrents = $this->rtorrent->call('d.multicall2', ['', 'default', 'd.hash=', 'd.name=', 'd.directory=']);
-            $this->numTorrents = count($torrents);
-            if ($this->numTorrents === 0) {
-                throw new \Exception('There is no torrent in rtorrent.');
-            }
-        } catch (\Exception $exception) {
-            Helpers::errorMessage($exception->getMessage(), $this->output);
-            exit(1);
+        $torrents = $this->rtorrent->call('d.multicall2', ['', 'default', 'd.hash=', 'd.name=', 'd.directory=']);
+        $this->numTorrents = count($torrents);
+
+        if ($this->numTorrents === 0) {
+            throw new \Exception('There is no torrent in rtorrent.');
         }
 
         $this->missingFileData = [];
@@ -95,8 +91,7 @@ class Cleaner
     protected function getFileListFromDisk()
     {
         if (count($this->directories) === 0) {
-            Helpers::errorMessage('The files are not able to be reached locally.', $this->output);
-            exit(1);
+            throw new \Exception('The files are not able to be reached locally.');
         }
 
         $this->localFileData = [];

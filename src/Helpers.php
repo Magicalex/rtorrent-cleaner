@@ -48,16 +48,6 @@ class Helpers
         return $humanTime;
     }
 
-    public static function errorMessage($message, $output)
-    {
-        $spaces = '';
-        for ($i = 0; $i < strlen($message) + 4; $i++) {
-            $spaces .= ' ';
-        }
-
-        return $output->writeln(['<error>'.$spaces.'</>', '<error>  '.$message.'  </>', '<error>'.$spaces.'</>']);
-    }
-
     public static function title($title, $output)
     {
         $dash = '';

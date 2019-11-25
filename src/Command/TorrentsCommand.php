@@ -28,7 +28,7 @@ class TorrentsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $time = (new Stopwatch())->start('torrent');
-        Helpers::title('rtorrent-cleaner - manage missing files', $output);
+        Helpers::title('rtorrent-cleaner - torrents', $output);
         $scgi = Helpers::scgiArgument($input->getArgument('scgi'));
 
         $cleaner = new Cleaner(
