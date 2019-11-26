@@ -36,24 +36,23 @@ class DebugCommand extends Command
         $scgi = Helpers::scgiArgument($input->getArgument('scgi'));
         $debug = new Debug($scgi['hostname'], $scgi['port'], $input->getArgument('hash'));
 
-        $output->writeln(['> Torrent info', '']);
-
         $rows = [];
+        $output->writeln(['', '> Downloads infos', '']);
         $table = new Table($output);
-        $table->setHeaders(['command (d.*)', 'result']);
+        $table->setHeaders(['command: d.*', 'result']);
         foreach ($debug->getTorrentInfo() as $cmd => $result) {
             $rows[] = [$cmd, Helpers::truncate($result, 80)];
         }
         $table->setRows($rows);
         $table->render();
 
-        $output->writeln(['', '> Files info']);
+        $output->writeln(['', '> Files infos']);
 
         foreach ($debug->getFilesInfo() as $file) {
             $rows = [];
             $output->writeln('');
             $table = new Table($output);
-            $table->setHeaders(['command (f.*)', 'result']);
+            $table->setHeaders(['command: f.*', 'result']);
             foreach ($file as $cmd => $result) {
                 $rows[] = [$cmd, Helpers::truncate($result, 80)];
             }
