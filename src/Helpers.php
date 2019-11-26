@@ -59,7 +59,7 @@ class Helpers
         $top = '┌'.$dash.'┐';
         $bottom = '└'.$dash.'┘';
 
-        return $output->writeln([$top, '│ '.$title.' │', $bottom, '']);
+        return $output->writeln([$top, '│ '.$title.' │', $bottom]);
     }
 
     public static function getParentFolder($array)

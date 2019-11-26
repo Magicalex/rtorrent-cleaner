@@ -38,7 +38,7 @@ class Cleaner
         $this->missingFileData = [];
 
         $progressBar = new ProgressBar($this->output, $this->numTorrents);
-        $progressBar->setFormat(' %bar% %percent%%'.PHP_EOL.' remaining time: %remaining%'.PHP_EOL.' status: %status%'.PHP_EOL);
+        $progressBar->setFormat(PHP_EOL.' %bar% %percent%%'.PHP_EOL.' remaining time: %remaining%'.PHP_EOL.' status: %status%'.PHP_EOL);
         $progressBar->setMessage('recovering the files list from rtorrent...', 'status');
         $progressBar->setBarCharacter('<fg=green>█</>');
         $progressBar->setEmptyBarCharacter('█');
@@ -50,9 +50,7 @@ class Cleaner
                 $this->directories[] = $torrent[2];
             }
 
-            $files = $this->rtorrent->call('f.multicall', [
-                $torrent[0], '', 'f.path=', 'f.size_bytes='
-            ]);
+            $files = $this->rtorrent->call('f.multicall', [$torrent[0], '', 'f.path=', 'f.size_bytes=']);
 
             foreach ($files as $file) {
                 if (is_file($torrent[2].'/'.$file[0])) {
@@ -200,7 +198,5 @@ class Cleaner
         $this->rtorrent->call('d.close', [$hash]);
         $this->rtorrent->call('f.multicall', [$hash, '', 'f.set_create_queued=0', 'f.set_resize_queued=0']);
         $this->rtorrent->call('d.check_hash', [$hash]);
-        $this->rtorrent->call('d.open', [$hash]);
-        $this->rtorrent->call('d.start', [$hash]);
     }
 }
