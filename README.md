@@ -161,6 +161,13 @@ The second example excludes the `movies` and `series` directories
 
 ## Usage with docker
 
+### Environment variables
+
+| Variable | Description | Type | Default value |
+| -------- | ----------- | ---- | ------------- |
+| **PHP_MEMORY_LIMIT** | Memory limit directive of php | *optional* | 128M
+| **PHP_TIMEZONE** | Timezone directive of php | *optional* | Europe/Paris
+
 Info: change `<rtorrent-rutorrent>` by the name of your container of rtorrent here: rtorrent-rutorrent  
 Info: change `</home/user/torrents>` by your torrents folder
 Info: change `</data/torrents>` by `directory.default` of rtorrent. See your file rtorrent.rc
