@@ -6,10 +6,10 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent.
 [![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://github.com/Magicalex/rtorrent-cleaner/blob/master/LICENSE)
 
 Docker image  
-[![](https://images.microbadger.com/badges/image/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/repository/docker/magicalex/docker-rtorrent-cleaner)
-[![](https://img.shields.io/docker/automated/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner/builds)
-[![](https://img.shields.io/docker/pulls/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner)
-[![](https://img.shields.io/docker/stars/magicalex/docker-rtorrent-cleaner.svg)](https://hub.docker.com/r/magicalex/docker-rtorrent-cleaner)
+[![](https://img.shields.io/docker/cloud/build/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
+[![](https://img.shields.io/docker/cloud/automated/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner/builds)
+[![](https://img.shields.io/docker/pulls/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
+[![](https://img.shields.io/docker/stars/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
 
 ## Requirements
 
@@ -53,10 +53,8 @@ composer global require magicalex/rtorrent-cleaner
 
 - docker [install docker](https://docs.docker.com/install)
 
-Install docker-rtorrent-cleaner
-
 ```sh
-docker pull magicalex/docker-rtorrent-cleaner
+docker pull magicalex/rtorrent-cleaner
 ```
 
 See the details [here](https://github.com/Magicalex/rtorrent-cleaner#usage-with-docker)
@@ -178,7 +176,7 @@ Command for displaying help: `rtorrent-cleaner`
 docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner
+  magicalex/rtorrent-cleaner
 ```
 
 If you use your container with a network you can connect rtorrent-cleaner like this:  
@@ -189,7 +187,7 @@ docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner
+  magicalex/rtorrent-cleaner
 ```
 
 Command for making a report: `rtorrent-cleaner report rtorrent:5000`
@@ -199,7 +197,7 @@ docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner report rtorrent:5000
+  magicalex/rtorrent-cleaner report rtorrent:5000
 ```
 
 You can increase php memory limit if needed with PHP_MEMORY_LIMIT environment variable.  
@@ -211,7 +209,7 @@ docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner report rtorrent:5000
+  magicalex/rtorrent-cleaner report rtorrent:5000
 ```
 
 You can create a script for run rtorrent-cleaner with Docker
@@ -223,7 +221,7 @@ docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/docker-rtorrent-cleaner $*
+  magicalex/rtorrent-cleaner $*
 ```
 
 Or if you use a socket with rtorrent `/run/php/.rtorrent.sock`.
@@ -234,7 +232,7 @@ Or if you use a socket with rtorrent `/run/php/.rtorrent.sock`.
 docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   -v /run/php:/run/php \
-  magicalex/docker-rtorrent-cleaner $*
+  magicalex/rtorrent-cleaner $*
 ```
 
 ```sh
@@ -299,7 +297,7 @@ Create your rtorrent-cleaner script in `/usr/local/bin` folder
 docker run -it --rm \
   -v /path/to/rutorrent/downloads:/downloads \
   -v /run/php:/run/php \
-  magicalex/docker-rtorrent-cleaner $*
+  magicalex/rtorrent-cleaner $*
 ```
 
 After this step you can run rtorrent-cleaner
@@ -312,7 +310,7 @@ rtorrent-cleaner report /run/php/.rtorrent.sock
 ## Build docker image
 
 ```sh
-docker build -t magicalex/docker-rtorrent-cleaner:latest https://github.com/Magicalex/rtorrent-cleaner.git#master:docker-rtorrent-cleaner
+docker build -t magicalex/rtorrent-cleaner:latest https://github.com/Magicalex/rtorrent-cleaner.git#master:rtorrent-cleaner
 ```
 
 ## Build a php archive Phar (rtorrent-cleaner.phar)
