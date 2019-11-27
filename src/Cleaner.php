@@ -30,12 +30,11 @@ class Cleaner
     {
         $torrents = $this->rtorrent->call('d.multicall2', ['', 'default', 'd.hash=', 'd.name=', 'd.directory=']);
         $this->numTorrents = count($torrents);
+        $this->missingFileData = [];
 
         if ($this->numTorrents === 0) {
-            throw new \Exception('There is no torrent in rtorrent.');
+            throw new \Exception('No torrent found in rtorrent.');
         }
-
-        $this->missingFileData = [];
 
         $progressBar = new ProgressBar($this->output, $this->numTorrents);
         $progressBar->setFormat(PHP_EOL.' %bar% %percent%%'.PHP_EOL.' remaining time: %remaining%'.PHP_EOL.' status: %status%'.PHP_EOL);

@@ -6,7 +6,7 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent.
 [![License](https://poser.pugx.org/magicalex/rtorrent-cleaner/license)](https://github.com/Magicalex/rtorrent-cleaner/blob/master/LICENSE)
 
 Docker image  
-[![](https://img.shields.io/docker/cloud/build/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
+[![](https://img.shields.io/docker/cloud/build/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner/builds)
 [![](https://img.shields.io/docker/cloud/automated/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner/builds)
 [![](https://img.shields.io/docker/pulls/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
 [![](https://img.shields.io/docker/stars/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
