@@ -4,7 +4,7 @@ LABEL description="rtorrent-cleaner is a tool to clean up unnecessary files in r
       tags="latest" \
       maintainer="magicalex <magicalex@mondedie.fr>"
 
-ENV PHP_MEMORY_LIMIT=128M PHP_TIMEZONE=Europe/Paris
+ENV PHP_MEMORY_LIMIT=128M PHP_TIMEZONE=UTC
 
 COPY rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner
 

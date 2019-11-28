@@ -164,7 +164,7 @@ The second example excludes the `movies` and `series` directories
 | Variable | Description | Type | Default value |
 | -------- | ----------- | ---- | ------------- |
 | **PHP_MEMORY_LIMIT** | Memory limit directive of php | *optional* | 128M
-| **PHP_TIMEZONE** | Timezone directive of php | *optional* | Europe/Paris
+| **PHP_TIMEZONE** | Timezone directive of php | *optional* | UTC
 
 Info: change `<rtorrent-rutorrent>` by the name of your container of rtorrent here: rtorrent-rutorrent  
 Info: change `</home/user/torrents>` by your torrents folder
@@ -209,7 +209,19 @@ docker run -it --rm \
   -v </home/user/torrents>:</data/torrents> \
   --network <name_of_network> \
   --link <rtorrent-rutorrent>:rtorrent \
-  magicalex/rtorrent-cleaner report rtorrent:5000
+  magicalex/rtorrent-cleaner
+```
+
+You can change the timezone with PHP_TIMEZONE environment variable.  
+By default, the timezone is UTC.
+
+```sh
+docker run -it --rm \
+  -e PHP_TIMEZONE=Europe/Paris \
+  -v </home/user/torrents>:</data/torrents> \
+  --network <name_of_network> \
+  --link <rtorrent-rutorrent>:rtorrent \
+  magicalex/rtorrent-cleaner
 ```
 
 You can create a script for run rtorrent-cleaner with Docker
