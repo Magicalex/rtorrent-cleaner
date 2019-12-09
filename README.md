@@ -166,16 +166,16 @@ The second example excludes the `movies` and `series` directories
 | **PHP_MEMORY_LIMIT** | Memory limit directive of php | *optional* | 128M
 | **PHP_TIMEZONE** | Timezone directive of php | *optional* | UTC
 
-Info: change `<rtorrent-rutorrent>` by the name of your container of rtorrent here: rtorrent-rutorrent  
+Info: change `<container-name>` by the name of your container of rtorrent  
 Info: change `</home/user/torrents>` by your torrents folder
-Info: change `</data/torrents>` by `directory.default` of rtorrent. See your file rtorrent.rc
+Info: change `</data/downloads>` by `directory.default` of rtorrent. See your file rtorrent.rc
 
 Command for displaying help: `rtorrent-cleaner`
 
 ```sh
 docker run -it --rm \
-  -v </home/user/torrents>:</data/torrents> \
-  --link <rtorrent-rutorrent>:rtorrent \
+  -v </home/user/torrents>:</data/downloads> \
+  --link <container-name>:rtorrent \
   magicalex/rtorrent-cleaner
 ```
 
@@ -184,9 +184,9 @@ Info: change `<name_of_network>` by your network (you can list all the docker ne
 
 ```sh
 docker run -it --rm \
-  -v </home/user/torrents>:</data/torrents> \
+  -v </home/user/torrents>:</data/downloads> \
   --network <name_of_network> \
-  --link <rtorrent-rutorrent>:rtorrent \
+  --link <container-name>:rtorrent \
   magicalex/rtorrent-cleaner
 ```
 
@@ -194,9 +194,9 @@ Command for making a report: `rtorrent-cleaner report rtorrent:5000`
 
 ```sh
 docker run -it --rm \
-  -v </home/user/torrents>:</data/torrents> \
+  -v </home/user/torrents>:</data/downloads> \
   --network <name_of_network> \
-  --link <rtorrent-rutorrent>:rtorrent \
+  --link <container-name>:rtorrent \
   magicalex/rtorrent-cleaner report rtorrent:5000
 ```
 
@@ -206,9 +206,9 @@ By default, the memory limit is 128M.
 ```sh
 docker run -it --rm \
   -e PHP_MEMORY_LIMIT=256M \
-  -v </home/user/torrents>:</data/torrents> \
+  -v </home/user/torrents>:</data/downloads> \
   --network <name_of_network> \
-  --link <rtorrent-rutorrent>:rtorrent \
+  --link <container-name>:rtorrent \
   magicalex/rtorrent-cleaner
 ```
 
@@ -218,9 +218,9 @@ By default, the timezone is UTC.
 ```sh
 docker run -it --rm \
   -e PHP_TIMEZONE=Europe/Paris \
-  -v </home/user/torrents>:</data/torrents> \
+  -v </home/user/torrents>:</data/downloads> \
   --network <name_of_network> \
-  --link <rtorrent-rutorrent>:rtorrent \
+  --link <container-name>:rtorrent \
   magicalex/rtorrent-cleaner
 ```
 
@@ -230,9 +230,9 @@ You can create a script for run rtorrent-cleaner with Docker
 #!/usr/bin/env sh
 
 docker run -it --rm \
-  -v </home/user/torrents>:</data/torrents> \
+  -v </home/user/torrents>:</data/downloads> \
   --network <name_of_network> \
-  --link <rtorrent-rutorrent>:rtorrent \
+  --link <container-name>:rtorrent \
   magicalex/rtorrent-cleaner $*
 ```
 
@@ -242,7 +242,7 @@ Or if you use a socket with rtorrent `/run/php/.rtorrent.sock`.
 #!/usr/bin/env sh
 
 docker run -it --rm \
-  -v </home/user/torrents>:</data/torrents> \
+  -v </home/user/torrents>:</data/downloads> \
   -v /run/php:/run/php \
   magicalex/rtorrent-cleaner $*
 ```
@@ -278,7 +278,7 @@ version: "3"
 
 services:
   rutorrent:
-    image: linuxserver/rutorrent
+    image: linuxserver/rutorrent:latest
     container_name: rutorrent
     environment:
       - PUID=1000
@@ -289,7 +289,6 @@ services:
       - /run/php:/run/php
     ports:
       - 80:80
-      - 5000:5000
       - 51413:51413
       - 6881:6881/udp
     restart: unless-stopped
