@@ -47,11 +47,11 @@
       "composer install",
       "./box.phar compile",
       "mv rtorrent-cleaner.phar rtorrent-cleaner-php5.phar",
-      "rm -Rf vendor composer.lock rtorrent-cleaner-php7.phar",
+      "rm -Rf vendor composer.lock rtorrent-cleaner-php7.1.phar",
       "composer config platform.php 7.1.3",
       "composer install",
       "./box.phar compile",
-      "mv rtorrent-cleaner.phar rtorrent-cleaner-php7.phar",
+      "mv rtorrent-cleaner.phar rtorrent-cleaner-php7.1.phar",
       "composer config --unset platform"
     ]
   },
