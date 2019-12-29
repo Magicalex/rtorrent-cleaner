@@ -80,5 +80,7 @@ class TorrentsCommand extends Command
         $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $output->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
+
+        return 0;
     }
 }

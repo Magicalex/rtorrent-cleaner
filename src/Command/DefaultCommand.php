@@ -19,5 +19,7 @@ class DefaultCommand extends ListCommand
         ]);
 
         parent::execute($input, $output);
+
+        return 0;
     }
 }

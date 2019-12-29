@@ -116,5 +116,7 @@ class RemoveCommand extends Command
         $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
+
+        return 0;
     }
 }

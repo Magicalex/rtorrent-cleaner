@@ -64,5 +64,7 @@ class DebugCommand extends Command
         $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $output->writeln(['', '> time: '.$time.', date: '.$date]);
+
+        return 0;
     }
 }
