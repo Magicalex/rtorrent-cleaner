@@ -22,7 +22,7 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent
 For Debian
 
 ```sh
-apt install php-cli php-xmlrpc php-simplexml php-zip php-intl php-mbstring
+apt install php-cli php-xmlrpc php-mbstring
 ```
 
 ### Install rtorrent-cleaner via phar file (recommended)
@@ -306,6 +306,8 @@ Create your rtorrent-cleaner script in `/usr/local/bin` folder
 #!/usr/bin/env sh
 
 docker run -it --rm \
+  -e PHP_MEMORY_LIMIT=128M \
+  -e PHP_TIMEZONE=Europe/Paris \
   -v /path/to/rutorrent/downloads:/downloads \
   -v /run/php:/run/php \
   magicalex/rtorrent-cleaner $*
