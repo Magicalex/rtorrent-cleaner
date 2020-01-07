@@ -5,8 +5,6 @@ LABEL description="rtorrent-cleaner is a tool to clean up unnecessary files in r
 
 ENV PHP_MEMORY_LIMIT=128M PHP_TIMEZONE=UTC
 
-COPY rtorrent-cleaner-php7.2.phar /usr/local/bin/rtorrent-cleaner
-
 RUN apk add --no-progress --no-cache \
     php7 \
     php7-phar \
@@ -16,6 +14,8 @@ RUN apk add --no-progress --no-cache \
     php7-iconv \
   && sed -i 's/memory_limit = .*/memory_limit = ${PHP_MEMORY_LIMIT}/' /etc/php7/php.ini \
   && sed -i 's/;date.timezone =/date.timezone = ${PHP_TIMEZONE}/' /etc/php7/php.ini \
+  && wget https://github.com/Magicalex/rtorrent-cleaner/raw/0.9.6/rtorrent-cleaner-php7.phar \
+  && mv --force rtorrent-cleaner-php7.phar /usr/local/bin/rtorrent-cleaner \
   && chmod +x /usr/local/bin/rtorrent-cleaner
 
 ENTRYPOINT ["rtorrent-cleaner"]

@@ -13,33 +13,16 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent
 
 ## Requirements
 
-- php 5.6 and above with extension `php-xmlrpc`
+- php 5.5.9 and above (php 7.2 recommended)
+- php extension: `php-cli`, `php-xmlrpc` and `php-mbstring`
 
 ## Installation
 
-### Install php
+### Install rtorrent-cleaner from phar file (recommended)
 
-For Debian
+The preferred method of installation is to use the rtorrent-cleaner PHAR which can be downloaded from the most recent [Github Release](https://github.com/Magicalex/rtorrent-cleaner/releases).
 
-```sh
-apt install php-cli php-xmlrpc php-mbstring
-```
-
-### Install rtorrent-cleaner via phar file (recommended)
-
-See the instructions on releases notes: https://github.com/Magicalex/rtorrent-cleaner/releases
-
-### Install rtorrent-cleaner via composer
-
-Install composer for root user
-
-```sh
-curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-chmod +x /usr/local/bin/composer
-mkdir /root/.composer && composer install -d /root/.composer
-echo 'export PATH="$PATH:/root/.composer/vendor/bin"' >> /root/.bashrc
-source /root/.bashrc
-```
+### Install rtorrent-cleaner from composer
 
 Install rtorrent-cleaner in global
 
@@ -47,14 +30,14 @@ Install rtorrent-cleaner in global
 composer global require magicalex/rtorrent-cleaner
 ```
 
-### Install rtorrent-cleaner via Docker
+### Install rtorrent-cleaner from DockerHub
 
 #### Requirements
 
 - docker [install docker](https://docs.docker.com/install)
 
 ```sh
-docker pull magicalex/rtorrent-cleaner
+docker run -it --rm magicalex/rtorrent-cleaner:latest
 ```
 
 See the details [here](https://github.com/Magicalex/rtorrent-cleaner#usage-with-docker)
@@ -64,7 +47,6 @@ See the details [here](https://github.com/Magicalex/rtorrent-cleaner#usage-with-
 Displaying help:
 
 ```sh
-rtorrent-cleaner
       _                            _          _
  _ __| |_ ___  _ __ _ __ ___ _ __ | |_    ___| | ___  __ _ _ __   ___ _ __
 | '__| __/ _ \| '__| '__/ _ \ '_ \| __|  / __| |/ _ \/ _` | '_ \ / _ \ '__|
