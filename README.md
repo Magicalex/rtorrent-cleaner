@@ -4,6 +4,7 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent
 
 [![styleci](https://github.styleci.io/repos/158750704/shield?branch=master)](https://github.styleci.io/repos/158750704)
 [![stable](https://img.shields.io/packagist/v/magicalex/rtorrent-cleaner?color=green&style=flat-square)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
+![GitHub All Releases](https://img.shields.io/github/downloads/magicalex/rtorrent-cleaner/total?style=flat-square)
 [![license](https://img.shields.io/github/license/magicalex/rtorrent-cleaner?color=green&style=flat-square)](https://github.com/Magicalex/rtorrent-cleaner/blob/master/LICENSE)
 
 [![](https://img.shields.io/docker/cloud/build/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner/builds)
@@ -308,7 +309,7 @@ rtorrent-cleaner report /run/php/.rtorrent.sock
 docker build -t magicalex/rtorrent-cleaner:latest https://github.com/Magicalex/rtorrent-cleaner.git
 ```
 
-## Build a php archive Phar (rtorrent-cleaner.phar)
+## Build Phar Archive (rtorrent-cleaner.phar)
 
 To build the archive phar, php 7.2 and `php-phar` extension is required.
 
