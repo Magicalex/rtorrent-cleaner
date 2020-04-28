@@ -24,32 +24,38 @@ class MoveCommand extends Command
             ->addArgument(
                 'scgi',
                 InputArgument::REQUIRED,
-                'Set the scgi hostname:port or socket file of rtorrent')
+                'Set the scgi hostname:port or socket file of rtorrent'
+            )
             ->addArgument(
                 'folder',
                 InputArgument::REQUIRED,
-                'Set a folder to move unnecessary files')
+                'Set a folder to move unnecessary files'
+            )
             ->addOption(
                 'exclude-files',
                 'f',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Excludes files with a pattern')
+                'Excludes files with a pattern'
+            )
             ->addOption(
                 'exclude-dirs',
                 'd',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Excludes directories, must be relative to the default rtorrent directory')
+                'Excludes directories, must be relative to the default rtorrent directory'
+            )
             ->addOption(
                 'log',
                 'l',
                 InputOption::VALUE_OPTIONAL,
                 'Log output console in a file',
-                false)
+                false
+            )
             ->addOption(
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
-                'Move all the files without confirmation');
+                'Move all the files without confirmation'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

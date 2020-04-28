@@ -22,11 +22,13 @@ class DebugCommand extends Command
             ->addArgument(
                 'scgi',
                 InputArgument::REQUIRED,
-                'Set the scgi hostname:port or socket file of rtorrent')
+                'Set the scgi hostname:port or socket file of rtorrent'
+            )
             ->addArgument(
                 'hash',
                 InputArgument::REQUIRED,
-                'Set the hash of the torrent');
+                'Set the hash of the torrent'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
