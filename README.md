@@ -5,10 +5,8 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent
 [![styleci](https://github.styleci.io/repos/158750704/shield?branch=master)](https://github.styleci.io/repos/158750704)
 [![stable](https://img.shields.io/packagist/v/magicalex/rtorrent-cleaner?color=green&style=flat-square)](https://packagist.org/packages/magicalex/rtorrent-cleaner)
 ![GitHub All Releases](https://img.shields.io/github/downloads/magicalex/rtorrent-cleaner/total?style=flat-square)
-[![license](https://img.shields.io/github/license/magicalex/rtorrent-cleaner?color=green&style=flat-square)](https://github.com/Magicalex/rtorrent-cleaner/blob/master/LICENSE)
 
-[![](https://img.shields.io/docker/cloud/build/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner/builds)
-[![](https://img.shields.io/docker/cloud/automated/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner/builds)
+![](https://github.com/magicalex/rtorrent-cleaner/workflows/build/badge.svg)
 [![](https://img.shields.io/docker/pulls/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
 [![](https://img.shields.io/docker/stars/magicalex/rtorrent-cleaner)](https://hub.docker.com/r/magicalex/rtorrent-cleaner)
 
@@ -21,7 +19,8 @@ rtorrent-cleaner is a tool to clean up unnecessary files in rtorrent
 
 ### Install rtorrent-cleaner from phar file (recommended)
 
-The preferred method of installation is to use the rtorrent-cleaner PHAR which can be downloaded from the most recent [Github Release](https://github.com/Magicalex/rtorrent-cleaner/releases).
+The preferred method of installation is to use the rtorrent-cleaner PHAR which can be downloaded from the most recent  
+[Check GitHub Release](https://github.com/Magicalex/rtorrent-cleaner/releases).
 
 ### Install rtorrent-cleaner from composer
 
