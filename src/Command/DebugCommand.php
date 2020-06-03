@@ -62,7 +62,7 @@ class DebugCommand extends Command
             $table->render();
         }
 
-        $date = (new \DateTime())->format('D, j M Y H:i:s');
+        $date = (new \DateTime())->format('d/m/Y H:i:s');
         $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
         $output->writeln(['', '> time: '.$time.', date: '.$date]);

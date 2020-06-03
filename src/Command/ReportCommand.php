@@ -116,12 +116,12 @@ class ReportCommand extends Command
             $console->writeln('> <fg=green>No missing files.</>');
         }
 
-        $date = (new \DateTime())->format('D, j M Y H:i:s');
+        $date = (new \DateTime())->format('d/m/Y H:i:s');
         $torrents = $cleaner->getnumTorrents();
         $space = Helpers::convertFileSize($cleaner->getFreeDiskSpace(), 2);
         $event = $time->stop();
         $time = Helpers::humanTime($event->getDuration());
-        $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free space: '.$space.', date: '.$date]);
+        $console->writeln(['', '> time: '.$time.', torrents: '.$torrents.', free: '.$space.', date: '.$date]);
 
         return 0;
     }

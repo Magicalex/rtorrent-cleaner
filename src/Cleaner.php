@@ -31,9 +31,12 @@ class Cleaner
         $torrents = $this->rtorrent->call('d.multicall2', ['', 'default', 'd.hash=', 'd.name=', 'd.directory=']);
         $this->numTorrents = count($torrents);
         $this->missingFileData = [];
+        $this->rtorrentFileData = [];
 
         if ($this->numTorrents === 0) {
-            throw new \Exception('No torrent found in rtorrent.');
+            $this->directories[] = $this->rtorrent->call('directory.default');
+
+            return $this;
         }
 
         $progressBar = new ProgressBar($this->output, $this->numTorrents);
